@@ -1,5 +1,4 @@
 
-
 Pod::Spec.new do |spec|
   spec.name         = "TFY_BannerscrollKit"
   spec.version      = "2.0.0"
