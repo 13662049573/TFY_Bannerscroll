@@ -9,13 +9,13 @@ Pod::Spec.new do |spec|
   无限滚动视图，使用各种场景，如卡片，扇形，广告。。。
                    DESC
 
-  spec.homepage     = "http://EXAMPLE/TFY_BannerscrollKit"
+  spec.homepage     = "https://github.com/13662049573/TFY_Bannerscroll"
   
   spec.license      = "MIT"
  
   spec.author       = { "tfyzxc13662049573" => "420144542@qq.com" }
   
-  spec.source       = { :git => "https://github.com/13662049573/TFY_Calendar.git", :tag => spec.version }
+  spec.source       = { :git => "https://github.com/13662049573/TFY_Bannerscroll.git", :tag => spec.version }
 
   spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/**/*.{h,m}"
 
