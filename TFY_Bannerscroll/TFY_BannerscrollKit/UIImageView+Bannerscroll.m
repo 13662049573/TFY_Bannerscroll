@@ -263,14 +263,14 @@
 #pragma mark - public method
 
 - (void)tfy_setImageWithURLString:(NSString *)url placeholderImageName:(NSString *)placeholderImageName {
-    return [self tfy_setImageWithURLString:url placeholderImageName:placeholderImageName completion:nil];
+    return [self tfy_setImageWithURLString:url placeholderImageName:placeholderImageName completion:^(UIImage * _Nullable image) {}];
 }
 
 - (void)tfy_setImageWithURLString:(NSString *)url placeholder:(UIImage *)placeholderImage {
-    return [self tfy_setImageWithURLString:url placeholder:placeholderImage completion:nil];
+    return [self tfy_setImageWithURLString:url placeholder:placeholderImage completion:^(UIImage * _Nullable image) {}];
 }
 
-- (void)tfy_setImageWithURLString:(NSString *)url placeholderImageName:(NSString *)placeholderImage completion:(void (^)(UIImage *image))completion {
+- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholderImageName:(NSString *__nullable)placeholderImage completion:(void (^)(UIImage * __nullable image))completion {
     NSString *path = [[NSBundle mainBundle] pathForResource:placeholderImage ofType:nil];
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     if (image == nil) { image = [UIImage imageNamed:placeholderImage]; }
@@ -338,7 +338,7 @@
     }];
 }
 
-- (void)tfy_setImageWithURLString:(NSString *)url placeholder:(UIImage *)placeholderImageName completion:(void (^)(UIImage *image))completion {
+- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholder:(UIImage *__nullable)placeholderImageName completion:(void (^)(UIImage *__nullable image))completion {
     [self.layer removeAllAnimations];
     self.tfy_completion = completion;
     
@@ -375,7 +375,7 @@
     }
     
     [self cancelRequest];
-    self.tfy_imageDownloader = nil;
+    self.tfy_imageDownloader = [ImageDownloader new];
     
     WSelf(myslef);
     

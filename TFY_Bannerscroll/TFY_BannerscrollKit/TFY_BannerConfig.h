@@ -9,6 +9,7 @@
 #ifndef TFY_BannerConfig_h
 #define TFY_BannerConfig_h
 
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIImageView+Bannerscroll.h"
 

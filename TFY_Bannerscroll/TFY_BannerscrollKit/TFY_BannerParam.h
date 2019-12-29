@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "TFY_BannerConfig.h"
 
-
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TFY_BannerParam : NSObject

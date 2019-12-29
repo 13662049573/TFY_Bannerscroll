@@ -7,27 +7,27 @@
 //
 #import <UIKit/UIKit.h>
 
-typedef void (^DownLoadDataCallBack)(NSData * _Nonnull  data, NSError * _Nonnull error);
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^DownLoadDataCallBack)(NSData * __nullable  data, NSError * __nullable error);
 typedef void (^DownloadProgressBlock)(unsigned long long total, unsigned long long current);
 
 @interface ImageDownloader : NSObject<NSURLSessionDownloadDelegate>
 
-@property (nonatomic, strong) NSURLSession * _Nonnull session;
-@property (nonatomic, strong) NSURLSessionDownloadTask * _Nonnull task;
+@property (nonatomic, strong) NSURLSession * __nullable session;
+@property (nonatomic, strong) NSURLSessionDownloadTask * __nullable task;
 
 @property (nonatomic, assign) unsigned long long totalLength;
 @property (nonatomic, assign) unsigned long long currentLength;
 
-@property (nonatomic, copy) DownloadProgressBlock _Nonnull progressBlock;
-@property (nonatomic, copy) DownLoadDataCallBack _Nonnull callbackOnFinished;
+@property (nonatomic, copy) DownloadProgressBlock __nullable progressBlock;
+@property (nonatomic, copy) DownLoadDataCallBack __nullable callbackOnFinished;
 
-- (void)tfy_startDownloadImageWithUrl:(NSString *_Nonnull)url progress:(DownloadProgressBlock _Nonnull )progress finished:(DownLoadDataCallBack _Nonnull )finished;
+- (void)tfy_startDownloadImageWithUrl:(NSString *__nullable)url progress:(DownloadProgressBlock __nullable )progress finished:(DownLoadDataCallBack __nullable )finished;
 
 @end
 
-typedef void (^ImageBlock)(UIImage * _Nonnull image);
-
-NS_ASSUME_NONNULL_BEGIN
+typedef void (^ImageBlock)(UIImage * __nullable image);
 
 @interface UIImageView (Bannerscroll)
 /**
@@ -49,11 +49,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  使用`url`和占位符设置imageView`image`。下载是异步和缓存的。
  */
-- (void)tfy_setImageWithURLString:(NSString *)url placeholderImageName:(NSString *)placeholderImageName;
+- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholderImageName:(NSString *__nullable)placeholderImageName;
 /**
  *  使用`url`和占位符设置imageView`image`。下载是异步和缓存的。
  */
-- (void)tfy_setImageWithURLString:(NSString *)url placeholder:(UIImage *)placeholderImage;
+- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholder:(UIImage *__nullable)placeholderImage;
 /**
  * placeholderImage最初要设置的图像，直到图像请求完成。
  * completion操作完成时调用的块。该块没有返回值
@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 指示图像是从本地缓存还是从网络检索的。
  * 第四个参数是原始图像网址。
  */
-- (void)tfy_setImageWithURLString:(NSString *)url placeholder:(UIImage *)placeholderImage completion:(void (^)(UIImage *image))completion;
+- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholder:(UIImage *__nullable)placeholderImage completion:(void (^)(UIImage *__nullable image))completion;
 /**
  * placeholderImageName最初要设置的图像名称，直到图像请求完成。
  * completion操作完成时调用的块。该块没有返回值
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 指示图像是从本地缓存还是从网络检索的。
  * 第四个参数是原始图像网址。
  */
-- (void)tfy_setImageWithURLString:(NSString *)url placeholderImageName:(NSString *)placeholderImageName completion:(void (^)(UIImage *image))completion;
+- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholderImageName:(NSString *__nullable)placeholderImageName completion:(void (^)(UIImage * __nullable image))completion;
 /**
  *  为UIImageView加入一个设置gif图内容的方法：
  */
