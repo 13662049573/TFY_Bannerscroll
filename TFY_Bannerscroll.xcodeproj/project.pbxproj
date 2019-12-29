@@ -34,6 +34,8 @@
 		3674C9D523B70FAE0076A0D5 /* marqueCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C9C223B70FAE0076A0D5 /* marqueCell.m */; };
 		3674C9D623B70FAE0076A0D5 /* DemoAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C9C723B70FAE0076A0D5 /* DemoAdd.m */; };
 		3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */; };
+		36CDA2BC23B8337B009EFF82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BB23B8337B009EFF82 /* UIKit.framework */; };
+		36CDA2BE23B83383009EFF82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BD23B83383009EFF82 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +113,8 @@
 		3674C9C823B70FAE0076A0D5 /* DemoAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoAdd.h; sourceTree = "<group>"; };
 		3674C9CA23B70FAE0076A0D5 /* DemoPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoPageControl.h; sourceTree = "<group>"; };
 		3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoPageControl.m; sourceTree = "<group>"; };
+		36CDA2BB23B8337B009EFF82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		36CDA2BD23B83383009EFF82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36CDA2BC23B8337B009EFF82 /* UIKit.framework in Frameworks */,
+				36CDA2BE23B83383009EFF82 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +151,7 @@
 				3674C96F23B6DAA40076A0D5 /* TFY_BannerscrollTests */,
 				3674C97A23B6DAA40076A0D5 /* TFY_BannerscrollUITests */,
 				3674C95223B6DAA20076A0D5 /* Products */,
+				36CDA2BA23B8337B009EFF82 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -335,6 +342,15 @@
 				3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */,
 			);
 			path = "自定义pageControl";
+			sourceTree = "<group>";
+		};
+		36CDA2BA23B8337B009EFF82 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				36CDA2BD23B83383009EFF82 /* Foundation.framework */,
+				36CDA2BB23B8337B009EFF82 /* UIKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
