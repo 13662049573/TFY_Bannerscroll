@@ -24,7 +24,7 @@ Pod::Spec.new do |spec|
 
   spec.frameworks    = "Foundation","UIKit"
 
-  spec.user_target_xcconfig = { 'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES' }
+  spec.xcconfig      = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include" }
 
   spec.requires_arc = true
   
