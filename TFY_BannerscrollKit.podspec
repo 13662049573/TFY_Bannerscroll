@@ -18,7 +18,7 @@ Pod::Spec.new do |spec|
  
   spec.author       = { "tfyzxc13662049573" => "420144542@qq.com" }
   
-  spec.source       = { :git => "https://github.com/13662049573/TFY_Bannerscroll.git", :tag => s.version.to_s }
+  spec.source       = { :git => "https://github.com/13662049573/TFY_Bannerscroll.git", :tag => spec.version.to_s}
 
   spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_BannerscrollHeader.h","TFY_Bannerscroll/TFY_BannerscrollKit/**/*.{h,m}"
 
