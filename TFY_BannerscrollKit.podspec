@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   
   spec.source       = { :git => "https://github.com/13662049573/TFY_Bannerscroll.git", :tag => s.version.to_s }
 
-  spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/**/*.{h,m}"
+  spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_BannerscrollHeader.h","TFY_Bannerscroll/TFY_BannerscrollKit/**/*.{h,m}"
 
   spec.user_target_xcconfig = { 'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES' }
 
