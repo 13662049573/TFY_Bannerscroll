@@ -224,13 +224,13 @@
 			isa = PBXGroup;
 			children = (
 				3674C99F23B6E97B0076A0D5 /* TFY_BannerscrollHeader.h */,
+				3674C99823B6DFDB0076A0D5 /* TFY_BannerConfig.h */,
 				3674C99C23B6E1A00076A0D5 /* TFY_BannerParam.h */,
 				3674C99D23B6E1A00076A0D5 /* TFY_BannerParam.m */,
 				3674C9A623B70B300076A0D5 /* TFY_BannerView.h */,
 				3674C9A723B70B300076A0D5 /* TFY_BannerView.m */,
 				3674C99523B6DE850076A0D5 /* UIImageView+Bannerscroll.h */,
 				3674C99623B6DE850076A0D5 /* UIImageView+Bannerscroll.m */,
-				3674C99823B6DFDB0076A0D5 /* TFY_BannerConfig.h */,
 				3674C99923B6E0D90076A0D5 /* TFY_BannerControl.h */,
 				3674C99A23B6E0D90076A0D5 /* TFY_BannerControl.m */,
 				3674C9A023B708DE0076A0D5 /* TFY_BannerFlowLayout.h */,

@@ -361,7 +361,7 @@ TFY_BannerParam *paramModel(void){
        };
 }
 
-/**自定义安全的圆点图标的size  default (5,5)*/
+/**自定义安全的圆点图标的size  default (10,10)*/
 - (TFY_BannerParam * (^) (CGSize tfy_BannerControlImageSize))tfy_BannerControlImageSizeSet{
     BannerWSelf(myself);
     return ^(CGSize tfy_BannerControlImageSize){
@@ -370,7 +370,7 @@ TFY_BannerParam *paramModel(void){
     };
 }
 
-/**自定义安全的选中圆点图标的size (10,5)*/
+/**自定义安全的选中圆点图标的size (10,10)*/
 - (TFY_BannerParam * (^) (CGSize tfy_BannerControlSelectImageSize))tfy_BannerControlSelectImageSizeSet{
     BannerWSelf(myself);
     return ^(CGSize tfy_BannerControlSelectImageSize){
