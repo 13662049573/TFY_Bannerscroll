@@ -33,8 +33,8 @@
     //开启自动滚动
     .tfy_AutoScrollSet(YES)
     //自动滚动时间
-    .tfy_AutoScrollSecondSet(3)
-    ;
+    .tfy_AutoScrollSecondSet(3);
+    
     TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:viewOne];
     

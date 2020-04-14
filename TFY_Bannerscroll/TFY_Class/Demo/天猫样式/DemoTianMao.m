@@ -53,9 +53,7 @@
     //间距
     .tfy_LineSpacingSet(10)
     //开启背景毛玻璃
-    .tfy_EffectSet(YES)
-    
-    ;
+    .tfy_EffectSet(YES);
     self.bannerView = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:self.bannerView];
 }
