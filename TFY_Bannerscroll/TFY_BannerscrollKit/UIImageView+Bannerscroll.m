@@ -232,7 +232,7 @@
     return count;
 }
 
-- (BOOL)tfy_shouldAutoClipImageToViewSize
+- (BOOL)tfy_BannershouldAutoClipImageToViewSize
 {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
 }
@@ -253,10 +253,10 @@
     objc_setAssociatedObject(self, @selector(tfy_attemptToReloadTimesForFailedURL), @(tfy_attemptToReloadTimesForFailedURL), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)setTfy_shouldAutoClipImageToViewSize:(BOOL)tfy_shouldAutoClipImageToViewSize
-{
-    objc_setAssociatedObject(self, @selector(tfy_shouldAutoClipImageToViewSize), @(tfy_shouldAutoClipImageToViewSize), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+-(void)setTfy_BannershouldAutoClipImageToViewSize:(BOOL)tfy_BannershouldAutoClipImageToViewSize{
+    objc_setAssociatedObject(self, @selector(tfy_BannershouldAutoClipImageToViewSize), @(tfy_BannershouldAutoClipImageToViewSize), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 
 #pragma mark - public method
 
@@ -386,7 +386,7 @@
                 UIImage *finalImage = image;
                 
                 if (image) {
-                    if (myslef.tfy_shouldAutoClipImageToViewSize) {
+                    if (myslef.tfy_BannershouldAutoClipImageToViewSize) {
                         // cutting
                         if (fabs(myslef.frame.size.width - image.size.width) != 0
                             && fabs(myslef.frame.size.height - image.size.height) != 0) {
