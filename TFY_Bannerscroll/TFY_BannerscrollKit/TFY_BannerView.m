@@ -193,7 +193,7 @@
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
         if ([(NSString*)data hasPrefix:@"http"]) {
-            [icon tfy_setImageWithURLString:(NSString*)data placeholder:self.param.tfy_PlaceholderImage?[UIImage imageNamed:self.param.tfy_PlaceholderImage]:nil];
+            [icon tfy_BannerImageWithURLString:(NSString*)data placeholder:self.param.tfy_PlaceholderImage?[UIImage imageNamed:self.param.tfy_PlaceholderImage]:nil];
         }else{
             icon.image = [UIImage imageNamed:(NSString*)data];
         }

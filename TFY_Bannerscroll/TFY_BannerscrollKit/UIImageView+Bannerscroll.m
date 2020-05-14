@@ -12,11 +12,11 @@
 
 #define WSelf(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
-@implementation ImageDownloader
+@implementation TFY_BannerImageDownloader
 
-- (void)tfy_startDownloadImageWithUrl:(NSString *)url progress:(DownloadProgressBlock)progress finished:(DownLoadDataCallBack)finished {
-    self.progressBlock = progress;
-    self.callbackOnFinished = finished;
+- (void)tfy_BannerstartDownloadImageWithUrl:(NSString *)url progress:(BannerDownloadProgressBlock)progress finished:(BannerDownLoadDataCallBack)finished {
+    self.tfy_BannerprogressBlock = progress;
+    self.tfy_BannercallbackOnFinished = finished;
     
     if ([NSURL URLWithString:url] == nil) {
         NSData *data; NSError *error;
@@ -32,46 +32,46 @@
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSOperationQueue *queue = [[NSOperationQueue alloc]init];
-    self.session = [NSURLSession sessionWithConfiguration:config
+    self.tfy_Bannersession = [NSURLSession sessionWithConfiguration:config
                                                  delegate:self
                                             delegateQueue:queue];
-    NSURLSessionDownloadTask *task = [self.session downloadTaskWithRequest:request];
+    NSURLSessionDownloadTask *task = [self.tfy_Bannersession downloadTaskWithRequest:request];
     [task resume];
-    self.task = task;
+    self.tfy_Bannertask = task;
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
     NSData *data = [NSData dataWithContentsOfURL:location];
     
-    if (self.progressBlock) {
-        self.progressBlock(self.totalLength, self.currentLength);
+    if (self.tfy_BannerprogressBlock) {
+        self.tfy_BannerprogressBlock(self.tfy_BannertotalLength, self.tfy_BannercurrentLength);
     }
     
-    if (self.callbackOnFinished) {
+    if (self.tfy_BannercallbackOnFinished) {
         NSError *error;
-        self.callbackOnFinished(data, error);
+        self.tfy_BannercallbackOnFinished(data, error);
         
         // 防止重复调用
-        self.callbackOnFinished =nil;
+        self.tfy_BannercallbackOnFinished =nil;
     }
 }
 
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
-    self.currentLength = totalBytesWritten;
-    self.totalLength = totalBytesExpectedToWrite;
+    self.tfy_BannercurrentLength = totalBytesWritten;
+    self.tfy_BannertotalLength = totalBytesExpectedToWrite;
     
-    if (self.progressBlock) {
-        self.progressBlock(self.totalLength, self.currentLength);
+    if (self.tfy_BannerprogressBlock) {
+        self.tfy_BannerprogressBlock(self.tfy_BannertotalLength, self.tfy_BannercurrentLength);
     }
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     if ([error code] != NSURLErrorCancelled) {
-        if (self.callbackOnFinished) {
+        if (self.tfy_BannercallbackOnFinished) {
             NSData *data;
-            self.callbackOnFinished(data, error);
+            self.tfy_BannercallbackOnFinished(data, error);
         }
-        self.callbackOnFinished = nil;
+        self.tfy_BannercallbackOnFinished = nil;
     }
 }
 
@@ -215,12 +215,12 @@
 @implementation UIImageView (Bannerscroll)
 #pragma mark - getter
 
-- (ImageBlock)tfy_completion
+- (TFY_BannerImageBlock)tfy_Bannercompletion
 {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (ImageDownloader *)tfy_imageDownloader
+- (TFY_BannerImageDownloader *)tfy_BannerimageDownloader
 {
     return objc_getAssociatedObject(self, _cmd);
 }
@@ -239,16 +239,14 @@
 
 #pragma mark - setter
 
--(void)setTfy_completion:(ImageBlock)tfy_completion{
-    objc_setAssociatedObject(self, @selector(tfy_completion), tfy_completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
+-(void)setTfy_Bannercompletion:(TFY_BannerImageBlock)tfy_Bannercompletion{
+    objc_setAssociatedObject(self, @selector(tfy_Bannercompletion), tfy_Bannercompletion, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-
-
-- (void)setTfy_imageDownloader:(ImageDownloader *)tfy_imageDownloader
-{
-    objc_setAssociatedObject(self, @selector(tfy_imageDownloader), tfy_imageDownloader, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+-(void)setTfy_BannerimageDownloader:(TFY_BannerImageDownloader *)tfy_BannerimageDownloader{
+    objc_setAssociatedObject(self, @selector(tfy_BannerimageDownloader), tfy_BannerimageDownloader, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 
 - (void)setTfy_attemptToReloadTimesForFailedURL:(NSUInteger)tfy_attemptToReloadTimesForFailedURL
 {
@@ -262,20 +260,20 @@
 
 #pragma mark - public method
 
-- (void)tfy_setImageWithURLString:(NSString *)url placeholderImageName:(NSString *)placeholderImageName {
-    return [self tfy_setImageWithURLString:url placeholderImageName:placeholderImageName completion:^(UIImage * _Nullable image) {}];
+- (void)tfy_BannerImageWithURLString:(NSString *)url placeholderImageName:(NSString *)placeholderImageName {
+    return [self tfy_BannerImageWithURLString:url placeholderImageName:placeholderImageName completion:^(UIImage * _Nullable image) {}];
 }
 
-- (void)tfy_setImageWithURLString:(NSString *)url placeholder:(UIImage *)placeholderImage {
-    return [self tfy_setImageWithURLString:url placeholder:placeholderImage completion:^(UIImage * _Nullable image) {}];
+- (void)tfy_BannerImageWithURLString:(NSString *)url placeholder:(UIImage *)placeholderImage {
+    return [self tfy_BannerImageWithURLString:url placeholder:placeholderImage completion:^(UIImage * _Nullable image) {}];
 }
 
-- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholderImageName:(NSString *__nullable)placeholderImage completion:(void (^)(UIImage * __nullable image))completion {
+- (void)tfy_BannerImageWithURLString:(NSString *__nullable)url placeholderImageName:(NSString *__nullable)placeholderImage completion:(void (^)(UIImage * __nullable image))completion {
     NSString *path = [[NSBundle mainBundle] pathForResource:placeholderImage ofType:nil];
     UIImage *image = [UIImage imageWithContentsOfFile:path];
     if (image == nil) { image = [UIImage imageNamed:placeholderImage]; }
     
-    [self tfy_setImageWithURLString:url placeholder:image completion:completion];
+    [self tfy_BannerImageWithURLString:url placeholder:image completion:completion];
 }
 
 //解析gif文件数据的方法 block中会将解析的数据传递出来
@@ -314,7 +312,7 @@
 }
 
 //为UIImageView加入一个设置gif图内容的方法：
--(void)tfy_setImage:(NSURL *)imageUrl{
+-(void)tfy_BannerImage:(NSURL *)imageUrl{
     __weak id __self = self;
     [self getGifImageWithUrk:imageUrl returnData:^(NSArray<UIImage *> *imageArray, NSArray<NSNumber *> *timeArray, CGFloat totalTime, NSArray<NSNumber *> *widths, NSArray<NSNumber *> *heights) {
         //加入帧动画
@@ -338,15 +336,15 @@
     }];
 }
 
-- (void)tfy_setImageWithURLString:(NSString *__nullable)url placeholder:(UIImage *__nullable)placeholderImageName completion:(void (^)(UIImage *__nullable image))completion {
+- (void)tfy_BannerImageWithURLString:(NSString *__nullable)url placeholder:(UIImage *__nullable)placeholderImageName completion:(void (^)(UIImage *__nullable image))completion {
     [self.layer removeAllAnimations];
-    self.tfy_completion = completion;
+    self.tfy_Bannercompletion = completion;
     
     if (url == nil || [url isKindOfClass:[NSNull class]] || (![url hasPrefix:@"http://"] && ![url hasPrefix:@"https://"])) {
         [self setImage:placeholderImageName isFromCache:YES];
         
         if (completion) {
-            self.tfy_completion(self.image);
+            self.tfy_Bannercompletion(self.image);
         }
         return;
     }
@@ -362,8 +360,8 @@
     
     if (cachedImage) {
         [self setImage:cachedImage isFromCache:YES];
-        if (self.tfy_completion) {
-            self.tfy_completion(cachedImage);
+        if (self.tfy_Bannercompletion) {
+            self.tfy_Bannercompletion(cachedImage);
         }
         return;
     }
@@ -375,12 +373,12 @@
     }
     
     [self cancelRequest];
-    self.tfy_imageDownloader = [ImageDownloader new];
+    self.tfy_BannerimageDownloader = [TFY_BannerImageDownloader new];
     
     WSelf(myslef);
     
-    self.tfy_imageDownloader = [[ImageDownloader alloc] init];
-    [self.tfy_imageDownloader tfy_startDownloadImageWithUrl:theRequest.URL.absoluteString progress:nil finished:^(NSData *data, NSError *error) {
+    self.tfy_BannerimageDownloader = [[TFY_BannerImageDownloader alloc] init];
+    [self.tfy_BannerimageDownloader tfy_BannerstartDownloadImageWithUrl:theRequest.URL.absoluteString progress:nil finished:^(NSData *data, NSError *error) {
         // success
         if (data != nil && error == nil) {
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
@@ -405,12 +403,12 @@
                     if (finalImage) {
                         [myslef setImage:finalImage isFromCache:NO];
                         
-                        if (myslef.tfy_completion) {
-                            myslef.tfy_completion(myslef.image);
+                        if (myslef.tfy_Bannercompletion) {
+                            myslef.tfy_Bannercompletion(myslef.image);
                         }
                     } else {// error data
-                        if (myslef.tfy_completion) {
-                            myslef.tfy_completion(myslef.image);
+                        if (myslef.tfy_Bannercompletion) {
+                            myslef.tfy_Bannercompletion(myslef.image);
                         }
                     }
                 });
@@ -418,8 +416,8 @@
         } else { // error
             [[UIApplication sharedApplication] tfy_cacheFailRequest:theRequest];
             
-            if (myslef.tfy_completion) {
-                myslef.tfy_completion(myslef.image);
+            if (myslef.tfy_Bannercompletion) {
+                myslef.tfy_Bannercompletion(myslef.image);
             }
         }
     }];
@@ -437,7 +435,7 @@
 }
 
 - (void)cancelRequest {
-    [self.tfy_imageDownloader.task cancel];
+    [self.tfy_BannerimageDownloader.tfy_Bannertask cancel];
 }
 
 - (UIImage *)clipImage:(UIImage *)image toSize:(CGSize)size isScaleToMax:(BOOL)isScaleToMax {
