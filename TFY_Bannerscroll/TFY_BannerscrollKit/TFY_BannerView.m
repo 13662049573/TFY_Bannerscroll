@@ -21,6 +21,7 @@
 @property(strong,nonatomic)NSArray *data;
 @property(strong,nonatomic)TFY_BannerParam *param;
 @property(strong,nonatomic)NSTimer *timer;
+@property(weak,nonatomic)UIVisualEffectView *effectView;
 @end
 
 @implementation TFY_BannerView
@@ -51,12 +52,21 @@
     }
     return self;
 }
+//横竖屏更新布局。
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    
+    self.myCollectionV.frame = self.bounds;
+    self.bgImgView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*self.param.tfy_EffectHeight);
+    self.effectView.frame = self.bgImgView.frame;
+    
+    [self layoutIfNeeded];
+}
 
 - (void)updateUI{
     self.data = [NSArray arrayWithArray:self.param.tfy_data];
     [self resetCollection];
 }
-
 
 - (void)resetCollection{
     self.bannerControl.numberOfPages = self.data.count;
@@ -165,6 +175,7 @@
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     effectView.frame = self.bgImgView.bounds;
     [self.bgImgView addSubview:effectView];
+    self.effectView = effectView;
     
     [self resetCollection];
 }
