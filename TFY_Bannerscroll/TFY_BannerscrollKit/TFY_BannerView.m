@@ -52,6 +52,7 @@
     }
     return self;
 }
+
 //横竖屏更新布局。
 - (void)layoutSubviews{
     [super layoutSubviews];

@@ -129,6 +129,7 @@
     self.viewOne = [[TFY_BannerView alloc]initConfigureWithModel:self.param withView:self.view];
 }
 
+
 //更新数据
 - (void)updata{
     self.param.tfy_dataSet(@[

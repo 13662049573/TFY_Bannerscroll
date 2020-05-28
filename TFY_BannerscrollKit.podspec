@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
   spec.name         = "TFY_BannerscrollKit"
   
-  spec.version      = "2.0.8"
+  spec.version      = "2.1.0"
 
   spec.summary      = "无限滚动视图，使用各种场景，如卡片，扇形，广告。。。"
 

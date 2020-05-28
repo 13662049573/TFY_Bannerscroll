@@ -22,6 +22,8 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    self.navigationController.navigationBar.translucent = NO;
+    
     UITableView *ta = [[UITableView alloc]initWithFrame:CGRectMake(0, 88, self.view.frame.size.width,self.view.frame.size.height-88) style:UITableViewStyleGrouped];
     [self.view addSubview:ta];
     if (@available(iOS 11.0, *)) {
@@ -34,6 +36,15 @@
     ta.delegate = self;
     self.ta = ta;
 }
+
+-(void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    
+    self.ta.frame = self.view.bounds;
+    
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;
 }
