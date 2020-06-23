@@ -45,12 +45,19 @@
      TFY_BannerParam *param1 =  paramModel()
      .tfy_FrameSet(CGRectMake(10, BannerHeight/2, BannerWitdh-20, BannerHeight/4))
      .tfy_dataSet([self getData])
-    //开启跑马灯
-     .tfy_MarqueeSet(YES)
-     //开启循环滚动
-     .tfy_RepeatSet(YES)
-     //纵向
-     .tfy_VerticalSet(YES);
+
+    .tfy_CanFingerSlidingSet(NO)
+    
+    .tfy_MarqueeSet(YES)
+    //开启循环滚动
+    .tfy_RepeatSet(YES)
+    
+    .tfy_HideBannerControlSet(YES)
+    .tfy_VerticalSet(YES)
+    
+    .tfy_ItemSizeSet(CGSizeMake(BannerWitdh, 100))
+    //固定移动的距离
+   .tfy_LineSpacingSet(20);
     
      TFY_BannerView *viewOne1 = [[TFY_BannerView alloc]initConfigureWithModel:param1];
      [self.view addSubview:viewOne1];
