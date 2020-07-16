@@ -24,7 +24,7 @@
      *横向
      */
     TFY_BannerParam *param =  paramModel()
-    .tfy_FrameSet(CGRectMake(10, BannerHeight/6, BannerWitdh-20, BannerHeight/4))
+    .tfy_FrameSet(CGRectMake(0, BannerHeight/6, BannerWitdh, BannerWitdh/3))
     .tfy_dataSet([self getData])
     //开启循环滚动
     .tfy_RepeatSet(YES)
@@ -33,7 +33,7 @@
     //开启自动滚动
     .tfy_AutoScrollSet(YES)
     //自动滚动时间
-    .tfy_AutoScrollSecondSet(3);
+    .tfy_AutoScrollSecondSet(3).tfy_ItemSizeSet(CGSizeMake(BannerWitdh/3, BannerWitdh/3)).tfy_HideBannerControlSet(YES);
     
     TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:viewOne];
