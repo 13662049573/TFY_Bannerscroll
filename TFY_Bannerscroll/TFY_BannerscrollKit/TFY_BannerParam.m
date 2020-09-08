@@ -61,7 +61,7 @@ TFY_BannerParam *paramModel(void){
      };
 }
 /**数据源 必传*/
--(TFY_BannerParam *(^)(NSArray *tfy_data))tfy_dataSet{
+-(TFY_BannerParam *(^)(NSArray *tfy_data))tfy_DataSet{
     BannerWSelf(myself);
     return ^(NSArray *tfy_data){
         myself.tfy_data= tfy_data;

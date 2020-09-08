@@ -26,7 +26,7 @@
     TFY_BannerParam *param =  paramModel()
     .tfy_FrameSet(CGRectMake(10,100, BannerWitdh-20, BannerHeight*0.35))
     .tfy_ItemSizeSet(CGSizeMake(BannerWitdh-60, BannerHeight*0.25))
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     //设置item的间距
     .tfy_LineSpacingSet(15)
     //开启卡片叠加模式
@@ -50,7 +50,7 @@
     })
     .tfy_FrameSet(CGRectMake(10,  CGRectGetMaxY(viewOne.frame)+30 , BannerWitdh-20, BannerHeight*0.35))
     .tfy_ItemSizeSet(CGSizeMake(BannerWitdh/2, BannerHeight*0.3))
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     .tfy_HideBannerControlSet(YES)
     //设置item的间距
     .tfy_LineSpacingSet(15)

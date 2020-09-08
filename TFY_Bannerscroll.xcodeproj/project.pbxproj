@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3674C95F23B6DAA20076A0D5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3674C95D23B6DAA20076A0D5 /* Main.storyboard */; };
+		33D8A0A537D10489E1DC8272 /* Pods_TFY_BannerscrollTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29F625BEEF7898D1E210DE0 /* Pods_TFY_BannerscrollTests.framework */; };
 		3674C96123B6DAA40076A0D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3674C96023B6DAA40076A0D5 /* Assets.xcassets */; };
 		3674C96423B6DAA40076A0D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3674C96223B6DAA40076A0D5 /* LaunchScreen.storyboard */; };
 		3674C96723B6DAA40076A0D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C96623B6DAA40076A0D5 /* main.m */; };
@@ -36,6 +36,8 @@
 		3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */; };
 		36CDA2BC23B8337B009EFF82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BB23B8337B009EFF82 /* UIKit.framework */; };
 		36CDA2BE23B83383009EFF82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BD23B83383009EFF82 /* Foundation.framework */; };
+		EC6790A5AB1874B21FE71537 /* Pods_TFY_Bannerscroll.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E304A0B8A9FD3B88B89E280D /* Pods_TFY_Bannerscroll.framework */; };
+		F93C439ADF508FE77E5D40EA /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,8 +58,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0FEB32499BF82F690EB88A3F /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig"; sourceTree = "<group>"; };
+		1DF16605C24348E72E6F6241 /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3674C95123B6DAA20076A0D5 /* TFY_Bannerscroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFY_Bannerscroll.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3674C95E23B6DAA20076A0D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3674C96023B6DAA40076A0D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3674C96323B6DAA40076A0D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3674C96523B6DAA40076A0D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,6 +119,12 @@
 		3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoPageControl.m; sourceTree = "<group>"; };
 		36CDA2BB23B8337B009EFF82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		36CDA2BD23B83383009EFF82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4686EBA8D031AD5EDB5761FF /* Pods-TFY_BannerscrollTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_BannerscrollTests.release.xcconfig"; path = "Target Support Files/Pods-TFY_BannerscrollTests/Pods-TFY_BannerscrollTests.release.xcconfig"; sourceTree = "<group>"; };
+		4BB6E2B993E137D295E03E88 /* Pods-TFY_Bannerscroll.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll.release.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll.release.xcconfig"; sourceTree = "<group>"; };
+		8FF1D1DAABDE23FA9B8A5982 /* Pods-TFY_Bannerscroll.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll.debug.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll.debug.xcconfig"; sourceTree = "<group>"; };
+		C88FF06999D0B475FEF0F5C7 /* Pods-TFY_BannerscrollTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_BannerscrollTests.debug.xcconfig"; path = "Target Support Files/Pods-TFY_BannerscrollTests/Pods-TFY_BannerscrollTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E304A0B8A9FD3B88B89E280D /* Pods_TFY_Bannerscroll.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFY_Bannerscroll.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F29F625BEEF7898D1E210DE0 /* Pods_TFY_BannerscrollTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFY_BannerscrollTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +134,7 @@
 			files = (
 				36CDA2BC23B8337B009EFF82 /* UIKit.framework in Frameworks */,
 				36CDA2BE23B83383009EFF82 /* Foundation.framework in Frameworks */,
+				EC6790A5AB1874B21FE71537 /* Pods_TFY_Bannerscroll.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33D8A0A537D10489E1DC8272 /* Pods_TFY_BannerscrollTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F93C439ADF508FE77E5D40EA /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,6 +165,7 @@
 				3674C97A23B6DAA40076A0D5 /* TFY_BannerscrollUITests */,
 				3674C95223B6DAA20076A0D5 /* Products */,
 				36CDA2BA23B8337B009EFF82 /* Frameworks */,
+				EF3015DDEC0CAC670FF1F4A7 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -172,7 +186,6 @@
 				3674C98A23B6DB200076A0D5 /* TFY_AppDelegate */,
 				3674C99123B6DB200076A0D5 /* TFY_BannerscrollKit */,
 				3674C98923B6DB200076A0D5 /* TFY_Class */,
-				3674C95D23B6DAA20076A0D5 /* Main.storyboard */,
 				3674C96023B6DAA40076A0D5 /* Assets.xcassets */,
 				3674C96223B6DAA40076A0D5 /* LaunchScreen.storyboard */,
 				3674C96523B6DAA40076A0D5 /* Info.plist */,
@@ -349,8 +362,24 @@
 			children = (
 				36CDA2BD23B83383009EFF82 /* Foundation.framework */,
 				36CDA2BB23B8337B009EFF82 /* UIKit.framework */,
+				E304A0B8A9FD3B88B89E280D /* Pods_TFY_Bannerscroll.framework */,
+				23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */,
+				F29F625BEEF7898D1E210DE0 /* Pods_TFY_BannerscrollTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EF3015DDEC0CAC670FF1F4A7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8FF1D1DAABDE23FA9B8A5982 /* Pods-TFY_Bannerscroll.debug.xcconfig */,
+				4BB6E2B993E137D295E03E88 /* Pods-TFY_Bannerscroll.release.xcconfig */,
+				1DF16605C24348E72E6F6241 /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig */,
+				0FEB32499BF82F690EB88A3F /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig */,
+				C88FF06999D0B475FEF0F5C7 /* Pods-TFY_BannerscrollTests.debug.xcconfig */,
+				4686EBA8D031AD5EDB5761FF /* Pods-TFY_BannerscrollTests.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,9 +389,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3674C98023B6DAA40076A0D5 /* Build configuration list for PBXNativeTarget "TFY_Bannerscroll" */;
 			buildPhases = (
+				53CA580D03922C78885EFF92 /* [CP] Check Pods Manifest.lock */,
 				3674C94D23B6DAA20076A0D5 /* Sources */,
 				3674C94E23B6DAA20076A0D5 /* Frameworks */,
 				3674C94F23B6DAA20076A0D5 /* Resources */,
+				B5DC5FAFDD897110DF63A0F5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -377,6 +408,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3674C98323B6DAA40076A0D5 /* Build configuration list for PBXNativeTarget "TFY_BannerscrollTests" */;
 			buildPhases = (
+				EEBA020971085F861DA715F0 /* [CP] Check Pods Manifest.lock */,
 				3674C96823B6DAA40076A0D5 /* Sources */,
 				3674C96923B6DAA40076A0D5 /* Frameworks */,
 				3674C96A23B6DAA40076A0D5 /* Resources */,
@@ -395,9 +427,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3674C98623B6DAA40076A0D5 /* Build configuration list for PBXNativeTarget "TFY_BannerscrollUITests" */;
 			buildPhases = (
+				2A76ACD01FE108F742C6322D /* [CP] Check Pods Manifest.lock */,
 				3674C97323B6DAA40076A0D5 /* Sources */,
 				3674C97423B6DAA40076A0D5 /* Frameworks */,
 				3674C97523B6DAA40076A0D5 /* Resources */,
+				F906C92259D2A9E84984CCFC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -458,7 +492,6 @@
 			files = (
 				3674C96423B6DAA40076A0D5 /* LaunchScreen.storyboard in Resources */,
 				3674C96123B6DAA40076A0D5 /* Assets.xcassets in Resources */,
-				3674C95F23B6DAA20076A0D5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,6 +510,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2A76ACD01FE108F742C6322D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		53CA580D03922C78885EFF92 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TFY_Bannerscroll-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B5DC5FAFDD897110DF63A0F5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EEBA020971085F861DA715F0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TFY_BannerscrollTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F906C92259D2A9E84984CCFC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3674C94D23B6DAA20076A0D5 /* Sources */ = {
@@ -540,14 +676,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		3674C95D23B6DAA20076A0D5 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3674C95E23B6DAA20076A0D5 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		3674C96223B6DAA40076A0D5 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -609,7 +737,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -661,7 +789,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -671,6 +799,7 @@
 		};
 		3674C98123B6DAA40076A0D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FF1D1DAABDE23FA9B8A5982 /* Pods-TFY_Bannerscroll.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
@@ -694,6 +823,7 @@
 		};
 		3674C98223B6DAA40076A0D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BB6E2B993E137D295E03E88 /* Pods-TFY_Bannerscroll.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
@@ -717,6 +847,7 @@
 		};
 		3674C98423B6DAA40076A0D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C88FF06999D0B475FEF0F5C7 /* Pods-TFY_BannerscrollTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -737,6 +868,7 @@
 		};
 		3674C98523B6DAA40076A0D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4686EBA8D031AD5EDB5761FF /* Pods-TFY_BannerscrollTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -757,6 +889,7 @@
 		};
 		3674C98723B6DAA40076A0D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DF16605C24348E72E6F6241 /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RP2K7V42S5;
@@ -775,6 +908,7 @@
 		};
 		3674C98823B6DAA40076A0D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FEB32499BF82F690EB88A3F /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RP2K7V42S5;

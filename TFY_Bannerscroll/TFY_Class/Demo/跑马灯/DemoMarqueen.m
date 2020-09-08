@@ -27,7 +27,7 @@
       */
      TFY_BannerParam *param =  paramModel()
      .tfy_FrameSet(CGRectMake(10, BannerHeight/6, BannerWitdh-20, BannerHeight/4))
-     .tfy_dataSet([self getData])
+     .tfy_DataSet([self getData])
     //开启跑马灯
      .tfy_MarqueeSet(YES)
      //开启循环滚动
@@ -44,7 +44,7 @@
       */
      TFY_BannerParam *param1 =  paramModel()
      .tfy_FrameSet(CGRectMake(10, BannerHeight/2, BannerWitdh-20, BannerHeight/4))
-     .tfy_dataSet([self getData])
+     .tfy_DataSet([self getData])
 
     .tfy_CanFingerSlidingSet(NO)
     

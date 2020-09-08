@@ -25,7 +25,7 @@
      */
     TFY_BannerParam *param =  paramModel()
     .tfy_FrameSet(CGRectMake(0, BannerHeight/6, BannerWitdh, BannerWitdh/3))
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     //开启循环滚动
     .tfy_RepeatSet(YES)
     //设置item的间距
@@ -47,7 +47,7 @@
      */
     TFY_BannerParam *param1 =  paramModel()
     .tfy_FrameSet(CGRectMake(10, BannerHeight/2, BannerWitdh-20, BannerHeight/4))
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     //开启循环滚动
     .tfy_RepeatSet(YES)
     //开启自动滚动

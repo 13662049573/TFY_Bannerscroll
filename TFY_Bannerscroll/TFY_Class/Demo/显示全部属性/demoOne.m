@@ -123,7 +123,7 @@
     //左右偏移 让第一个和最后一个可以居中
     .tfy_SectionInsetSet(UIEdgeInsetsMake(0,BannerWitdh*0.25, 0, BannerWitdh*0.25))
     //数据源
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     ;
     
     self.viewOne = [[TFY_BannerView alloc]initConfigureWithModel:self.param withView:self.view];
@@ -132,7 +132,7 @@
 
 //更新数据
 - (void)updata{
-    self.param.tfy_dataSet(@[
+    self.param.tfy_DataSet(@[
 @{@"name":@"自定义文本11",@"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501052334&di=47c55150e39ee4e13f52c2a2d60e3249&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw800h450%2F20171207%2F9641-fypnsin6729109.jpg"},
 @{@"name":@"自定义文本22",@"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501100534&di=59ea2b526bd9050cd0e606be63ca1235&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn20110%2F82%2Fw1080h602%2F20191105%2F3093-ihyxcrp3886394.jpg"}
     ]);

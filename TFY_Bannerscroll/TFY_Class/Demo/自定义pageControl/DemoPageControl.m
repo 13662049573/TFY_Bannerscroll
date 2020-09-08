@@ -27,7 +27,7 @@
     .tfy_BannerControlColorSet([UIColor lightGrayColor])
     .tfy_BannerControlSelectColorSet([UIColor orangeColor])
     .tfy_FrameSet(CGRectMake(10, 100, BannerWitdh-20, BannerHeight/6))
-    .tfy_dataSet([self getData]);
+    .tfy_DataSet([self getData]);
     TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:viewOne];
 }
@@ -42,7 +42,7 @@
       .tfy_BannerControlSelectMarginSet(3)
       .tfy_BannerControlPositionSet(BannerControlRight)
       .tfy_FrameSet(CGRectMake(10, BannerHeight/3, BannerWitdh-20, BannerHeight/6))
-      .tfy_dataSet([self getData]);
+      .tfy_DataSet([self getData]);
     TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
       [self.view addSubview:viewOne];
 }
@@ -55,7 +55,7 @@
       .tfy_BannerControlImageSizeSet(CGSizeMake(14, 14))
       .tfy_BannerControlSelectImageSizeSet(CGSizeMake(14, 14))
       .tfy_BannerControlPositionSet(BannerControlLeft)
-      .tfy_dataSet([self getData]);
+      .tfy_DataSet([self getData]);
       TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
       [self.view addSubview:viewOne];
 }
@@ -74,7 +74,7 @@
           rect.origin.y =  10;
           pageControl.frame = rect;
       })
-      .tfy_dataSet([self getData]);
+      .tfy_DataSet([self getData]);
       TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
       [self.view addSubview:viewOne];
 }

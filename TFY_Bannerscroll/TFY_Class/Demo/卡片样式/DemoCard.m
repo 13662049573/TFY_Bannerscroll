@@ -35,7 +35,7 @@
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, 100, BannerWitdh, BannerHeight*0.2))
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     //关闭pageControl
     .tfy_HideBannerControlSet(YES)
     //开启缩放
@@ -72,7 +72,7 @@
        return cell;
    })
    .tfy_FrameSet(CGRectMake(0, BannerHeight*0.4, BannerWitdh, BannerHeight*0.2))
-   .tfy_dataSet([self getData])
+   .tfy_DataSet([self getData])
    //关闭pageControl
    .tfy_HideBannerControlSet(YES)
    //自定义item的大小
@@ -104,7 +104,7 @@
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, BannerHeight*0.7, BannerWitdh, BannerHeight*0.2))
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     //关闭pageControl
     .tfy_HideBannerControlSet(YES)
     //开启缩放

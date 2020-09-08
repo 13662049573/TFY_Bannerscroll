@@ -32,7 +32,7 @@
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, BannerHeight*0.3, BannerWitdh, BannerHeight*0.4))
-    .tfy_dataSet([self getData])
+    .tfy_DataSet([self getData])
     //关闭pageControl
     .tfy_HideBannerControlSet(YES)
     .tfy_SelectIndexSet(2)

@@ -1,0 +1,6 @@
+framework module Pods_TFY_Bannerscroll_TFY_BannerscrollUITests {
+  umbrella header "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -21,7 +21,7 @@ TFY_BannerParam *paramModel(void);
 
 /**数据源 必传*/
 @property(nonatomic,strong)NSArray  *tfy_data;
-- (TFY_BannerParam * (^) (NSArray *tfy_data))tfy_dataSet;
+- (TFY_BannerParam * (^) (NSArray *tfy_data))tfy_DataSet;
 
 /**开启缩放 default NO*/
 @property(nonatomic,assign)BOOL  tfy_Scale;

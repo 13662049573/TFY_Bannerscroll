@@ -50,7 +50,7 @@
         [cell.detailBtn setTitle:model[@"detail"] forState:UIControlStateNormal];
         return cell;
     })
-    .tfy_dataSet(data)
+    .tfy_DataSet(data)
     //关闭手指滑动
     .tfy_CanFingerSlidingSet(NO)
     .tfy_HideBannerControlSet(YES)
@@ -81,7 +81,7 @@
         cell.detailBtn.text = model[@"name"];
         return cell;
     })
-    .tfy_dataSet(data)
+    .tfy_DataSet(data)
     //关闭手指滑动
     .tfy_CanFingerSlidingSet(NO)
     .tfy_HideBannerControlSet(YES)
