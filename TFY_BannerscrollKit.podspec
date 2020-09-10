@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
   spec.name         = "TFY_BannerscrollKit"
   
-  spec.version      = "2.1.2"
+  spec.version      = "2.1.4"
 
   spec.summary      = "无限滚动视图，使用各种场景，如卡片，扇形，广告。。。"
 
@@ -20,7 +20,7 @@ Pod::Spec.new do |spec|
   
   spec.source       = { :git => "https://github.com/13662049573/TFY_Bannerscroll.git", :tag => spec.version}
 
-  spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_BannerscrollHeader.h","TFY_Bannerscroll/TFY_BannerscrollKit/**/*.{h,m}"
+  spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/**/*.{h,m}"
 
   spec.frameworks    = "Foundation","UIKit"
 
