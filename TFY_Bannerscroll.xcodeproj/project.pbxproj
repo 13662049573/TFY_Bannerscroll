@@ -85,7 +85,6 @@
 		3674C99A23B6E0D90076A0D5 /* TFY_BannerControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerControl.m; sourceTree = "<group>"; };
 		3674C99C23B6E1A00076A0D5 /* TFY_BannerParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerParam.h; sourceTree = "<group>"; };
 		3674C99D23B6E1A00076A0D5 /* TFY_BannerParam.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerParam.m; sourceTree = "<group>"; };
-		3674C99F23B6E97B0076A0D5 /* TFY_BannerscrollHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerscrollHeader.h; sourceTree = "<group>"; };
 		3674C9A023B708DE0076A0D5 /* TFY_BannerFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerFlowLayout.h; sourceTree = "<group>"; };
 		3674C9A123B708DE0076A0D5 /* TFY_BannerFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerFlowLayout.m; sourceTree = "<group>"; };
 		3674C9A323B70A300076A0D5 /* TFY_BannerOverLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerOverLayout.h; sourceTree = "<group>"; };
@@ -119,6 +118,7 @@
 		3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoPageControl.m; sourceTree = "<group>"; };
 		36CDA2BB23B8337B009EFF82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		36CDA2BD23B83383009EFF82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		36EE10F8250A0D7C00D24B3C /* TFY_BannerscrollKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerscrollKit.h; sourceTree = "<group>"; };
 		4686EBA8D031AD5EDB5761FF /* Pods-TFY_BannerscrollTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_BannerscrollTests.release.xcconfig"; path = "Target Support Files/Pods-TFY_BannerscrollTests/Pods-TFY_BannerscrollTests.release.xcconfig"; sourceTree = "<group>"; };
 		4BB6E2B993E137D295E03E88 /* Pods-TFY_Bannerscroll.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll.release.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll.release.xcconfig"; sourceTree = "<group>"; };
 		8FF1D1DAABDE23FA9B8A5982 /* Pods-TFY_Bannerscroll.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll.debug.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll.debug.xcconfig"; sourceTree = "<group>"; };
@@ -236,7 +236,7 @@
 		3674C99123B6DB200076A0D5 /* TFY_BannerscrollKit */ = {
 			isa = PBXGroup;
 			children = (
-				3674C99F23B6E97B0076A0D5 /* TFY_BannerscrollHeader.h */,
+				36EE10F8250A0D7C00D24B3C /* TFY_BannerscrollKit.h */,
 				3674C99823B6DFDB0076A0D5 /* TFY_BannerConfig.h */,
 				3674C99C23B6E1A00076A0D5 /* TFY_BannerParam.h */,
 				3674C99D23B6E1A00076A0D5 /* TFY_BannerParam.m */,
