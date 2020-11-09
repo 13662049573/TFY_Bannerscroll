@@ -9,10 +9,10 @@
 #ifndef TFY_PrefixHeader_pch
 #define TFY_PrefixHeader_pch
 
-#import <TFY_LayoutCategoryHeader.h>
+#import <TFY_LayoutCategoryKit.h>
 #import <TFY_Navigation.h>
-#import <TFY_PromptpopupHeader.h>
+#import <TFY_ProgressHMB.h>
 
-#import "TFY_BannerscrollHeader.h"
+#import "TFY_BannerscrollKit.h"
 
 #endif /* TFY_PrefixHeader_pch */
