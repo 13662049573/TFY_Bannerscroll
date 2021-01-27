@@ -24,57 +24,81 @@
 
 - (void)styleDefault{
     TFY_BannerParam *param =  paramModel()
-    .tfy_BannerControlColorSet([UIColor lightGrayColor])
-    .tfy_BannerControlSelectColorSet([UIColor orangeColor])
-    .tfy_FrameSet(CGRectMake(10, 100, BannerWitdh-20, BannerHeight/6))
-    .tfy_DataSet([self getData]);
+    .tfy_DataSet(@[@"01",@"02",@"03",@"04",@"05"])
+    .tfy_AutoScrollSet(YES)
+    .tfy_RepeatSet(YES)
+    .tfy_FrameSet(CGRectMake(10, 0, BannerWitdh-20, BannerHeight*0.2))
+    .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
+        pageControl.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.1];
+        pageControl.pageControlType = PageControlTypeCircle;
+        pageControl.pageSizeWidth = 15.0;
+        pageControl.pageSizeHeight = 15.0;
+        pageControl.pageIndicatorColor = [UIColor yellowColor];
+        pageControl.currentPageIndicatorColor = [UIColor redColor];
+        pageControl.transformScale = 1.5;
+        pageControl.showPageNumber = YES;
+        pageControl.pageNumberColor = [UIColor blackColor];
+        pageControl.pageNumberFont = [UIFont systemFontOfSize:8.0];
+        pageControl.currentPageNumberColor = [UIColor yellowColor];
+        pageControl.currentPageNumberFont = [UIFont boldSystemFontOfSize:9.0];
+    });
     TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:viewOne];
+   
 }
 
 - (void)styleOne{
       TFY_BannerParam *param =  paramModel()
-      .tfy_BannerControlImageSet(@"bannerP1")
-      .tfy_BannerControlSelectImageSet(@"bannerP2")
-      .tfy_BannerControlImageSizeSet(CGSizeMake(8, 20))
-      .tfy_BannerControlSelectImageSizeSet(CGSizeMake(20, 20))
-       //调整间距
-      .tfy_BannerControlSelectMarginSet(3)
-      .tfy_BannerControlPositionSet(BannerControlRight)
-      .tfy_FrameSet(CGRectMake(10, BannerHeight/3, BannerWitdh-20, BannerHeight/6))
-      .tfy_DataSet([self getData]);
+      .tfy_FrameSet(CGRectMake(10, BannerHeight*0.2 + 10, BannerWitdh-20, BannerHeight*0.2))
+      .tfy_DataSet([self getData])
+    .tfy_AutoScrollSet(YES)
+    .tfy_RepeatSet(YES)
+    .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
+        pageControl.pageControlType = PageControlTypeLine;
+        pageControl.pageMargin = 3.0;
+        pageControl.pageIndicatorColor = [UIColor orangeColor];
+        pageControl.currentPageIndicatorColor = [UIColor blackColor];
+    });
     TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
       [self.view addSubview:viewOne];
+   
 }
 
 - (void)styleTwo{
       TFY_BannerParam *param =  paramModel()
-      .tfy_FrameSet(CGRectMake(10, BannerHeight/2+20, BannerWitdh-20, BannerHeight/6))
-      .tfy_BannerControlImageSet(@"bannerP3")
-      .tfy_BannerControlSelectImageSet(@"bannerP4")
-      .tfy_BannerControlImageSizeSet(CGSizeMake(14, 14))
-      .tfy_BannerControlSelectImageSizeSet(CGSizeMake(14, 14))
-      .tfy_BannerControlPositionSet(BannerControlLeft)
-      .tfy_DataSet([self getData]);
+      .tfy_FrameSet(CGRectMake(10,BannerHeight*0.4 + 20, BannerWitdh-20, BannerHeight*0.2))
+      .tfy_DataSet([self getData])
+    .tfy_AutoScrollSet(YES)
+    .tfy_RepeatSet(YES)
+    .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
+        pageControl.pageControlType = PageControlTypeImage;
+        pageControl.pageMargin = 5.0;
+        pageControl.pageSizeWidth = 20.0;
+        pageControl.pageSizeHeight = 20.0;
+        pageControl.shouldAutoresizingImage = YES;
+        pageControl.pageIndicatorImage = [UIImage imageNamed:@"a"];
+        pageControl.currentPageIndicatorImage = [UIImage imageNamed:@"a-h"];
+        pageControl.transformScale = 1.2;
+    });
       TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
       [self.view addSubview:viewOne];
+   
 }
 
 - (void)styleThree{
       TFY_BannerParam *param =  paramModel()
-      .tfy_FrameSet(CGRectMake(10, BannerHeight*0.7+20, BannerWitdh-20, BannerHeight/6))
-      .tfy_BannerControlImageSet(@"bannerP3")
-      .tfy_BannerControlSelectImageSet(@"bannerP2")
-      .tfy_BannerControlImageSizeSet(CGSizeMake(10, 10))
-      .tfy_BannerControlSelectImageSizeSet(CGSizeMake(30, 30))
-      //自定义pageControl的位置
-      .tfy_CustomControlSet(^(UIPageControl *pageControl) {
-          //随意改变xy值
-          CGRect rect = pageControl.frame;
-          rect.origin.y =  10;
-          pageControl.frame = rect;
-      })
-      .tfy_DataSet([self getData]);
+      .tfy_FrameSet(CGRectMake(10, BannerHeight*0.6 + 30, BannerWitdh-20,BannerHeight*0.2))
+      .tfy_DataSet([self getData])
+    .tfy_AutoScrollSet(YES)
+    .tfy_RepeatSet(YES)
+    .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
+        pageControl.pageIndicatorColor = [UIColor greenColor];
+        pageControl.currentPageIndicatorColor = [UIColor purpleColor];
+        pageControl.pageSizeWidth = 10.0;
+        pageControl.pageSizeHeight = 10.0;
+        pageControl.transformScale = 1.5;
+        pageControl.pageControlAlignment = PageControlAlignmentRight;
+    });
       TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
       [self.view addSubview:viewOne];
 }

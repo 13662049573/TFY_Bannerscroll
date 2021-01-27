@@ -12,6 +12,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIImageView+Bannerscroll.h"
+#import "TFY_BannerPageControl.h"
 
 #define BannerWitdh  [UIScreen mainScreen].bounds.size.width
 #define BannerHeight [UIScreen mainScreen].bounds.size.height
@@ -42,7 +43,7 @@ typedef UICollectionViewCell* (^BannerCellCallBlock)(NSIndexPath *indexPath,UICo
 typedef void (^BannerClickBlock)(id anyID,NSInteger index);
 
 /** 自定义pageControl*/
-typedef void (^BannerPageControl)(UIPageControl* pageControl);
+typedef void (^BannerPageControl)(TFY_BannerPageControl* pageControl);
 
 /** 点击 ,可获取居中cell*/
 typedef void (^BannerCenterClickBlock)(id anyID,NSInteger index,BOOL isCenter,UICollectionViewCell* cell);
@@ -55,12 +56,5 @@ typedef enum :NSInteger{
     BannerCellPositionCenter      = 0,             //居中 默认
     BannerCellPositionBottom      = 1,             //置底
 }BannerCellPosition;
-
-/**pageControl的位置*/
-typedef enum :NSInteger{
-    BannerControlCenter      = 0,             //居中 默认
-    BannerControlLeft        = 1,             //左下
-    BannerControlRight       = 2,             //右下
-}BannerControlPosition;
 
 #endif /* TFY_BannerConfig_h */

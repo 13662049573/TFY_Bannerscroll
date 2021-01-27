@@ -9,7 +9,8 @@
 #import "TFY_BannerView.h"
 #import "TFY_BannerFlowLayout.h"
 #import "TFY_BannerOverLayout.h"
-#import "TFY_BannerControl.h"
+#import "TFY_BannerPageControl.h"
+
 #define COUNT 500
 
 @interface TFY_BannerView ()<UICollectionViewDelegate,UICollectionViewDataSource>{
@@ -17,7 +18,7 @@
 }
 @property(strong,nonatomic)UICollectionView *myCollectionV;
 @property(strong,nonatomic)UICollectionViewFlowLayout *flowL ;
-@property(strong,nonatomic)TFY_BannerControl *bannerControl ;
+@property(strong,nonatomic)TFY_BannerPageControl *bannerControl ;
 @property(strong,nonatomic)NSArray *data;
 @property(strong,nonatomic)TFY_BannerParam *param;
 @property(strong,nonatomic)NSTimer *timer;
@@ -33,7 +34,7 @@
             [parentView addSubview:self];
         }
         [self setFrame:self.param.tfy_Frame];
-        self.data = [NSArray arrayWithArray:self.param.tfy_data];
+        self.data = [NSArray arrayWithArray:self.param.tfy_Data];
         [self setUp];
     }
     return self;
@@ -47,7 +48,7 @@
     if (self = [super init]) {
         self.param = param;
         [self setFrame:self.param.tfy_Frame];
-        self.data = [NSArray arrayWithArray:self.param.tfy_data];
+        self.data = [NSArray arrayWithArray:self.param.tfy_Data];
         [self setUp];
     }
     return self;
@@ -58,14 +59,14 @@
     [super layoutSubviews];
     
     self.myCollectionV.frame = self.bounds;
-    self.bgImgView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*self.param.tfy_EffectHeight);
+    self.bgImgView.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight);
     self.effectView.frame = self.bgImgView.frame;
     
     [self layoutIfNeeded];
 }
 
 - (void)updateUI{
-    self.data = [NSArray arrayWithArray:self.param.tfy_data];
+    self.data = [NSArray arrayWithArray:self.param.tfy_Data];
     [self resetCollection];
 }
 
@@ -125,13 +126,13 @@
     }
     
     if (self.param.tfy_ItemSize.height == 0 || self.param.tfy_ItemSize.width == 0 ) {
-        self.param.tfy_ItemSize = CGSizeMake(self.frame.size.width, self.frame.size.height);
+        self.param.tfy_ItemSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
     }
 
-    else if(self.param.tfy_ItemSize.height>self.frame.size.height){
-        self.param.tfy_ItemSize = CGSizeMake(self.param.tfy_ItemSize.width, self.frame.size.height);
-    }else if(self.param.tfy_ItemSize.width>self.frame.size.width){
-        self.param.tfy_ItemSize = CGSizeMake(self.frame.size.width, self.param.tfy_ItemSize.height);
+    else if(self.param.tfy_ItemSize.height>CGRectGetHeight(self.frame)){
+        self.param.tfy_ItemSize = CGSizeMake(self.param.tfy_ItemSize.width, CGRectGetHeight(self.frame));
+    }else if(self.param.tfy_ItemSize.width>CGRectGetWidth(self.frame)){
+        self.param.tfy_ItemSize = CGSizeMake(CGRectGetWidth(self.frame), self.param.tfy_ItemSize.height);
     }
     
     
@@ -153,12 +154,13 @@
         [self.myCollectionV registerClass:NSClassFromString(self.param.tfy_MyCellClassName) forCellWithReuseIdentifier:self.param.tfy_MyCellClassName];
     }
     self.myCollectionV.frame = self.bounds;
-    self.myCollectionV.pagingEnabled = (self.param.tfy_ItemSize.width == self.myCollectionV.frame.size.width && self.param.tfy_LineSpacing == 0)||self.param.tfy_Vertical;
+    self.myCollectionV.pagingEnabled = (self.param.tfy_ItemSize.width == CGRectGetWidth(self.myCollectionV.frame) && self.param.tfy_LineSpacing == 0)||self.param.tfy_Vertical;
     if ([self.myCollectionV isPagingEnabled]) {
         self.myCollectionV.decelerationRate = UIScrollViewDecelerationRateNormal;
     }
     
-    self.bannerControl = [[TFY_BannerControl alloc]initWithFrame:CGRectMake((self.bounds.size.width - 80)/2 , self.bounds.size.height - 30,80, 30) WithModel:self.param];
+   
+    self.bannerControl = [[TFY_BannerPageControl alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.frame) - 30, CGRectGetWidth(self.frame)-20, 30)];
     if (self.param.tfy_CustomControl) {
         self.param.tfy_CustomControl(self.bannerControl);
     }
@@ -166,8 +168,7 @@
         [self addSubview:self.bannerControl];
     }
     
-    
-    self.bgImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height*self.param.tfy_EffectHeight)];
+    self.bgImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight)];
     [self addSubview:self.bgImgView];
     [self sendSubviewToBack:self.bgImgView];
     self.bgImgView.hidden = !self.param.tfy_Effect;
@@ -276,8 +277,8 @@
     if (self.data.count==0) return;
     if (self.param.tfy_CardOverLap) {
          [self.myCollectionV setContentOffset: self.param.tfy_Vertical?
-          CGPointMake(0, path.row *self.myCollectionV.bounds.size.height):
-          CGPointMake(path.row *self.myCollectionV.bounds.size.width, 0)
+          CGPointMake(0, path.row *CGRectGetHeight(self.myCollectionV.frame)):
+          CGPointMake(path.row *CGRectGetWidth(self.myCollectionV.frame), 0)
                                      animated:animated];
 
     }else{
@@ -292,9 +293,9 @@
     
     if ([self.myCollectionV isPagingEnabled]||self.param.tfy_CardOverLap) return;
     if(self.param.tfy_ContentOffsetX>0.5){
-        self.myCollectionV.contentOffset = CGPointMake(self.myCollectionV.contentOffset.x-(self.param.tfy_ContentOffsetX-0.5)*self.myCollectionV.frame.size.width, self.myCollectionV.contentOffset.y);
+        self.myCollectionV.contentOffset = CGPointMake(self.myCollectionV.contentOffset.x-(self.param.tfy_ContentOffsetX-0.5)*CGRectGetWidth(self.myCollectionV.frame), self.myCollectionV.contentOffset.y);
     }else if(self.param.tfy_ContentOffsetX<0.5){
-        self.myCollectionV.contentOffset = CGPointMake(self.myCollectionV.contentOffset.x+self.myCollectionV.frame.size.width *(0.5-self.param.tfy_ContentOffsetX), self.myCollectionV.contentOffset.y);
+        self.myCollectionV.contentOffset = CGPointMake(self.myCollectionV.contentOffset.x+CGRectGetWidth(self.myCollectionV.frame) *(0.5-self.param.tfy_ContentOffsetX), self.myCollectionV.contentOffset.y);
     }
 }
 
@@ -445,13 +446,6 @@
     return _myCollectionV;
 }
 
-- (TFY_BannerControl *)bannerControl{
-    if (!_bannerControl) {
-        _bannerControl = [[TFY_BannerControl alloc]initWithFrame:CGRectZero WithModel:_param];
-    }
-    return _bannerControl;
-}
-
 - (void)dealloc{
     //单纯调用这里无法消除定时器
     [self cancelTimer];
@@ -470,8 +464,8 @@
 @end
 
 @implementation Collectioncell
--(instancetype)initWithFrame:(CGRect)frame
-{
+
+-(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self){
         self.icon = [UIImageView new];
@@ -491,8 +485,8 @@
 @end
 
 @implementation CollectionTextCell
--(instancetype)initWithFrame:(CGRect)frame
-{
+
+-(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self){
         self.contentView.backgroundColor = [UIColor whiteColor];
@@ -500,7 +494,7 @@
         self.label.font = [UIFont systemFontOfSize:17.0];
         self.label.textColor = [UIColor redColor];
         [self.contentView addSubview:self.label];
-        self.label.frame = CGRectMake(10, 0, frame.size.width-20, frame.size.height);
+        self.label.frame = CGRectMake(10, 0, CGRectGetWidth(frame)-20, CGRectGetHeight(frame));
     }
     return self;
 }

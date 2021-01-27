@@ -32,8 +32,19 @@
     BannerWeakSelf(self);
     self.param =paramModel()
     //自定义pageControl的位置
-    .tfy_CustomControlSet(^(UIPageControl *pageControl) {
-        
+    .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
+        pageControl.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.1];
+        pageControl.pageControlType = PageControlTypeCircle;
+        pageControl.pageSizeWidth = 15.0;
+        pageControl.pageSizeHeight = 15.0;
+        pageControl.pageIndicatorColor = [UIColor yellowColor];
+        pageControl.currentPageIndicatorColor = [UIColor redColor];
+        pageControl.transformScale = 1.5;
+        pageControl.showPageNumber = YES;
+        pageControl.pageNumberColor = [UIColor blackColor];
+        pageControl.pageNumberFont = [UIFont systemFontOfSize:8.0];
+        pageControl.currentPageNumberColor = [UIColor yellowColor];
+        pageControl.currentPageNumberFont = [UIFont boldSystemFontOfSize:9.0];
     })
     //自定义视图必传
     .tfy_MyCellClassNameSet(@"MyCell")
@@ -88,22 +99,6 @@
     .tfy_CardOverLapSet(NO)
     //cell的位置
     .tfy_PositionSet(BannerCellPositionCenter)
-    //分页按钮的选中的颜色
-    .tfy_BannerControlSelectColorSet([UIColor whiteColor])
-    //分页按钮的未选中的颜色
-    .tfy_BannerControlColorSet([UIColor cyanColor])
-    //分页按钮的未选中的图片
-    .tfy_BannerControlImageSet(@"slideCirclePoint")
-    //分页按钮的选中的图片
-    .tfy_BannerControlSelectImageSet(@"slidePoint")
-    //分页按钮的未选中图片的size
-    .tfy_BannerControlImageSizeSet(CGSizeMake(10, 10))
-    //分页按钮选中的图片的size
-    .tfy_BannerControlSelectImageSizeSet(CGSizeMake(15, 10))
-    //分页按钮的圆角
-    .tfy_BannerControlImageRadiusSet(5)
-    //自定义圆点间距
-    .tfy_BannerControlSelectMarginSet(3)
     //隐藏分页按钮
     .tfy_HideBannerControlSet(NO)
     //能否拖动
@@ -118,13 +113,10 @@
     .tfy_MarqueeRateSet(5)
     //开启纵向
     .tfy_VerticalSet(NO)
-    //分页按钮的位置
-    .tfy_BannerControlPositionSet(BannerControlCenter)
     //左右偏移 让第一个和最后一个可以居中
     .tfy_SectionInsetSet(UIEdgeInsetsMake(0,BannerWitdh*0.25, 0, BannerWitdh*0.25))
     //数据源
-    .tfy_DataSet([self getData])
-    ;
+    .tfy_DataSet([self getData]);
     
     self.viewOne = [[TFY_BannerView alloc]initConfigureWithModel:self.param withView:self.view];
 }
