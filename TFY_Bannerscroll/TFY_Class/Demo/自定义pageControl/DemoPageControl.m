@@ -27,6 +27,7 @@
     .tfy_DataSet(@[@"01",@"02",@"03",@"04",@"05"])
     .tfy_AutoScrollSet(YES)
     .tfy_RepeatSet(YES)
+    .tfy_AutoScrollSecondSet(1)
     .tfy_FrameSet(CGRectMake(10, 0, BannerWitdh-20, BannerHeight*0.2))
     .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
         pageControl.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.1];
@@ -53,6 +54,7 @@
       .tfy_DataSet([self getData])
     .tfy_AutoScrollSet(YES)
     .tfy_RepeatSet(YES)
+    .tfy_AutoScrollSecondSet(2)
     .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
         pageControl.pageControlType = PageControlTypeLine;
         pageControl.pageMargin = 3.0;
@@ -70,6 +72,7 @@
       .tfy_DataSet([self getData])
     .tfy_AutoScrollSet(YES)
     .tfy_RepeatSet(YES)
+    .tfy_AutoScrollSecondSet(3)
     .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
         pageControl.pageControlType = PageControlTypeImage;
         pageControl.pageMargin = 5.0;
@@ -91,6 +94,7 @@
       .tfy_DataSet([self getData])
     .tfy_AutoScrollSet(YES)
     .tfy_RepeatSet(YES)
+    .tfy_AutoScrollSecondSet(4)
     .tfy_CustomControlSet(^(TFY_BannerPageControl *pageControl) {
         pageControl.pageIndicatorColor = [UIColor greenColor];
         pageControl.currentPageIndicatorColor = [UIColor purpleColor];

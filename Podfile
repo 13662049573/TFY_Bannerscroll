@@ -6,7 +6,7 @@ target 'TFY_Bannerscroll' do
   pod 'TFY_LayoutCategoryKit'
   pod 'TFY_ProgressHUD'
   pod 'TFY_Navigation'
-
+  
   # Pods for TFY_Bannerscroll
 
   target 'TFY_BannerscrollTests' do

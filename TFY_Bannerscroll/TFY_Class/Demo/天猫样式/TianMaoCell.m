@@ -11,8 +11,10 @@
 //
 
 #import "TianMaoCell.h"
+#import "marqueCell.h"
 
 @implementation TianMaoCell
+
 -(instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -37,6 +39,39 @@
         self.topLa.textColor = [UIColor whiteColor];
         [self.backImage addSubview:self.topLa];
         self.topLa.backgroundColor = BannerColor(0x035eef);
+        
+        NSArray *data = @[
+            @{@"name":@"五千万人都在玩的天猫农场",@"detail":@"快去领取>>"},
+            @{@"name":@"主人,你的阳光要被偷啦",@"detail":@"快去领取>>"},
+            @{@"name":@"免费兑换水果",@"detail":@"立即领取>>"},
+            @{@"name":@"免费兑换红包",@"detail":@"快去领取>>"},
+        ];
+        
+        TFY_BannerParam *param =  paramModel()
+        .tfy_FrameSet(CGRectMake(0,CGRectGetHeight(self.topLa.frame)+10, CGRectGetWidth(self.backImage.frame), 50))
+        .tfy_MyCellClassNameSet(@"marqueCell")
+        .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
+                   //自定义视图
+            marqueCell *cell = (marqueCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([marqueCell class]) forIndexPath:indexPath];
+            cell.label.text = model[@"name"];
+            [cell.detailBtn setTitle:model[@"detail"] forState:UIControlStateNormal];
+            return cell;
+        })
+        .tfy_DataSet(data)
+        //关闭手指滑动
+        .tfy_CanFingerSlidingSet(NO)
+        .tfy_HideBannerControlSet(YES)
+        //开启循环滚动
+        .tfy_RepeatSet(YES)
+        .tfy_AutoScrollSecondSet(1)
+        //开启自动滚动
+        .tfy_AutoScrollSet(YES)
+        .tfy_VerticalSet(YES);
+        TFY_BannerView *viewMarque = [[TFY_BannerView alloc]initConfigureWithModel:param];
+        [self.backImage addSubview:viewMarque];
+        
+        
+        
         
         self.titleLa = [UILabel new];
         self.titleLa.text = @"“天猫精灵,每天晚安闹钟”";
@@ -73,5 +108,7 @@
     }
     return self;
 }
+
+
 
 @end
