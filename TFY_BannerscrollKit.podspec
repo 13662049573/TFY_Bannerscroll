@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
   spec.name         = "TFY_BannerscrollKit"
   
-  spec.version      = "2.1.8"
+  spec.version      = "2.2.0"
 
   spec.summary      = "无限滚动视图，使用各种场景，如卡片，扇形，广告。。。"
 
@@ -14,7 +14,7 @@ Pod::Spec.new do |spec|
   
   spec.license      = "MIT"
  
-  spec.platform     = :ios, "10.0"
+  spec.platform     = :ios, "12.0"
 
   spec.author       = { "tfyzxc13662049573" => "420144542@qq.com" }
   
