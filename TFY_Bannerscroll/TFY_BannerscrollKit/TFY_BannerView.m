@@ -161,6 +161,7 @@
     
    
     self.bannerControl = [[TFY_BannerPageControl alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.frame) - 30, CGRectGetWidth(self.frame)-20, 30)];
+    self.bannerControl.pageControlType = PageControlTypeCircle;
     if (self.param.tfy_CustomControl) {
         self.param.tfy_CustomControl(self.bannerControl);
     }

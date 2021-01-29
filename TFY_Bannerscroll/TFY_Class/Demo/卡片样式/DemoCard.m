@@ -34,7 +34,7 @@
         [cell.icon tfy_BannerImage:[NSURL URLWithString:model[@"icon"]]];
         return cell;
     })
-    .tfy_FrameSet(CGRectMake(0, 100, BannerWitdh, BannerHeight*0.2))
+    .tfy_FrameSet(CGRectMake(0, 40, BannerWitdh, BannerHeight*0.2))
     .tfy_DataSet([self getData])
     //关闭pageControl
     .tfy_HideBannerControlSet(YES)
@@ -54,8 +54,8 @@
     .tfy_LineSpacingSet(20)
     //开启背景毛玻璃
     .tfy_EffectSet(YES)
+    .tfy_PositionSet(BannerCellPositionBottom);
     
-    ;
     TFY_BannerView *bannerView = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:bannerView];
 }
@@ -71,7 +71,7 @@
        [cell.icon tfy_BannerImage:[NSURL URLWithString:model[@"icon"]]];
        return cell;
    })
-   .tfy_FrameSet(CGRectMake(0, BannerHeight*0.4, BannerWitdh, BannerHeight*0.2))
+   .tfy_FrameSet(CGRectMake(0, BannerHeight*0.2+70, BannerWitdh, BannerHeight*0.2))
    .tfy_DataSet([self getData])
    //关闭pageControl
    .tfy_HideBannerControlSet(YES)
@@ -79,6 +79,7 @@
    .tfy_ItemSizeSet(CGSizeMake(BannerWitdh*0.55, BannerHeight*0.2))
    //固定移动的距离
    .tfy_ContentOffsetXSet(0.5)
+    .tfy_AutoScrollSecondSet(4)
    //自动滚动
    .tfy_AutoScrollSet(YES)
     //循环
@@ -103,18 +104,20 @@
         [cell.icon tfy_BannerImage:[NSURL URLWithString:model[@"icon"]]];
         return cell;
     })
-    .tfy_FrameSet(CGRectMake(0, BannerHeight*0.7, BannerWitdh, BannerHeight*0.2))
+    .tfy_FrameSet(CGRectMake(0, BannerHeight*0.5, BannerWitdh, BannerHeight*0.2))
     .tfy_DataSet([self getData])
     //关闭pageControl
     .tfy_HideBannerControlSet(YES)
     //开启缩放
     .tfy_ScaleSet(YES)
+    .tfy_AutoScrollSecondSet(5)
     //自定义item的大小
     .tfy_ItemSizeSet(CGSizeMake(BannerWitdh*0.2-10, BannerHeight*0.2))
     //固定移动的距离
     .tfy_ContentOffsetXSet(0.5)
      //循环
      .tfy_RepeatSet(YES)
+    .tfy_AutoScrollSet(YES)
     //整体左右间距  设置为size.width的一半 让最后一个可以居中
     .tfy_SectionInsetSet(UIEdgeInsetsMake(0,10, 0, BannerWitdh*0.55*0.3))
     //间距

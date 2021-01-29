@@ -21,10 +21,10 @@ typedef NS_ENUM(NSInteger, PageControlAlignment) {
 
 /// 页码样式，默认PageControlTypeSquare
 typedef NS_ENUM(NSInteger, PageControlType) {
-    PageControlTypeSquare = 0,
-    PageControlTypeCircle = 1,
-    PageControlTypeLine = 2,
-    PageControlTypeImage = 3,
+    PageControlTypeSquare = 0,//正方形
+    PageControlTypeCircle = 1,//圆点
+    PageControlTypeLine = 2,//线条型
+    PageControlTypeImage = 3,//图片设置，需要自己定义
 };
 
 

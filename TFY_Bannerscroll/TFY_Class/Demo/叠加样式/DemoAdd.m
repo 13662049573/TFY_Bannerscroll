@@ -24,7 +24,7 @@
      *横向
      */
     TFY_BannerParam *param =  paramModel()
-    .tfy_FrameSet(CGRectMake(10,100, BannerWitdh-20, BannerHeight*0.35))
+    .tfy_FrameSet(CGRectMake(0,60, BannerWitdh, BannerHeight*0.35))
     .tfy_ItemSizeSet(CGSizeMake(BannerWitdh-60, BannerHeight*0.25))
     .tfy_DataSet([self getData])
     //设置item的间距
