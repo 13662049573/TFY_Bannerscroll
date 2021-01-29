@@ -164,26 +164,16 @@ const char* jailbreak_tool_pathes[] = {
 
 - (NetworkStatus)networkStatusForFlags:(SCNetworkReachabilityFlags)flags{
     PrintReachabilityFlags(flags, "networkStatusForFlags");
-    if ((flags & kSCNetworkReachabilityFlagsReachable) == 0)
-    {
-        return NotReachable;
-    }
+    if ((flags & kSCNetworkReachabilityFlagsReachable) == 0){return NotReachable;}
     NetworkStatus returnValue = NotReachable;
-    
-    if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0)
-    {
-        returnValue = ReachableViaWiFi;
-    }
+    if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0) {returnValue = ReachableViaWiFi;}
     if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) ||
-         (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0))
-    {
-        
-        if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0)
-        {
+         (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0)) {
+        if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0) {
             returnValue = ReachableViaWiFi;
         }
     }
-    if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN){
+    if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN) {
         returnValue = ReachableViaWWAN;
     }
     return returnValue;
@@ -236,11 +226,13 @@ const char* jailbreak_tool_pathes[] = {
 //针对蜂窝网络判断是3G或者4G
 +(NSString *)getNetType{
     __block NSString *netconnType = nil;
-    NSArray *typeStrings2G = @[CTRadioAccessTechnologyEdge,
+    NSArray *typeStrings2G = @[
+            CTRadioAccessTechnologyEdge,
             CTRadioAccessTechnologyGPRS,
             CTRadioAccessTechnologyCDMA1x];
       
-     NSArray *typeStrings3G = @[CTRadioAccessTechnologyHSDPA,
+     NSArray *typeStrings3G = @[
+            CTRadioAccessTechnologyHSDPA,
             CTRadioAccessTechnologyWCDMA,
             CTRadioAccessTechnologyHSUPA,
             CTRadioAccessTechnologyCDMAEVDORev0,
@@ -248,30 +240,29 @@ const char* jailbreak_tool_pathes[] = {
             CTRadioAccessTechnologyCDMAEVDORevB,
             CTRadioAccessTechnologyeHRPD];
       
-     NSArray *typeStrings4G = @[CTRadioAccessTechnologyLTE];
-    
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
-        CTTelephonyNetworkInfo *teleInfo= [[CTTelephonyNetworkInfo alloc] init];
-        if (@available(iOS 12.0, *)) {
-            NSDictionary<NSString *, NSString *> *currentStatus = teleInfo.serviceCurrentRadioAccessTechnology;
-            if (currentStatus.allKeys.count==0) {
+    NSArray *typeStrings4G = @[CTRadioAccessTechnologyLTE];
+    NSArray *typeStrings5G;
+    if (@available(iOS 14.0, *)) {
+        typeStrings5G = @[CTRadioAccessTechnologyNRNSA,
+                          CTRadioAccessTechnologyNR];
+    }
+    CTTelephonyNetworkInfo *teleInfo= [[CTTelephonyNetworkInfo alloc] init];
+    if (@available(iOS 12.0, *)) {
+        NSDictionary<NSString *, NSString *> *currentStatus = teleInfo.serviceCurrentRadioAccessTechnology;
+        if (currentStatus.allKeys.count==0) {netconnType = @"未知";}
+        [currentStatus enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+            if ([typeStrings4G containsObject:obj]) {
+                netconnType = @"4G";
+            } else if ([typeStrings3G containsObject:obj]) {
+                netconnType = @"3G";
+            } else if ([typeStrings2G containsObject:obj]) {
+                netconnType = @"2G";
+            } else if ([typeStrings5G containsObject:obj]) {
+                netconnType = @"5G";
+            } else {
                 netconnType = @"未知";
             }
-            [currentStatus enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-                if ([typeStrings4G containsObject:obj]) {
-                    netconnType = @"4G";
-                } else if ([typeStrings3G containsObject:obj]) {
-                    netconnType = @"3G";
-                } else if ([typeStrings2G containsObject:obj]) {
-                    netconnType = @"2G";
-                } else {
-                    netconnType = @"未知";
-                }
-            }];
-        }
-    }
-    else {
-       netconnType = @"未知";
+        }];
     }
     return netconnType;
 }
@@ -2659,12 +2650,10 @@ const char* jailbreak_tool_pathes[] = {
 /**
  *   归档
  */
-+ (void)keyedArchiverObject:(id)object ForKey:(NSString *)key ToFile:(NSString *)path{
-    NSMutableData *md=[NSMutableData data];
-    NSKeyedArchiver *arch=[[NSKeyedArchiver alloc]initForWritingWithMutableData:md];
-    [arch encodeObject:object forKey:key];
-    [arch finishEncoding];
-    [md writeToFile:path atomically:YES];
++ (void)keyedArchiverObject:(id)object ToFile:(NSString *)path{
+    NSError * error;
+    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:object requiringSecureCoding:YES error:&error];
+    [data writeToFile:path atomically:YES];
 }
 static CGRect oldframe;
 /**
@@ -2706,18 +2695,16 @@ static CGRect oldframe;
 /**
  *  反归档
  */
-+(NSArray *)keyedUnArchiverForKey:(NSString *)key FromFile:(NSString *)path{
++(id)keyedUnArchiverForKey:(id)object FromFile:(NSString *)path{
     NSError *error=nil;
-    NSData *data=[NSData dataWithContentsOfFile:path];
-    NSArray *arr;
-    if (@available(iOS 11.0, *)) {
-        NSKeyedUnarchiver *unArch=[[NSKeyedUnarchiver alloc] initForReadingFromData:data error:&error];
-        arr = [unArch decodeObjectForKey:key];
+    NSData * unData = [NSData dataWithContentsOfFile:path];
+    id unarch;
+    if (@available(iOS 14.0, *)) {
+        unarch = [NSKeyedUnarchiver unarchivedArrayOfObjectsOfClass:object fromData:unData error:&error];
     } else {
-        NSKeyedUnarchiver *unArch=[[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        arr = [unArch decodeObjectForKey:key];
+        unarch = [NSKeyedUnarchiver unarchivedObjectOfClass:object fromData:unData error:&error];
     }
-    return arr;
+    return unarch;
 }
 
 /**

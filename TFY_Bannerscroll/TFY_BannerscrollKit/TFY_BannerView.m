@@ -304,8 +304,9 @@
 - (void)createTimer{
     if (!self.timer) {
         SEL sel = NSSelectorFromString(self.param.tfy_Marquee?@"autoMarqueenScrollAction":@"autoScrollAction");
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:self.param.tfy_AutoScrollSecond  target:self selector:sel userInfo:nil repeats:YES];
-        [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+        NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.param.tfy_AutoScrollSecond  target:self selector:sel userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        self.timer = timer;
     }
 }
 
