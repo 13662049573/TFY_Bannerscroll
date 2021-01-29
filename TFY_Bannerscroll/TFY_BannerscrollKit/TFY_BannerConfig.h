@@ -14,6 +14,8 @@
 #import "UIImageView+Bannerscroll.h"
 #import "TFY_BannerPageControl.h"
 
+@class TFY_BannerParam;
+
 #define BannerWitdh  [UIScreen mainScreen].bounds.size.width
 #define BannerHeight [UIScreen mainScreen].bounds.size.height
 
