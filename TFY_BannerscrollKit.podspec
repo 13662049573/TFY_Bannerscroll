@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
   spec.name         = "TFY_BannerscrollKit"
   
-  spec.version      = "2.2.2"
+  spec.version      = "2.2.4"
 
   spec.summary      = "无限滚动视图，使用各种场景，如卡片，扇形，广告。。。"
 
@@ -20,11 +20,18 @@ Pod::Spec.new do |spec|
   
   spec.source       = { :git => "https://github.com/13662049573/TFY_Bannerscroll.git", :tag => spec.version}
 
-  spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/**/*.{h,m}"
+  spec.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_BannerscrollKit.h"
 
-  spec.frameworks    = "Foundation","UIKit"
+  spec.subspec 'TFY_BannerView' do |s_s|
+    s_s.dependency "TFY_BannerscrollKit/TFY_ITools"
+    s_s.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_BannerView/**/*.{h,m}"
+  end
 
-  spec.xcconfig      = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include" }
+  spec.subspec 'TFY_ITools' do |s_s|
+    s_s.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_ITools/**/*.{h,m}"
+  end
+
+  spec.dependency 'SDWebImage/GIF'
 
   spec.requires_arc = true
   
