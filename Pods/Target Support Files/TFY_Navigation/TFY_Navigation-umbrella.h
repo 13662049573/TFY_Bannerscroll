@@ -16,6 +16,7 @@
 #import "TFYDelegateHandler.h"
 #import "TFYPopTransitionAnimation.h"
 #import "TFYPushTransitionAnimation.h"
+#import "TFY_Category.h"
 #import "UIBarButtonItem+TFYCategory.h"
 #import "UINavigationController+TFYCategory.h"
 #import "UINavigationItem+TFYCategory.h"

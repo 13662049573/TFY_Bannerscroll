@@ -1,4 +1,6 @@
 ${PODS_ROOT}/Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll-frameworks.sh
+${BUILT_PRODUCTS_DIR}/FLAnimatedImage/FLAnimatedImage.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/TFY_LayoutCategoryKit/TFY_LayoutCategoryKit.framework
 ${BUILT_PRODUCTS_DIR}/TFY_Navigation/TFY_Navigation.framework
 ${BUILT_PRODUCTS_DIR}/TFY_ProgressHUD/TFY_ProgressHUD.framework

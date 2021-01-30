@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MyCell : UICollectionViewCell
 @property(nonatomic,strong)UILabel *leftText;
-@property(nonatomic,strong)UIImageView *icon;
+@property(nonatomic,strong)FLAnimatedImageView *icon;
 @end
 
 NS_ASSUME_NONNULL_END

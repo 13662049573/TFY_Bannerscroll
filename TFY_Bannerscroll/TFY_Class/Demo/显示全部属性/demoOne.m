@@ -51,7 +51,7 @@
     .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
             //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
-        [cell.icon tfy_BannerImage:[NSURL URLWithString:model[@"icon"]]];
+        [cell.icon sd_setImageWithURL:[NSURL URLWithString:model[@"icon"]]];
         cell.leftText.text = model[@"name"];
         return cell;
     })
@@ -64,7 +64,7 @@
     .tfy_EventScrollEndSet( ^(id anyID, NSInteger index, BOOL isCenter,UICollectionViewCell *cell) {
         //毛玻璃效果外部调整
          BannerStrongSelf(weakObject)
-         [strongObject.viewOne.bgImgView tfy_BannerImage:[NSURL URLWithString:anyID[@"icon"]]];
+        [strongObject.viewOne.bgImgView sd_setImageWithURL:anyID[@"icon"]];
     })
     //图片对应的key值
     .tfy_DataParamIconNameSet(@"icon")
