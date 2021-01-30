@@ -8,7 +8,8 @@
 
 #import "demoNormal.h"
 @interface demoNormal ()
-
+@property(nonatomic , strong)TFY_BannerView *bannerScrollerView;
+@property(nonatomic , strong)TFY_BannerParam *bannerParam;
 @end
 
 @implementation demoNormal
@@ -18,31 +19,10 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     
-    
-    
     /*
      *横向
      */
-    TFY_BannerParam *param =  paramModel()
-    .tfy_FrameSet(CGRectMake(0, BannerHeight/6, BannerWitdh, BannerWitdh/3))
-    .tfy_DataSet([self getData])
-    //开启循环滚动
-    .tfy_RepeatSet(YES)
-    //设置item的间距
-    .tfy_LineSpacingSet(10)
-    //开启自动滚动
-    .tfy_AutoScrollSet(YES)
-    //自动滚动时间
-    .tfy_AutoScrollSecondSet(3)
-    .tfy_ItemSizeSet(CGSizeMake(BannerWitdh/2, BannerWitdh/3))//item的size default 视图的宽高 item的width最小为父视图的一半 (为了保证同屏最多显示3个 减少不必要的bug)
-    .tfy_HideBannerControlSet(YES);
-    
-    TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
-    [self.view addSubview:viewOne];
-    
-    
-    
-    
+    [self.view addSubview:self.bannerScrollerView];
     
     /*
      *纵向
@@ -60,10 +40,31 @@
     [self.view addSubview:viewTwo];
 }
 
--(void)viewWillLayoutSubviews{
-    [super viewWillLayoutSubviews];
-    
-    
+- (TFY_BannerView *)bannerScrollerView {
+    if (!_bannerScrollerView) {
+        _bannerScrollerView = [[TFY_BannerView alloc] initConfigureWithModel:self.bannerParam];
+    }
+    return _bannerScrollerView;
+}
+
+- (TFY_BannerParam *)bannerParam {
+    if (!_bannerParam) {
+        _bannerParam = paramModel();
+        _bannerParam
+        .tfy_FrameSet(CGRectMake(0, BannerHeight/6, BannerWitdh, BannerWitdh/3))
+        .tfy_DataSet([self getData])
+        //开启循环滚动
+        .tfy_RepeatSet(YES)
+        //设置item的间距
+        .tfy_LineSpacingSet(10)
+        //开启自动滚动
+        .tfy_AutoScrollSet(YES)
+        //自动滚动时间
+        .tfy_AutoScrollSecondSet(1.5)
+        .tfy_ItemSizeSet(CGSizeMake(BannerWitdh/2, BannerWitdh/3))//item的size default 视图的宽高 item的width最小为父视图的一半 (为了保证同屏最多显示3个 减少不必要的bug)
+        .tfy_HideBannerControlSet(YES);
+    }
+    return _bannerParam;
 }
 
 
