@@ -28,10 +28,9 @@ Pod::Spec.new do |spec|
   end
 
   spec.subspec 'TFY_ITools' do |s_s|
+    s_s.dependency 'SDWebImage/GIF'
     s_s.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_ITools/**/*.{h,m}"
   end
-
-  spec.dependency 'SDWebImage/GIF'
 
   spec.requires_arc = true
   
