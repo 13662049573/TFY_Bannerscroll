@@ -227,7 +227,7 @@
 
 - (NSTimeInterval)frameDelayGreatestCommonDivisor
 {
-    // 精度设置为“kFLAnimatedImageDelayTimeIntervalMinimum”的一半，以最小化帧下降。
+    // 精度设置为“kAnimatedImageDelayTimeIntervalMinimum”的一半，以最小化帧下降。
     const NSTimeInterval kGreatestCommonDivisorPrecision = 2.0 / kAnimatedImageDelayTimeIntervalMinimum;
 
     NSArray *delays = self.animatedImage.delayTimesForIndexes.allValues;
@@ -764,8 +764,8 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
     if ([image isKindOfClass:[UIImage class]]) {
         UIImage *uiImage = (UIImage *)image;
         imageSize = uiImage.size;
-    } else if ([image isKindOfClass:[TFY_AnimatedImage class]]) {
-        TFY_AnimatedImage *animatedImage = (TFY_AnimatedImage *)image;
+    } else if ([image isKindOfClass:[TFY_BannerAnimatedImage class]]) {
+        TFY_BannerAnimatedImage *animatedImage = (TFY_BannerAnimatedImage *)image;
         imageSize = animatedImage.size;
     }
     return imageSize;

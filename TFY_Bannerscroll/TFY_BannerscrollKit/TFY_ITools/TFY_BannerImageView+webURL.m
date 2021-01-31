@@ -9,6 +9,7 @@
 #import "TFY_BannerImageView+webURL.h"
 #import "TFY_FImageCache.h"
 #import "NSData+ImageType.h"
+#import <objc/runtime.h>
 
 static inline TFY_BannerAnimatedImage * WebImageCreateAnimatedImage(TFY_BannerImageView *imageView, NSData *imageData) {
     if ([NSData tfy_imageFormatForImageData:imageData] != ImageFormatGIF) {
