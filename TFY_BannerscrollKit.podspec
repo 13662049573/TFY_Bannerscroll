@@ -2,7 +2,7 @@
 Pod::Spec.new do |spec|
   spec.name         = "TFY_BannerscrollKit"
   
-  spec.version      = "2.2.4"
+  spec.version      = "2.2.6"
 
   spec.summary      = "无限滚动视图，使用各种场景，如卡片，扇形，广告。。。"
 
@@ -30,8 +30,6 @@ Pod::Spec.new do |spec|
   spec.subspec 'TFY_ITools' do |s_s|
     s_s.source_files  = "TFY_Bannerscroll/TFY_BannerscrollKit/TFY_ITools/**/*.{h,m}"
   end
-
-  spec.dependency 'SDWebImage/GIF'
 
   spec.requires_arc = true
   
