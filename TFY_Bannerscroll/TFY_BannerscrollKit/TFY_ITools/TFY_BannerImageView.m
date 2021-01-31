@@ -268,7 +268,7 @@ static NSUInteger gcd(NSUInteger a, NSUInteger b)
     if (self.animatedImage) {
         // Lazily create the display link.
         if (!self.displayLink) {
-            TFY_WeakProxy *weakProxy = [TFY_WeakProxy weakProxyForObject:self];
+            TFY_BannerWeakProxy *weakProxy = [TFY_BannerWeakProxy weakProxyForObject:self];
             self.displayLink = [CADisplayLink displayLinkWithTarget:weakProxy selector:@selector(displayDidRefresh:)];
             
             [self.displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:self.runLoopMode];
@@ -658,7 +658,7 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
         _allFramesIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(0, self.frameCount)];
         
         // 有关说明，请参阅属性声明。
-        _weakProxy = (id)[TFY_WeakProxy weakProxyForObject:self];
+        _weakProxy = (id)[TFY_BannerWeakProxy weakProxyForObject:self];
         
         //将这个实例注册到弱表中，用于内存通知。当我们离开时，NSHashTable会自己清理。
         //注意flanimateimages可以在任何线程上创建，所以哈希表必须被锁定。
