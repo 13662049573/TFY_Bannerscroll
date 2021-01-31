@@ -28,7 +28,7 @@
         cell.titleLa.text = model[@"name"];
         cell.topLa.backgroundColor = model[@"color"];
         cell.bottomView.backgroundColor = model[@"color"];
-        [cell.backImage sd_setImageWithURL:[NSURL URLWithString:model[@"icon"]]];
+        [cell.backImage tfy_setImageWithURL:model[@"icon"]];
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, BannerHeight*0.3, BannerWitdh, BannerHeight*0.4))

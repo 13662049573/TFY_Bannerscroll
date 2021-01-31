@@ -17,7 +17,7 @@
 {
     self = [super initWithFrame:frame];
     if (self){
-        self.icon = [FLAnimatedImageView new];
+        self.icon = [TFY_BannerImageView new];
         self.icon.contentMode = UIViewContentModeScaleAspectFill;
         self.icon.layer.masksToBounds = YES;
         [self.contentView addSubview:self.icon];

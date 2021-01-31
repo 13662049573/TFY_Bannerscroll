@@ -6,7 +6,6 @@ target 'TFY_Bannerscroll' do
   pod 'TFY_LayoutCategoryKit'
   pod 'TFY_ProgressHUD'
   pod 'TFY_Navigation'
-  pod 'SDWebImage/GIF'
   
   # Pods for TFY_Bannerscroll
 

@@ -11,7 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TianMaoCell : UICollectionViewCell
-@property(nonatomic,strong)FLAnimatedImageView *backImage;
+@property(nonatomic,strong)TFY_BannerImageView *backImage;
 @property(nonatomic,strong)UILabel *topLa;
 @property(nonatomic,strong)UILabel *titleLa;
 @property(nonatomic,strong)UILabel *textLa;

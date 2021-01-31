@@ -169,7 +169,7 @@
         [self addSubview:self.bannerControl];
     }
     
-    self.bgImgView = [[FLAnimatedImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight)];
+    self.bgImgView = [[TFY_BannerImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight)];
     [self addSubview:self.bgImgView];
     [self sendSubviewToBack:self.bgImgView];
     self.bgImgView.hidden = !self.param.tfy_Effect;
@@ -203,18 +203,26 @@
     }
 }
 
-- (void)setIconData:(FLAnimatedImageView*)icon withData:(id)data{
+- (void)setIconData:(TFY_BannerImageView*)icon withData:(id)data{
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
         if ([(NSString*)data hasPrefix:@"http"] || [(NSString*)data hasPrefix:@"https"]) {
-            UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-            [icon sd_setImageWithURL:[NSURL URLWithString:(NSString*)data] placeholderImage:defaultimage];
+        UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
+        [icon tfy_setImageWithURL:(NSString*)data placeholderImage:defaultimage];
         }else{
             icon.image = [UIImage imageNamed:(NSString*)data];
         }
     }
 }
-
+- (dispatch_queue_t )getImageOperatorQueue{
+    static dispatch_queue_t  _imageOperatorQueue;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        //第二个参数 传入 DISPATCH_QUEUE_SERIAL 或 NULL 表示创建串行队列。传入 DISPATCH_QUEUE_CONCURRENT 表示创建并行队列
+        _imageOperatorQueue = dispatch_queue_create([@"imageOperatorQueue" UTF8String], DISPATCH_QUEUE_CONCURRENT);
+    });
+    return _imageOperatorQueue;
+}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -464,7 +472,7 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self){
-        self.icon = [FLAnimatedImageView new];
+        self.icon = [TFY_BannerImageView new];
         self.icon.layer.masksToBounds = YES;
         [self.contentView addSubview:self.icon];
         self.icon.frame = self.contentView.bounds;

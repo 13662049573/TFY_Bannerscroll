@@ -12,8 +12,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "TFY_BannerPageControl.h"
-#import <FLAnimatedImageView.h>
-#import <FLAnimatedImageView+WebCache.h>
+#import "TFY_BannerImageView+webURL.h"
+#import "UIImageView+webURL.h"
 
 #define BannerWitdh  [UIScreen mainScreen].bounds.size.width
 #define BannerHeight [UIScreen mainScreen].bounds.size.height
@@ -38,7 +38,7 @@
 }
 
 /** cell的block*/
-typedef UICollectionViewCell* (^BannerCellCallBlock)(NSIndexPath *indexPath,UICollectionView* collectionView,id model,FLAnimatedImageView* bgImageView,NSArray*dataArr);
+typedef UICollectionViewCell* (^BannerCellCallBlock)(NSIndexPath *indexPath,UICollectionView* collectionView,id model,TFY_BannerImageView* bgImageView,NSArray*dataArr);
 
 /** 点击*/
 typedef void (^BannerClickBlock)(id anyID,NSInteger index);

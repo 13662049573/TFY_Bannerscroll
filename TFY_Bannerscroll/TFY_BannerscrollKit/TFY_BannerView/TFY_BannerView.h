@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TFY_BannerView : UIView
 /**背景图*/
-@property(strong,nonatomic)FLAnimatedImageView *bgImgView;
+@property(strong,nonatomic)TFY_BannerImageView *bgImgView;
 
 /**调用方法*/
 - (instancetype)initConfigureWithModel:(TFY_BannerParam *)param withView:(UIView*)parentView;
@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface Collectioncell : UICollectionViewCell
-@property(nonatomic,strong)FLAnimatedImageView *icon;
+@property(nonatomic,strong)TFY_BannerImageView *icon;
 @property(nonatomic,strong)TFY_BannerParam *param;
 @end
 
