@@ -417,8 +417,7 @@ static NSUInteger gcd(NSUInteger a, NSUInteger b)
 
 //弱代理用于中断内存警告的延迟操作的retain周期。
 //我们在这里谎报实际类型，以获得静态类型检查并消除类型转换。
-//对象的实际类型是TFY_WeakProxy。
-@property (nonatomic, strong, readonly) TFY_BannerAnimatedImage *weakProxy;
+@property (nonatomic, strong, readonly) TFY_BannerAnimatedImage *bannerweakProxy;
 
 @end
 
@@ -658,7 +657,7 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
         _allFramesIndexSet = [[NSIndexSet alloc] initWithIndexesInRange:NSMakeRange(0, self.frameCount)];
         
         // 有关说明，请参阅属性声明。
-        _weakProxy = (id)[TFY_BannerWeakProxy weakProxyForObject:self];
+        _bannerweakProxy = (id)[TFY_BannerWeakProxy weakProxyForObject:self];
         
         //将这个实例注册到弱表中，用于内存通知。当我们离开时，NSHashTable会自己清理。
         //注意flanimateimages可以在任何线程上创建，所以哈希表必须被锁定。
@@ -678,8 +677,8 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
 
 - (void)dealloc
 {
-    if (_weakProxy) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:_weakProxy];
+    if (_bannerweakProxy) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:_bannerweakProxy];
     }
     if (_imageSource) {
         CFRelease(_imageSource);
@@ -837,7 +836,7 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
     self.frameCacheSizeMaxInternal = [frameCacheSize unsignedIntegerValue];
     // 计划在一段时间后完全重置帧缓存大小最大值。
     const NSTimeInterval kResetDelay = 3.0;
-    [self.weakProxy performSelector:@selector(resetFrameCacheSizeMaxInternal) withObject:nil afterDelay:kResetDelay];
+    [self.bannerweakProxy performSelector:@selector(resetFrameCacheSizeMaxInternal) withObject:nil afterDelay:kResetDelay];
 }
 
 - (void)resetFrameCacheSizeMaxInternal
@@ -852,8 +851,8 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
     self.memoryWarningCount++;
     
     // 如果我们想要变得更大，但又被系统敲了一下指头，取消。
-    [NSObject cancelPreviousPerformRequestsWithTarget:self.weakProxy selector:@selector(growFrameCacheSizeAfterMemoryWarning:) object:@(AnimatedImageFrameCacheSizeGrowAfterMemoryWarning)];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self.weakProxy selector:@selector(resetFrameCacheSizeMaxInternal) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self.bannerweakProxy selector:@selector(growFrameCacheSizeAfterMemoryWarning:) object:@(AnimatedImageFrameCacheSizeGrowAfterMemoryWarning)];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self.bannerweakProxy selector:@selector(resetFrameCacheSizeMaxInternal) object:nil];
     
     // 降低到最小值，如果不被系统丢弃，隐式地立即从缓存中清除，并开始按需生成帧。
     self.frameCacheSizeMaxInternal = AnimatedImageFrameCacheSizeLowMemory;
@@ -861,7 +860,7 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
     const NSUInteger kGrowAttemptsMax = 2;
     const NSTimeInterval kGrowDelay = 2.0;
     if ((self.memoryWarningCount - 1) <= kGrowAttemptsMax) {
-        [self.weakProxy performSelector:@selector(growFrameCacheSizeAfterMemoryWarning:) withObject:@(AnimatedImageFrameCacheSizeGrowAfterMemoryWarning) afterDelay:kGrowDelay];
+        [self.bannerweakProxy performSelector:@selector(growFrameCacheSizeAfterMemoryWarning:) withObject:@(AnimatedImageFrameCacheSizeGrowAfterMemoryWarning) afterDelay:kGrowDelay];
     }
 }
 
@@ -928,8 +927,6 @@ typedef NS_ENUM(NSUInteger, AnimatedImageFrameCacheSize) {
 }
 
 @end
-
-#pragma mark - FLWeakProxy
 
 @interface TFY_BannerWeakProxy ()
 @property (nonatomic, weak) id target;
