@@ -160,7 +160,7 @@
                             
                             if(completion) {
                                 dispatch_async(dispatch_get_main_queue(), ^{
-                                    completion(image,UIImageJPEGRepresentation(image,1.0f));
+                                    completion(image,data);
                                 });
                             }
                         });

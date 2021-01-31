@@ -10,7 +10,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^ExternalCompletionBlock)(UIImage * _Nullable image,NSData * _Nullable imageData,NSURL * _Nullable imageURL);
 
 @interface UIImage (TFY_BannerAnimatedImage)
 
@@ -29,13 +28,6 @@ typedef void(^ExternalCompletionBlock)(UIImage * _Nullable image,NSData * _Nulla
 - (void)tfy_setImageWithURL:(nullable NSString *)url NS_REFINED_FOR_SWIFT;
 
 - (void)tfy_setImageWithURL:(nullable NSString *)url placeholderImage:(nullable UIImage *)placeholder NS_REFINED_FOR_SWIFT;
-
-- (void)tfy_setImageWithURL:(nullable NSString *)url
-                 completed:(nullable ExternalCompletionBlock)completedBlock;
-
-- (void)tfy_setImageWithURL:(nullable NSString *)url
-          placeholderImage:(nullable UIImage *)placeholder
-                 completed:(nullable ExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT;
 
 @end
 

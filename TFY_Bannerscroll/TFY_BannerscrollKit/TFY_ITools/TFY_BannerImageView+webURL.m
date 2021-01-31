@@ -78,21 +78,10 @@ static inline TFY_BannerAnimatedImage * WebImageCreateAnimatedImage(TFY_BannerIm
 
 
 - (void)tfy_setImageWithURL:(nullable NSString *)url NS_REFINED_FOR_SWIFT {
-    [self tfy_setImageWithURL:url placeholderImage:nil completed:nil];
+    [self tfy_setImageWithURL:url placeholderImage:nil];
 }
 
 - (void)tfy_setImageWithURL:(nullable NSString *)url placeholderImage:(nullable UIImage *)placeholder NS_REFINED_FOR_SWIFT {
-    [self tfy_setImageWithURL:url placeholderImage:placeholder completed:nil];
-}
-
-- (void)tfy_setImageWithURL:(nullable NSString *)url
-                  completed:(nullable ExternalCompletionBlock)completedBlock {
-    [self tfy_setImageWithURL:url placeholderImage:nil completed:completedBlock];
-}
-
-- (void)tfy_setImageWithURL:(nullable NSString *)url
-          placeholderImage:(nullable UIImage *)placeholder
-                  completed:(nullable ExternalCompletionBlock)completedBlock NS_REFINED_FOR_SWIFT {
     __weak typeof(self)weakSelf = self;
     if (url==nil || [url isEqualToString:@""]) {
         self.image = placeholder;
@@ -129,7 +118,6 @@ static inline TFY_BannerAnimatedImage * WebImageCreateAnimatedImage(TFY_BannerIm
                     }
                 });
             });
-            completedBlock(image,imageData,[NSURL URLWithString:url]);
         }];
     }
 }
