@@ -21,8 +21,8 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGRect,tfy_Frame)
 TFY_BannerSetFuncStatement(TFY_BannerParam,strong,NSArray*,tfy_Data)
 /**开启缩放 default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Scale)
-/**开启卡片重叠模式 default NO*/
-TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_CardOverLap)
+/**选择卡片模式 default CardtypeCommon*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,Cardtype,tfy_CardOverLap)
 /**背景毛玻璃效果 default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Effect)
 /**隐藏pageControl default NO*/
@@ -89,7 +89,22 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerScrollEndBlock,tfy_EventSc
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,UIBlurEffectStyle,tfy_EffectStyle);
 /**毛玻璃透明度 默认 1*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_EffectAlpha);
-/**行数*/
+
+#pragma mark ------- 第三模块设置属性 ------------------
+///图片滚动的样式
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,DiverseImageScrollType,tfy_scrollType)
+/// collectionView展示cell的数量,以最中间的cell开始和其两边的cell的数量加起来的数量,由于两边对称,所以数量为单数,如果设置为4,则展示3个,中间一个cell和两边各一个,数量必须为大于0,默认5
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,NSInteger,tfy_visibleCount)
+///cell的间隔,默认为0,若是竖直滚动,cell的高不进行缩放,只缩放宽,则cell之间的上下间隔就是space,若对高进行缩放,则cell之间的上下间隔就是space+cell的高乘上高的缩放比例除2,也就是说,就算你space为0,cell的高缩放了,间隔也会改变;反之,若是水平滚动,cell的宽不进行缩放,只缩放高,则cell之间的左右间隔就是space,,若对宽进行缩放,则cell之间的左右间隔就是space+cell的宽乘上宽的缩放比例除2.
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_space)
+/// 样式5,6的旋转弧度,默认M_PI_4,也就是度数为45°
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_rotationAngle)
+/// 样式7圆形半径
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_radius)
+/// 样式7每两个item之间的旋转角度
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_anglePerItem)
+
+/**当前页码（滑动前）*/
 @property(nonatomic,assign)NSInteger myCurrentPath;
 
 @end

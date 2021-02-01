@@ -96,7 +96,7 @@
     //自动滚动
     .tfy_AutoScrollSet(YES)
     //卡片叠加模式
-    .tfy_CardOverLapSet(NO)
+    .tfy_CardOverLapSet(CardtypeCommon)
     //cell的位置
     .tfy_PositionSet(BannerCellPositionCenter)
     //隐藏分页按钮

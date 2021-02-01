@@ -52,10 +52,34 @@ typedef void (^BannerCenterClickBlock)(id anyID,NSInteger index,BOOL isCenter,UI
 /** 滚动结束*/
 typedef void (^BannerScrollEndBlock)(id anyID,NSInteger index,BOOL isCenter,UICollectionViewCell* cell);
 
+/**
+  卡片类型
+*/
+typedef enum {
+    CardtypeCommon = 0,//普通模式
+    CardtypeFallen = 1,//重叠卡片
+    CardtypeMultifunction = 2, //多功能卡片
+}Cardtype;
+
+
 /**cell动画的位置*/
 typedef enum :NSInteger{
-    BannerCellPositionCenter      = 0,             //居中 默认
-    BannerCellPositionBottom      = 1,             //置底
+    BannerCellPositionCenter = 0,  //居中 默认
+    BannerCellPositionBottom = 1,  //置底
 }BannerCellPosition;
+
+/**
+图片滚动的样式  这里只属于第三模块
+*/
+typedef enum {
+    DiverseImageScrollNone,
+    DiverseImageScrollCardOne,
+    DiverseImageScrollCardTwo,
+    DiverseImageScrollCardThird,
+    DiverseImageScrollCardFour,
+    DiverseImageScrollCardFive,
+    DiverseImageScrollCardSix,
+    DiverseImageScrollCardSeven,
+}DiverseImageScrollType;
 
 #endif /* TFY_BannerConfig_h */

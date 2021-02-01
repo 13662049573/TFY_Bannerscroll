@@ -10,10 +10,10 @@
 #import "TFY_BannerFlowLayout.h"
 #import "TFY_BannerOverLayout.h"
 #import "TFY_BannerPageControl.h"
-
+#import "TFY_BannerDiverseLayout.h"
 #define COUNT 500
 
-@interface TFY_BannerView ()<UICollectionViewDelegate,UICollectionViewDataSource>{
+@interface TFY_BannerView ()<UICollectionViewDelegate,UICollectionViewDataSource> {
     BOOL beganDragging;
 }
 @property(strong,nonatomic)UICollectionView *myCollectionV;
@@ -125,7 +125,7 @@
         self.param.tfy_SectionInset = sets;
     }
     
-    if (self.param.tfy_ItemSize.height == 0 || self.param.tfy_ItemSize.width == 0 ) {
+    if (self.param.tfy_ItemSize.height == 0 || self.param.tfy_ItemSize.width == 0) {
         self.param.tfy_ItemSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
     }
 
@@ -136,16 +136,24 @@
     }
     
     
-    if (!self.param.tfy_CardOverLap) {
-        self.flowL = [[TFY_BannerFlowLayout alloc] initConfigureWithModel:self.param];;
-    }else{
-        self.param.tfy_Repeat = YES;
-        if (self.param.tfy_ScaleFactor == 0.5) {
-            self.param.tfy_ScaleFactor = 0.8f;
-        }
-        self.flowL = [[TFY_BannerOverLayout alloc] initConfigureWithModel:self.param];;
+    switch (self.param.tfy_CardOverLap) {
+        case CardtypeCommon:
+            self.flowL = [[TFY_BannerFlowLayout alloc] initConfigureWithModel:self.param];
+            break;
+        case CardtypeFallen:
+            self.param.tfy_Repeat = YES;
+            if (self.param.tfy_ScaleFactor == 0.5) {
+                self.param.tfy_ScaleFactor = 0.8f;
+            }
+            self.flowL = [[TFY_BannerOverLayout alloc] initConfigureWithModel:self.param];
+            break;
+        case CardtypeMultifunction:
+            self.flowL = [[TFY_BannerDiverseLayout alloc] initConfigureWithModel:self.param];
+            break;
+        default:
+            break;
     }
-
+    
     [self addSubview:self.myCollectionV];
     self.myCollectionV.scrollEnabled = self.param.tfy_CanFingerSliding;
     [self.myCollectionV registerClass:[Collectioncell class] forCellWithReuseIdentifier:NSStringFromClass([Collectioncell class])];
@@ -286,29 +294,85 @@
         return;
     }
     if (self.data.count==0) return;
-    if (self.param.tfy_CardOverLap) {
-         [self.myCollectionV setContentOffset: self.param.tfy_Vertical?
-          CGPointMake(0, path.row *CGRectGetHeight(self.myCollectionV.frame)):
-          CGPointMake(path.row *CGRectGetWidth(self.myCollectionV.frame), 0)
-                                     animated:animated];
-
-    }else{
-        if ([self.myCollectionV isPagingEnabled]) {
-            [self.myCollectionV scrollToItemAtIndexPath:path atScrollPosition:
-             self.param.tfy_Vertical?UICollectionViewScrollPositionCenteredVertically:
-                                  UICollectionViewScrollPositionCenteredHorizontally animated:animated];
-        }else{
-            [self.myCollectionV scrollToItemAtIndexPath:path atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
-        }
+    switch (self.param.tfy_CardOverLap) {
+        case CardtypeCommon://普通
+            if ([self.myCollectionV isPagingEnabled]) {
+                [self.myCollectionV scrollToItemAtIndexPath:path atScrollPosition:
+                 self.param.tfy_Vertical?UICollectionViewScrollPositionCenteredVertically:
+                                      UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+            }else{
+                [self.myCollectionV scrollToItemAtIndexPath:path atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+            }
+            break;
+        case CardtypeFallen://重叠
+            [self.myCollectionV setContentOffset: self.param.tfy_Vertical?
+             CGPointMake(0, path.row *CGRectGetHeight(self.myCollectionV.frame)):
+             CGPointMake(path.row *CGRectGetWidth(self.myCollectionV.frame), 0)
+                                        animated:animated];
+            break;
+        case CardtypeMultifunction://多样式
+            
+            break;
+        default:
+            break;
     }
-    
     if ([self.myCollectionV isPagingEnabled]||self.param.tfy_CardOverLap) return;
+    
     if(self.param.tfy_ContentOffsetX>0.5){
         self.myCollectionV.contentOffset = CGPointMake(self.myCollectionV.contentOffset.x-(self.param.tfy_ContentOffsetX-0.5)*CGRectGetWidth(self.myCollectionV.frame), self.myCollectionV.contentOffset.y);
     }else if(self.param.tfy_ContentOffsetX<0.5){
         self.myCollectionV.contentOffset = CGPointMake(self.myCollectionV.contentOffset.x+CGRectGetWidth(self.myCollectionV.frame) *(0.5-self.param.tfy_ContentOffsetX), self.myCollectionV.contentOffset.y);
     }
 }
+
+#pragma mark - 私有方法
+
+- (NSInteger)currentIndex
+{
+    if (CGRectGetHeight(self.frame) == 0 || CGRectGetWidth(self.frame) == 0) {
+        return 0;
+    }
+    
+    NSInteger index     = 0;
+    NSInteger cellCount = [self.myCollectionV numberOfItemsInSection:0];
+    
+    if (self.param.tfy_scrollType == DiverseImageScrollCardSeven) {
+        CGFloat anglePerItem   = self.param.tfy_anglePerItem;
+        CGFloat angleAtExtreme = (cellCount - 1) * self.param.tfy_anglePerItem;
+        CGFloat factor;
+        // 默认停下来时，旋转的角度
+        CGFloat proposedAngle;
+        if (self.param.tfy_Vertical) {
+            factor        = angleAtExtreme / (self.myCollectionV.contentSize.height - CGRectGetHeight(self.frame));
+            proposedAngle = factor * self.myCollectionV.contentOffset.y;
+
+        }else {
+            factor        = angleAtExtreme / (self.myCollectionV.contentSize.width - CGRectGetWidth(self.frame));
+            proposedAngle = factor * self.myCollectionV.contentOffset.x;
+        }
+        CGFloat ratio = proposedAngle / anglePerItem;
+        index         = roundf(ratio);
+    }else {
+        if (self.param.tfy_Vertical) {
+            index = roundf((self.myCollectionV.contentOffset.y + CGRectGetHeight(self.frame) / 2 - (self.param.tfy_ItemSize.height + self.param.tfy_space) / 2) / (self.param.tfy_ItemSize.height + self.param.tfy_space));
+        }else {
+            index = roundf((self.myCollectionV.contentOffset.x + CGRectGetWidth(self.frame) / 2 - (self.param.tfy_ItemSize.width + self.param.tfy_space) / 2) / (self.param.tfy_ItemSize.width + self.param.tfy_space));
+        }
+    }
+    if (index < 0) {
+        index = 0;
+    }
+    if (index >= cellCount) {
+        index = cellCount - 1;
+    }
+    return index;
+}
+
+- (int)pageControlIndexWithCurrentCellIndex:(NSInteger)index
+{
+    return (int)index % self.data.count;
+}
+
 
 
 //定时器
@@ -375,20 +439,28 @@
     }
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (self.param.tfy_CardOverLap) {
-        if ([self.myCollectionV isPagingEnabled]&&!self.param.tfy_Marquee) {
-            NSInteger index = self.param.tfy_Repeat?self.param.myCurrentPath%self.data.count:self.param.myCurrentPath;
-            self.bannerControl.currentPage = self.param.tfy_Repeat?index %self.data.count:index;
-        }
-    }else{
-        if ([self.myCollectionV isPagingEnabled]&&!self.param.tfy_Marquee) {
-            NSInteger index =  self.param.tfy_Vertical?
-                               scrollView.contentOffset.y/scrollView.frame.size.height:
-                               scrollView.contentOffset.x/scrollView.frame.size.width;
-            self.param.myCurrentPath = index;
-            self.bannerControl.currentPage = self.param.tfy_Repeat?index %self.data.count:index;
-        }
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    switch (self.param.tfy_CardOverLap) {
+        case CardtypeCommon:
+            if ([self.myCollectionV isPagingEnabled]&&!self.param.tfy_Marquee) {
+                NSInteger index =  self.param.tfy_Vertical?
+                                   scrollView.contentOffset.y/scrollView.frame.size.height:
+                                   scrollView.contentOffset.x/scrollView.frame.size.width;
+                self.param.myCurrentPath = index;
+                self.bannerControl.currentPage = self.param.tfy_Repeat?index %self.data.count:index;
+            }
+            break;
+        case CardtypeFallen:
+            if ([self.myCollectionV isPagingEnabled]&&!self.param.tfy_Marquee) {
+                NSInteger index = self.param.tfy_Repeat?self.param.myCurrentPath%self.data.count:self.param.myCurrentPath;
+                self.bannerControl.currentPage = self.param.tfy_Repeat?index %self.data.count:index;
+            }
+            break;
+        case CardtypeMultifunction:
+            
+            break;
+        default:
+            break;
     }
 }
 

@@ -8,6 +8,14 @@
 
 #import "TFY_BannerParam.h"
 
+#define kImageSevenRadius 500.0
+
+#define kRotationAngle M_PI_4
+
+#define kAnglePerItem M_PI/12
+
+#define kVisibleCount 5
+
 @implementation TFY_BannerParam
 /**本类初始化*/
 TFY_BannerParam *paramModel(void){
@@ -18,8 +26,8 @@ TFY_BannerParam *paramModel(void){
 {
     self = [super init];
     if (self) {
-        self.tfy_Scale=NO;
-        self.tfy_CardOverLap= NO;
+        self.tfy_Scale = NO;
+        self.tfy_CardOverLap = CardtypeCommon;
         self.tfy_Effect = NO;
         self.tfy_HideBannerControl = NO;
         self.tfy_CanFingerSliding = YES;
@@ -37,7 +45,7 @@ TFY_BannerParam *paramModel(void){
         self.tfy_LineSpacing = 0;
         self.tfy_ContentOffsetX = 0.5;
         self.tfy_Position = BannerCellPositionCenter;
-        self.tfy_AutoScrollSecond =3;
+        self.tfy_AutoScrollSecond = 3;
         self.tfy_SelectIndex = 0;
         self.tfy_MarqueeTextColor = [UIColor redColor];
         self.tfy_MarqueeRate = 5;
@@ -45,6 +53,11 @@ TFY_BannerParam *paramModel(void){
         self.tfy_DataParamIconName = @"icon";
         self.tfy_EffectStyle = UIBlurEffectStyleLight;
         self.tfy_EffectAlpha = 1;
+        self.tfy_radius = kImageSevenRadius;
+        self.tfy_anglePerItem = kAnglePerItem;
+        self.tfy_rotationAngle = kRotationAngle;
+        self.tfy_visibleCount = kVisibleCount;
+        self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
     }
     return self;
 }
@@ -55,7 +68,7 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,NSArray*,tfy_Data)
 /**开启缩放 default NO*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Scale)
 /**开启卡片重叠模式 default NO*/
-TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_CardOverLap)
+TFY_BannerSetFuncImplementation(TFY_BannerParam,Cardtype,tfy_CardOverLap)
 /**背景毛玻璃效果 default NO*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Effect)
 /**隐藏pageControl default NO*/
@@ -123,5 +136,18 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,UIBlurEffectStyle,tfy_EffectStyl
 /**毛玻璃透明度 默认 apal */
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_EffectAlpha)
 
+#pragma mark ------- 第三模块设置属性 ------------------
+
+TFY_BannerSetFuncImplementation(TFY_BannerParam,DiverseImageScrollType,tfy_scrollType)
+/// collectionView展示cell的数量,以最中间的cell开始和其两边的cell的数量加起来的数量,由于两边对称,所以数量为单数,如果设置为4,则展示3个,中间一个cell和两边各一个,数量必须为大于0,默认5
+TFY_BannerSetFuncImplementation(TFY_BannerParam,NSInteger,tfy_visibleCount)
+///cell的间隔,默认为0,若是竖直滚动,cell的高不进行缩放,只缩放宽,则cell之间的上下间隔就是space,若对高进行缩放,则cell之间的上下间隔就是space+cell的高乘上高的缩放比例除2,也就是说,就算你space为0,cell的高缩放了,间隔也会改变;反之,若是水平滚动,cell的宽不进行缩放,只缩放高,则cell之间的左右间隔就是space,,若对宽进行缩放,则cell之间的左右间隔就是space+cell的宽乘上宽的缩放比例除2.
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_space)
+/// 样式5,6的旋转弧度,默认M_PI_4,也就是度数为45°
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_rotationAngle)
+/// 样式7圆形半径
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_radius)
+/// 样式7每两个item之间的旋转角度
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_anglePerItem)
 @end
 

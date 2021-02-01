@@ -35,36 +35,18 @@
     return [TFY_BannerDiverseLayoutAttributes class];
 }
 
-- (instancetype)init
-{
-    if (self = [super init]) {
-        [self initialization];
-    }
-    return self;
-}
-
-- (void)initialization
-{
-    self.zoomScale = kZoomScale;
-    self.radius = kImageSevenRadius;
-    self.anglePerItem = kAnglePerItem;
-    self.rotationAngle = kRotationAngle;
-    self.visibleCount = kVisibleCount;
-}
-
 - (void)prepareLayout {
     [super prepareLayout];
-    self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast;
-    if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+    if (self.param.tfy_Vertical) {
         _viewHeight = CGRectGetHeight(self.collectionView.frame);
-        _itemHeight = self.itemSize.height + self.space;
-        if (self.scrollType != DiverseImageScrollCardSeven) {
+        _itemHeight = self.param.tfy_ItemSize.height + self.param.tfy_space;
+        if (self.param.tfy_scrollType != DiverseImageScrollCardSeven) {
             self.collectionView.contentInset = UIEdgeInsetsMake((_viewHeight - _itemHeight) / 2, 0, (_viewHeight - _itemHeight) / 2, 0);
         }
     } else {
         _viewHeight = CGRectGetWidth(self.collectionView.frame);
-        _itemHeight = self.itemSize.width + self.space;
-        if (self.scrollType != DiverseImageScrollCardSeven) {
+        _itemHeight = self.param.tfy_ItemSize.width + self.param.tfy_space;
+        if (self.param.tfy_scrollType != DiverseImageScrollCardSeven) {
             self.collectionView.contentInset = UIEdgeInsetsMake(0, (_viewHeight - _itemHeight) / 2, 0, (_viewHeight - _itemHeight) / 2);
         }
     }
@@ -77,26 +59,28 @@
     }
     
     /// 获取总的旋转的角度
-    CGFloat angleAtExtreme = (_cellCount - 1) * self.anglePerItem;
+    CGFloat angleAtExtreme = (_cellCount - 1) * self.param.tfy_anglePerItem;
     /// 随着UICollectionView的移动，第0个cell初始时的角度
     CGFloat angle;
     //// 锚点的位置
     CGFloat anchorPoint;
     
+    CGFloat zommScale = (self.param.tfy_ScreenScale-0.2);
+    
     NSInteger minIndex = 0;
     NSInteger maxIndex = _cellCount - 1;
-    if (self.visibleCount <= 0) {
+    if (self.param.tfy_visibleCount <= 0) {
         NSAssert(NO, @"visibleCount不能小于等于0");
     }else {
         NSInteger index = 0;
-        if (self.scrollType != DiverseImageScrollCardSeven) {
-            CGFloat centerY = (self.scrollDirection == UICollectionViewScrollDirectionVertical ? self.collectionView.contentOffset.y : self.collectionView.contentOffset.x) + _viewHeight / 2;
+        if (self.param.tfy_scrollType != DiverseImageScrollCardSeven) {
+            CGFloat centerY = (self.param.tfy_Vertical ? self.collectionView.contentOffset.y : self.collectionView.contentOffset.x) + _viewHeight / 2;
             index = centerY / _itemHeight;
         }else {
             CGFloat factor;
             // 默认停下来时，旋转的角度
             CGFloat proposedAngle;
-            if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+            if (self.param.tfy_Vertical) {
                 factor = angleAtExtreme / (self.collectionView.contentSize.height - _viewHeight);
                 proposedAngle = factor * self.collectionView.contentOffset.y;
 
@@ -104,7 +88,7 @@
                 factor = angleAtExtreme / (self.collectionView.contentSize.width - _viewHeight);
                 proposedAngle = factor * self.collectionView.contentOffset.x;
             }
-            CGFloat ratio = proposedAngle / _anglePerItem;
+            CGFloat ratio = proposedAngle / self.param.tfy_anglePerItem;
             index = roundf(ratio);
 
         }
@@ -115,35 +99,35 @@
             index = _cellCount - 1;
         }
 
-        NSInteger count = (self.visibleCount - 1) / 2;
+        NSInteger count = (self.param.tfy_visibleCount - 1) / 2;
         minIndex = MAX(0, (index - count));
         maxIndex = MIN((_cellCount - 1), (index + count));
     }
 
-    if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+    if (self.param.tfy_Vertical) {
         angle = - angleAtExtreme * self.collectionView.contentOffset.y / (self.collectionView.contentSize.height - _viewHeight);
-        anchorPoint = (self.itemSize.width/2.0 + self.radius) / self.itemSize.width;
+        anchorPoint = (self.param.tfy_ItemSize.width/2.0 + self.param.tfy_radius) / self.param.tfy_ItemSize.width;
     }else {
         angle = - angleAtExtreme * self.collectionView.contentOffset.x / (self.collectionView.contentSize.width - _viewHeight);
-        anchorPoint = (self.itemSize.height/2.0 + self.radius) / self.itemSize.height;
+        anchorPoint = (self.param.tfy_ItemSize.height/2.0 + self.param.tfy_radius) / self.param.tfy_ItemSize.height;
     }
     
     for (NSInteger i = minIndex; i <= maxIndex; i++) {
         TFY_BannerDiverseLayoutAttributes *attribute = [TFY_BannerDiverseLayoutAttributes layoutAttributesForCellWithIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-        attribute.size = self.itemSize;
+        attribute.size = self.param.tfy_ItemSize;
         CGFloat rowCenter = _itemHeight * i + _itemHeight / 2;
         
-        CGFloat center = (self.scrollDirection == UICollectionViewScrollDirectionVertical ? self.collectionView.contentOffset.y : self.collectionView.contentOffset.x) + _viewHeight / 2;
+        CGFloat center = (self.param.tfy_Vertical ? self.collectionView.contentOffset.y : self.collectionView.contentOffset.x) + _viewHeight / 2;
         
-        switch (self.scrollType) {
+        switch (self.param.tfy_scrollType) {
             case DiverseImageScrollCardOne:
             {
                 CGFloat delta = center - rowCenter;
                 CGFloat ratio =  - delta / _itemHeight;
-                CGFloat scale = 1 - ABS(ratio) * (1 - self.zoomScale);
+                CGFloat scale = 1 - ABS(ratio) * (1 - zommScale);
                 attribute.transform = CGAffineTransformMakeScale(scale, scale);
                 
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+                if (self.param.tfy_Vertical) {
                     attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                 } else {
                     attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
@@ -155,21 +139,21 @@
             {
                 CGFloat delta = center - rowCenter;
                 CGFloat ratio =  - delta / _itemHeight;
-                CGFloat scale = 1 - ABS(ratio) * (1 - self.zoomScale);
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+                CGFloat scale = 1 - ABS(ratio) * (1 - zommScale);
+                if (self.param.tfy_Vertical) {
                     if (delta == 0) {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                     }else {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width * scale, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width * scale, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                     }
                 }else {
                     if (delta == 0) {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
                     }else {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width , self.itemSize.height * scale);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width , self.param.tfy_ItemSize.height * scale);
                         attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
                     }
                 }
@@ -179,27 +163,27 @@
             {
                 CGFloat delta = center - rowCenter;
                 CGFloat ratio =  - delta / _itemHeight;
-                CGFloat scale = 1 - ABS(ratio) * (1 - self.zoomScale);
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+                CGFloat scale = 1 - ABS(ratio) * (1 - zommScale);
+                if (self.param.tfy_Vertical) {
                     if ((delta > -_itemHeight && delta < 0) || (delta > 0 && delta < _itemHeight)) {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width * scale, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width * scale, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                     }else if (delta == 0){
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                     }else {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width * self.zoomScale, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width * zommScale, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                     }
                 }else {
                     if ((delta > -_itemHeight && delta < 0) || (delta > 0 && delta < _itemHeight)) {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width , self.itemSize.height * scale);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width , self.param.tfy_ItemSize.height * scale);
                         attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
                     }else if (delta == 0){
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
                     }else {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height * self.zoomScale);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height * zommScale);
                         attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
                     }
                 }
@@ -209,28 +193,28 @@
             {
                 CGFloat delta = center - rowCenter;
                 CGFloat ratio =  - delta / _itemHeight;
-                CGFloat scale = 1 - ABS(ratio) * (1 - self.zoomScale);
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+                CGFloat scale = 1 - ABS(ratio) * (1 - zommScale);
+                if (self.param.tfy_Vertical) {
                     if ((delta > -_itemHeight && delta < 0) || (delta > 0 && delta < _itemHeight)) {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width * scale, self.itemSize.height);
-                        attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2 - self.itemSize.width * ((1 - self.zoomScale)/2) * ABS(ratio), rowCenter);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width * scale, self.param.tfy_ItemSize.height);
+                        attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2 - self.param.tfy_ItemSize.width * ((1 - zommScale)/2) * ABS(ratio), rowCenter);
                     }else if (delta == 0){
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                     }else {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width * self.zoomScale, self.itemSize.height);
-                        attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2 - self.itemSize.width * ((1 - self.zoomScale)/2), rowCenter);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width * zommScale, self.param.tfy_ItemSize.height);
+                        attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2 - self.param.tfy_ItemSize.width * ((1 - zommScale)/2), rowCenter);
                     }
                 }else {
                     if ((delta > -_itemHeight && delta < 0) || (delta > 0 && delta < _itemHeight)) {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height * scale);
-                        attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2 + self.itemSize.height * ((1 - self.zoomScale)/2) * ABS(ratio));
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height * scale);
+                        attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2 + self.param.tfy_ItemSize.height * ((1 - zommScale)/2) * ABS(ratio));
                     }else if (delta == 0){
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height);
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height);
                         attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
                     }else {
-                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.itemSize.width, self.itemSize.height * self.zoomScale);
-                        attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2 + self.itemSize.height * ((1 - self.zoomScale)/2));
+                        attribute.frame = CGRectMake(attribute.frame.origin.x, attribute.frame.origin.y, self.param.tfy_ItemSize.width, self.param.tfy_ItemSize.height * zommScale);
+                        attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2 + self.param.tfy_ItemSize.height * ((1 - zommScale)/2));
                     }
                 }
             }
@@ -239,8 +223,8 @@
             {
                 CGFloat delta = center - rowCenter;
                 CGFloat ratio =  - delta / _itemHeight;
-                attribute.transform = CGAffineTransformRotate(attribute.transform, - ratio * self.rotationAngle);
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+                attribute.transform = CGAffineTransformRotate(attribute.transform, - ratio * self.param.tfy_rotationAngle);
+                if (self.param.tfy_Vertical) {
                     attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                 }else {
                     attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
@@ -254,11 +238,11 @@
                 CGFloat ratio =  - delta / _itemHeight;
                 CATransform3D transform = CATransform3DIdentity;
                 transform.m34 = -1.0/400.0f;
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
-                    transform = CATransform3DRotate(transform, ratio * self.rotationAngle, 1, 0, 0);
+                if (self.param.tfy_Vertical) {
+                    transform = CATransform3DRotate(transform, ratio * self.param.tfy_rotationAngle, 1, 0, 0);
                     attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                 }else {
-                    transform = CATransform3DRotate(transform, -ratio * self.rotationAngle, 0, 1, 0);
+                    transform = CATransform3DRotate(transform, -ratio * self.param.tfy_rotationAngle, 0, 1, 0);
                     attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
                 }
                 attribute.transform3D = transform;
@@ -266,9 +250,9 @@
                 break;
             case DiverseImageScrollCardSeven:
             {
-                attribute.angle = angle + self.anglePerItem *i;
-                attribute.scrollDirection = self.scrollDirection;
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+                attribute.angle = angle + self.param.tfy_anglePerItem *i;
+                attribute.scrollDirection = self.param.tfy_Vertical;
+                if (self.param.tfy_Vertical) {
                     attribute.anchorPoint = CGPointMake(-anchorPoint, 0.5);
                     attribute.center = CGPointMake(CGRectGetMidX(self.collectionView.bounds), center);
                 }else {
@@ -282,7 +266,7 @@
                 break;
             default:
             {
-                if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+                if (self.param.tfy_Vertical) {
                     attribute.center = CGPointMake(CGRectGetWidth(self.collectionView.frame) / 2, rowCenter);
                 } else {
                     attribute.center = CGPointMake(rowCenter, CGRectGetHeight(self.collectionView.frame) / 2);
@@ -298,16 +282,16 @@
 }
 
 - (CGSize)collectionViewContentSize {
-    if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
-        if (self.scrollType == DiverseImageScrollCardSeven) {
+    if (self.param.tfy_Vertical) {
+        if (self.param.tfy_scrollType == DiverseImageScrollCardSeven) {
             // UICollectionView不满一屏时，无法滚动
-            return CGSizeMake(CGRectGetWidth(self.collectionView.frame), _cellCount * self.itemSize.height + _viewHeight);
+            return CGSizeMake(CGRectGetWidth(self.collectionView.frame), _cellCount * self.param.tfy_ItemSize.height + _viewHeight);
         }
         return CGSizeMake(CGRectGetWidth(self.collectionView.frame), _cellCount * _itemHeight);
     }else {
-        if (self.scrollType == DiverseImageScrollCardSeven) {
+        if (self.param.tfy_scrollType == DiverseImageScrollCardSeven) {
             // 加上_viewHeight是因为UICollectionView不满一屏时，无法滚动,并且加上了滚动会丝滑点,具体原因以后再学习
-            return CGSizeMake(_cellCount * self.itemSize.width + _viewHeight, CGRectGetHeight(self.collectionView.frame));
+            return CGSizeMake(_cellCount * self.param.tfy_ItemSize.width + _viewHeight, CGRectGetHeight(self.collectionView.frame));
         }
         return CGSizeMake(_cellCount * _itemHeight, CGRectGetHeight(self.collectionView.frame));
     }
@@ -324,29 +308,29 @@
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
     // 预期停下来original
     CGPoint finalContentOffset = proposedContentOffset;
-    if (self.scrollType == DiverseImageScrollCardSeven) {
-        if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+    if (self.param.tfy_scrollType == DiverseImageScrollCardSeven) {
+        if (self.param.tfy_Vertical) {
             // 影响参数
-            CGFloat angleAtExtreme = (_cellCount - 1) * self.anglePerItem;
+            CGFloat angleAtExtreme = (_cellCount - 1) * self.param.tfy_anglePerItem;
             CGFloat factor = -angleAtExtreme / (self.collectionView.contentSize.height - _viewHeight);
 
             // 默认停下来时，旋转的角度
             CGFloat proposedAngle = factor * self.collectionView.contentOffset.y;
-            CGFloat ratio = proposedAngle / self.anglePerItem;
+            CGFloat ratio = proposedAngle / self.param.tfy_anglePerItem;
 
             CGFloat multiplier = 0;
             if (velocity.y > 0) {
                 //向下运动
-                if (self.currentIndex) {
-                    multiplier = _currentIndex.integerValue - 1;
+                if (self.param.myCurrentPath) {
+                    multiplier = self.param.myCurrentPath - 1;
                 }else {
                     multiplier = ceil(ratio);
                 }
                 
             }else if (velocity.y < 0){
                 //向上运动
-                if (self.currentIndex) {
-                    multiplier = _currentIndex.integerValue + 1;
+                if (self.param.myCurrentPath) {
+                    multiplier = self.param.myCurrentPath + 1;
                 }else {
                     multiplier = floor(ratio);
                 }
@@ -354,29 +338,29 @@
                 //速度为0
                 multiplier = round(ratio);
             }
-            finalContentOffset.y = multiplier * self.anglePerItem / factor;
+            finalContentOffset.y = multiplier * self.param.tfy_anglePerItem / factor;
         }else {
             // 影响参数
-            CGFloat angleAtExtreme = (_cellCount - 1) * self.anglePerItem;
+            CGFloat angleAtExtreme = (_cellCount - 1) * self.param.tfy_anglePerItem;
             CGFloat factor = -angleAtExtreme / (self.collectionView.contentSize.width - _viewHeight);
 
             // 默认停下来时，旋转的角度
             CGFloat proposedAngle = factor * self.collectionView.contentOffset.x;
-            CGFloat ratio = proposedAngle / self.anglePerItem;
+            CGFloat ratio = proposedAngle / self.param.tfy_anglePerItem;
 
             CGFloat multiplier = 0;
             if (velocity.x > 0) {
                 //向右运动
-                if (self.currentIndex) {
-                    multiplier = _currentIndex.integerValue - 1;
+                if (self.param.myCurrentPath) {
+                    multiplier = self.param.myCurrentPath - 1;
                 }else {
                     multiplier = ceil(ratio);
                 }
                 
             }else if (velocity.x < 0){
                 //向左运动
-                if (self.currentIndex) {
-                    multiplier = _currentIndex.integerValue + 1;
+                if (self.param.myCurrentPath) {
+                    multiplier = self.param.myCurrentPath + 1;
                 }else {
                     multiplier = floor(ratio);
                 }
@@ -384,25 +368,25 @@
                 //速度为0
                 multiplier = round(ratio);
             }
-            finalContentOffset.x = multiplier * self.anglePerItem / factor;
+            finalContentOffset.x = multiplier * self.param.tfy_anglePerItem / factor;
         }
         
     }else {
         CGFloat index;
-        if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+        if (self.param.tfy_Vertical) {
             index = roundf((proposedContentOffset.y + _viewHeight / 2 - _itemHeight / 2) / _itemHeight);
         }else {
             index = roundf((proposedContentOffset.x + _viewHeight / 2 - _itemHeight / 2) / _itemHeight);
         }
         
-        if (self.currentIndex) {
-            if (index > _currentIndex.integerValue) {
-                index = _currentIndex.integerValue +1;
+        if (self.param.myCurrentPath) {
+            if (index > self.param.myCurrentPath) {
+                index = self.param.myCurrentPath +1;
             }else {
-                index = _currentIndex.integerValue -1;
+                index = self.param.myCurrentPath -1;
             }
         }
-        if (self.scrollDirection == UICollectionViewScrollDirectionVertical) {
+        if (self.param.tfy_Vertical) {
             finalContentOffset.y = _itemHeight * index + _itemHeight / 2 - _viewHeight / 2;
         } else {
             finalContentOffset.x = _itemHeight * index + _itemHeight / 2 - _viewHeight / 2;

@@ -30,7 +30,7 @@
     //设置item的间距
     .tfy_LineSpacingSet(15)
     //开启卡片叠加模式
-    .tfy_CardOverLapSet(YES)
+    .tfy_CardOverLapSet(CardtypeFallen)
     //毛玻璃背景
     .tfy_EffectSet(YES)
     //开启自动滚动
@@ -55,7 +55,7 @@
     //设置item的间距
     .tfy_LineSpacingSet(15)
     //开启卡片叠加模式
-    .tfy_CardOverLapSet(YES)
+    .tfy_CardOverLapSet(CardtypeFallen)
 //    //开启自动滚动
 //    .tfy_AutoScrollSet(YES)
     //缩放系数

@@ -24,7 +24,6 @@
 - (void)prepareLayout
 {
     [super prepareLayout];
-  
     self.itemSize = self.param.tfy_ItemSize;
     self.minimumInteritemSpacing = (self.param.tfy_Frame.size.height-self.param.tfy_ItemSize.height)/2;
     self.minimumLineSpacing = self.param.tfy_LineSpacing;
