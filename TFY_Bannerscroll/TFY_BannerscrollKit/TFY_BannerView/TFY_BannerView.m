@@ -174,9 +174,10 @@
     [self sendSubviewToBack:self.bgImgView];
     self.bgImgView.hidden = !self.param.tfy_Effect;
     
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:self.param.tfy_EffectStyle];
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     effectView.frame = self.bgImgView.bounds;
+    effectView.alpha = self.param.tfy_EffectAlpha;
     [self.bgImgView addSubview:effectView];
     self.effectView = effectView;
     

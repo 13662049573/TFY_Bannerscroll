@@ -85,6 +85,10 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerClickBlock,tfy_EventClick)
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerCenterClickBlock,tfy_EventCenterClick)
 /**每次滚动结束都会调用 最好是关闭自动滚动的场景使用*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerScrollEndBlock,tfy_EventScrollEnd)
+/**毛玻璃类型  默认 UIBlurEffectStyleLight */
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,UIBlurEffectStyle,tfy_EffectStyle);
+/**毛玻璃透明度 默认 1*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_EffectAlpha);
 /**行数*/
 @property(nonatomic,assign)NSInteger myCurrentPath;
 

@@ -43,6 +43,8 @@ TFY_BannerParam *paramModel(void){
         self.tfy_MarqueeRate = 5;
         self.tfy_DecelerationRate = 0.1;
         self.tfy_DataParamIconName = @"icon";
+        self.tfy_EffectStyle = UIBlurEffectStyleLight;
+        self.tfy_EffectAlpha = 1;
     }
     return self;
 }
@@ -116,6 +118,10 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerClickBlock,tfy_EventClick)
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerCenterClickBlock,tfy_EventCenterClick)
 /**每次滚动结束都会调用 最好是关闭自动滚动的场景使用*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerScrollEndBlock,tfy_EventScrollEnd)
+/**毛玻璃类型  默认 UIBlurEffectStyleLight */
+TFY_BannerSetFuncImplementation(TFY_BannerParam,UIBlurEffectStyle,tfy_EffectStyle)
+/**毛玻璃透明度 默认 apal */
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_EffectAlpha)
 
 @end
 

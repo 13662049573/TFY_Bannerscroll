@@ -24,7 +24,7 @@
      *横向
      */
     TFY_BannerParam *param =  paramModel()
-    .tfy_FrameSet(CGRectMake(0,60, BannerWitdh, BannerHeight*0.35))
+    .tfy_FrameSet(CGRectMake(-45,60, BannerWitdh+45, BannerHeight*0.35))
     .tfy_ItemSizeSet(CGSizeMake(BannerWitdh-60, BannerHeight*0.25))
     .tfy_DataSet([self getData])
     //设置item的间距
@@ -34,12 +34,12 @@
     //毛玻璃背景
     .tfy_EffectSet(YES)
     //开启自动滚动
-    .tfy_AutoScrollSet(YES);
+    .tfy_AutoScrollSet(YES)
+    .tfy_EffectStyleSet(UIBlurEffectStyleDark)//毛玻璃类型
+    .tfy_EffectAlphaSet(0.5);
     TFY_BannerView *viewOne = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:viewOne];
 
-
-    
 
     /*
     *纵向
