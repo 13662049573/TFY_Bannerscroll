@@ -21,7 +21,8 @@
 @property(strong,nonatomic)TFY_BannerPageControl *bannerControl ;
 @property(strong,nonatomic)NSArray *data;
 @property(strong,nonatomic)TFY_BannerParam *param;
-@property(copy,nonatomic)NSString *timer;
+@property(copy,nonatomic)NSString *gcd_timer;
+@property(strong,nonatomic)NSTimer *timer;
 @property(weak,nonatomic)UIVisualEffectView *effectView;
 @end
 
@@ -376,10 +377,25 @@
 
 
 //定时器
-- (void)createTimer{
+- (void)createTimer {
     SEL sel = NSSelectorFromString(self.param.tfy_Marquee?@"autoMarqueenScrollAction":@"autoScrollAction");
-    NSString *time = [BannerTime bannerTimerWithTarget:self selector:sel StartTime:1 interval:self.param.tfy_AutoScrollSecond repeats:YES mainQueue:YES];
-    self.timer = time;
+    switch (self.param.tfy_Time) {
+        case BannTimeTypeGCD:{
+            NSString *time = [BannerTime bannerTimerWithTarget:self selector:sel StartTime:1 interval:self.param.tfy_AutoScrollSecond repeats:YES mainQueue:YES];
+            self.gcd_timer = time;
+        }
+            break;
+        case BannTimeTypeTime:{
+            if (self.timer == nil) {
+                NSTimer *timer = [NSTimer timerWithTimeInterval:self.param.tfy_AutoScrollSecond target:self selector:sel userInfo:nil repeats:YES];
+                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+                self.timer = timer;
+            }
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 //定时器方法 自动滚动
@@ -425,8 +441,22 @@
 }
 
 //定时器销毁
-- (void)cancelTimer{
-    [BannerTime bannerCancel:self.timer];
+- (void)cancelTimer {
+    switch (self.param.tfy_Time) {
+        case BannTimeTypeGCD:{
+            [BannerTime bannerCancel:self.gcd_timer];
+        }
+            break;
+        case BannTimeTypeTime:{
+            if (self.timer!=nil) {
+                [self.timer invalidate];
+                self.timer = nil;
+            }
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 //开始拖动
@@ -534,7 +564,21 @@
     [super willMoveToSuperview:newSuperview];
     if (!newSuperview) {
         // 销毁定时器
-        [BannerTime bannerCancel:self.timer];
+        switch (self.param.tfy_Time) {
+            case BannTimeTypeGCD:{
+                [BannerTime bannerCancel:self.gcd_timer];
+            }
+                break;
+            case BannTimeTypeTime:{
+                if (self.timer!=nil) {
+                    [self.timer invalidate];
+                    self.timer = nil;
+                }
+            }
+                break;
+            default:
+                break;
+        }
     }
 }
 

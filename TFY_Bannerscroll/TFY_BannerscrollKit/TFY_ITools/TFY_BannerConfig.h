@@ -68,6 +68,12 @@ typedef enum :NSInteger{
     BannerCellPositionBottom = 1,  //置底
 }BannerCellPosition;
 
+/**定时器选择 -- */
+typedef enum :NSInteger{
+    BannTimeTypeGCD = 0,  //----  GCD
+    BannTimeTypeTime = 1, //----  TIME
+}BannTimeType;
+
 /**
 图片滚动的样式  这里只属于第三模块
 */

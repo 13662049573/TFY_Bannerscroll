@@ -58,11 +58,14 @@ TFY_BannerParam *paramModel(void){
         self.tfy_rotationAngle = kRotationAngle;
         self.tfy_visibleCount = kVisibleCount;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
+        self.tfy_Time = BannTimeTypeGCD;
     }
     return self;
 }
 
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGRect,tfy_Frame)
+/**选择想要的定时器*/
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BannTimeType,tfy_Time)
 /**数据源 必传*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,NSArray*,tfy_Data)
 /**开启缩放 default NO*/

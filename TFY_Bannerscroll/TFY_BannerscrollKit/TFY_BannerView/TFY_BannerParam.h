@@ -17,6 +17,8 @@ TFY_BannerParam *paramModel(void);
 
 /**布局方式 frame  必传*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGRect,tfy_Frame)
+/**选择想要的定时器 默认 BannTimeTypeGCD*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannTimeType,tfy_Time)
 /**数据源 必传*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,strong,NSArray*,tfy_Data)
 /**开启缩放 default NO*/
