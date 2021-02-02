@@ -39,6 +39,8 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Repeat)
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_AutoScroll)
 /**纵向(cell全屏的时候有效) default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Vertical)
+/**点击视图居中*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_ClickCenter)
 /**跑马灯(文字效果) default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Marquee)
 /**整体间距 默认UIEdgeInsetsMake(0,0, 0, 0)*/
@@ -74,7 +76,7 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,NSInteger,tfy_SelectIndex)
 /**自定义cell内容 默认是Collectioncell类*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerCellCallBlock,tfy_MyCell)
 /**自定义cell的类名 自定义视图必传 不然会crash*/
-TFY_BannerSetFuncStatement(TFY_BannerParam,copy,NSString*,tfy_MyCellClassName)
+TFY_BannerSetFuncStatement(TFY_BannerParam,copy,id,tfy_MyCellClassNames)
 /**跑马灯文字颜色  default  red*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,strong,UIColor*,tfy_MarqueeTextColor)
 /**自定义pageControl设置*/

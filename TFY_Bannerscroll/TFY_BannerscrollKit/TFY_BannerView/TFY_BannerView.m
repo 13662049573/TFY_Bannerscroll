@@ -34,6 +34,10 @@
         if (parentView) {
             [parentView addSubview:self];
         }
+        self.param.tfy_Frame = CGRectMake(self.param.tfy_Frame.origin.x,
+                                       self.param.tfy_Frame.origin.y,
+                                       (int)self.param.tfy_Frame.size.width,
+                                       (int)self.param.tfy_Frame.size.height);
         [self setFrame:self.param.tfy_Frame];
         self.data = [NSArray arrayWithArray:self.param.tfy_Data];
         [self setUp];
@@ -48,6 +52,10 @@
 - (instancetype)initConfigureWithModel:(TFY_BannerParam *)param{
     if (self = [super init]) {
         self.param = param;
+        self.param.tfy_Frame = CGRectMake(self.param.tfy_Frame.origin.x,
+                                       self.param.tfy_Frame.origin.y,
+                                       (int)self.param.tfy_Frame.size.width,
+                                       (int)self.param.tfy_Frame.size.height);
         [self setFrame:self.param.tfy_Frame];
         self.data = [NSArray arrayWithArray:self.param.tfy_Data];
         [self setUp];
@@ -75,7 +83,7 @@
     self.bannerControl.numberOfPages = self.data.count;
     [UIView animateWithDuration:0.0 animations:^{
         [self.myCollectionV reloadData];
-        if (self.param.tfy_SelectIndex|| self.param.tfy_Repeat) {
+        if (self.param.tfy_SelectIndex > 0 || self.param.tfy_Repeat) {
             NSIndexPath *path = [NSIndexPath indexPathForRow: self.param.tfy_Repeat?((COUNT/2)*self.data.count+self.param.tfy_SelectIndex):self.param.tfy_SelectIndex inSection:0];
             [self scrolToPath:path animated:NO];
             self.bannerControl.currentPage = self.param.tfy_SelectIndex;
@@ -157,13 +165,28 @@
     
     [self addSubview:self.myCollectionV];
     self.myCollectionV.scrollEnabled = self.param.tfy_CanFingerSliding;
+    
     [self.myCollectionV registerClass:[Collectioncell class] forCellWithReuseIdentifier:NSStringFromClass([Collectioncell class])];
     [self.myCollectionV registerClass:[CollectionTextCell class] forCellWithReuseIdentifier:NSStringFromClass([CollectionTextCell class])];
-    if (self.param.tfy_MyCellClassName) {
-        [self.myCollectionV registerClass:NSClassFromString(self.param.tfy_MyCellClassName) forCellWithReuseIdentifier:self.param.tfy_MyCellClassName];
+    
+    if (self.param.tfy_MyCellClassNames) {
+        if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSString class]]) {
+            
+           [self.myCollectionV registerClass:NSClassFromString(self.param.tfy_MyCellClassNames) forCellWithReuseIdentifier:self.param.tfy_MyCellClassNames];
+            
+        }else if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSArray class]]) {
+            
+            [(NSArray*)self.param.tfy_MyCellClassNames enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                if ([obj isKindOfClass:[NSString class]]) {
+                     [self.myCollectionV registerClass:NSClassFromString(obj) forCellWithReuseIdentifier:obj];
+                }
+            }];
+        }
     }
+    
     self.myCollectionV.frame = self.bounds;
     self.myCollectionV.pagingEnabled = (self.param.tfy_ItemSize.width == CGRectGetWidth(self.myCollectionV.frame) && self.param.tfy_LineSpacing == 0)||self.param.tfy_Vertical;
+    
     if ([self.myCollectionV isPagingEnabled]) {
         self.myCollectionV.decelerationRate = UIScrollViewDecelerationRateNormal;
     }
@@ -252,6 +275,34 @@
         BOOL center = [self checkCellInCenterCollectionView:collectionView AtIndexPath:indexPath];
         UICollectionViewCell *currentCell = (UICollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
         self.param.tfy_EventCenterClick(dic, index,center,currentCell);
+    }
+    if (self.param.tfy_ClickCenter) {
+        NSArray *visibleCellIndex = [collectionView visibleCells];
+        NSArray *sortedIndexPaths = [visibleCellIndex sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSIndexPath *path1 = (NSIndexPath *)[collectionView indexPathForCell:obj1];
+            NSIndexPath *path2 = (NSIndexPath *)[collectionView indexPathForCell:obj2];
+            return [path1 compare:path2];
+        }];
+        if (sortedIndexPaths.count>0) {
+            NSInteger center = sortedIndexPaths.count/2;
+            UICollectionViewCell *tmpCell = [collectionView cellForItemAtIndexPath:indexPath];
+            for (int i = 0; i < sortedIndexPaths.count; i++) {
+                UICollectionViewCell *cell = sortedIndexPaths[i];
+                if (cell == tmpCell) {
+                    NSIndexPath *nextIndexPath = nil;
+                    if (i>center || i<center) {
+                        nextIndexPath = [NSIndexPath indexPathForItem: indexPath.row inSection:0];
+                        self.param.myCurrentPath = indexPath.row;
+                        [self scrolToPath:nextIndexPath animated:YES];
+                        [collectionView setUserInteractionEnabled:NO];
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                             [collectionView setUserInteractionEnabled:YES];
+                        });
+                    }
+                    break;
+                }
+            }
+        }
     }
 }
 
