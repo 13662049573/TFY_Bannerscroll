@@ -49,7 +49,7 @@
         
         TFY_BannerParam *param =  paramModel()
         .tfy_FrameSet(CGRectMake(0,CGRectGetHeight(self.topLa.frame)+10, CGRectGetWidth(self.backImage.frame), 50))
-        .tfy_MyCellClassNameSet(@"marqueCell")
+        .tfy_MyCellClassNamesSet(@"marqueCell")
         .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
                    //自定义视图
             marqueCell *cell = (marqueCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([marqueCell class]) forIndexPath:indexPath];

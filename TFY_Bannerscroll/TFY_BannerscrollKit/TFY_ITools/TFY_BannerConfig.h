@@ -52,6 +52,12 @@ typedef void (^BannerCenterClickBlock)(id anyID,NSInteger index,BOOL isCenter,UI
 /** 滚动结束*/
 typedef void (^BannerScrollEndBlock)(id anyID,NSInteger index,BOOL isCenter,UICollectionViewCell* cell);
 
+/** 滚动*/
+typedef void (^BannerScrollBlock)(CGPoint point);
+
+/** 自定义下划线*/
+typedef void (^BannerSpecialLine)(UIView *line);
+
 /**
   卡片类型
 */
@@ -66,6 +72,7 @@ typedef enum {
 typedef enum :NSInteger{
     BannerCellPositionCenter = 0,  //居中 默认
     BannerCellPositionBottom = 1,  //置底
+    BannerCellPositionTop    = 2,  //顶部
 }BannerCellPosition;
 
 /**定时器选择 -- */
@@ -73,6 +80,14 @@ typedef enum :NSInteger{
     BannTimeTypeGCD = 0,  //----  GCD
     BannTimeTypeTime = 1, //----  TIME
 }BannTimeType;
+
+/*
+ *特殊样式
+ */
+typedef enum :NSInteger{
+    SpecialStyleLine       = 1, //下划线
+    SpecialStyleFirstScale = 2, //首个变大效果
+}SpecialStyle;
 
 /**
 图片滚动的样式  这里只属于第三模块

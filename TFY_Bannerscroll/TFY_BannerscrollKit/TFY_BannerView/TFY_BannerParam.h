@@ -25,6 +25,12 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,strong,NSArray*,tfy_Data)
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Scale)
 /**选择卡片模式 default CardtypeCommon*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,Cardtype,tfy_CardOverLap)
+//卡片重叠模式开启偏移透明度变化 default NO
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_CardOverAlphaOpen)
+//叠加模式透明度最小值 defalt 0.1
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_CardOverMinAlpha)
+//卡片重叠显示个数 default 4
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,NSInteger,tfy_CardOverLapCount)
 /**背景毛玻璃效果 default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Effect)
 /**隐藏pageControl default NO*/
@@ -43,6 +49,8 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Vertical)
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_ClickCenter)
 /**跑马灯(文字效果) default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Marquee)
+//中间视图放最上面 default NO
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Zindex)
 /**整体间距 默认UIEdgeInsetsMake(0,0, 0, 0)*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,UIEdgeInsets,tfy_SectionInset)
 /**整体视图缩放系数 default 1*/
@@ -81,7 +89,7 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,copy,id,tfy_MyCellClassNames)
 TFY_BannerSetFuncStatement(TFY_BannerParam,strong,UIColor*,tfy_MarqueeTextColor)
 /**自定义pageControl设置*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerPageControl,tfy_CustomControl)
-/**跑马灯速度  default  5*/
+/**跑马灯速度  default  0.5*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_MarqueeRate)
 /**点击方法*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerClickBlock,tfy_EventClick)
@@ -89,6 +97,12 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerClickBlock,tfy_EventClick)
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerCenterClickBlock,tfy_EventCenterClick)
 /**每次滚动结束都会调用 最好是关闭自动滚动的场景使用*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerScrollEndBlock,tfy_EventScrollEnd)
+//正在滚动
+TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerScrollBlock,tfy_EventDidScroll)
+//特殊样式SpecialLine 自定义下划线
+TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerSpecialLine,tfy_SpecialCustumLine)
+//特殊样式 default 无
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,SpecialStyle,tfy_SpecialStyle)
 /**毛玻璃类型  默认 UIBlurEffectStyleLight */
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,UIBlurEffectStyle,tfy_EffectStyle);
 /**毛玻璃透明度 默认 1*/
@@ -110,6 +124,8 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_anglePerItem)
 
 /**当前页码（滑动前）*/
 @property(nonatomic,assign)NSInteger myCurrentPath;
+/**重叠卡片行数*/
+@property(nonatomic,assign)NSInteger overFactPath;
 
 @end
 

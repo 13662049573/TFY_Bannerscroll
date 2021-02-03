@@ -42,7 +42,7 @@
 
 //卡片缩放
 - (NSArray<UICollectionViewLayoutAttributes *> *)cardScaleTypeInRect:(CGRect)rect{
-    
+    [self setUpIndex];
     NSArray *array = [self getCopyOfAttributes:[super layoutAttributesForElementsInRect:rect]];
     if (!self.param.tfy_Scale||self.param.tfy_Marquee) {
         return array;
@@ -50,13 +50,40 @@
     CGRect  visibleRect = CGRectZero;
     visibleRect.origin = self.collectionView.contentOffset;
     visibleRect.size = self.collectionView.bounds.size;
+    NSMutableArray *marr = [NSMutableArray new];
+    NSInteger minIndex = 0;
+    CGFloat minCenterX = [(UICollectionViewLayoutAttributes*)array.firstObject center].x;
+    for (int i = 0; i<array.count; i++) {
+        UICollectionViewLayoutAttributes *attributes = array[i];
+        CGRect cellFrameInSuperview = [self.collectionView convertRect:attributes.frame toView:self.collectionView.superview];
+        if (cellFrameInSuperview.origin.x>=0&&
+            cellFrameInSuperview.origin.x<=self.collectionView.frame.size.width) {
+            if (minCenterX>cellFrameInSuperview.origin.x) {
+                minCenterX = cellFrameInSuperview.origin.x;
+                minIndex = i;
+            }
+        }
+    }
     for (int i = 0; i<array.count; i++) {
         UICollectionViewLayoutAttributes *attributes = array[i];
         CGFloat distance = CGRectGetMidX(visibleRect) - attributes.center.x;
+        if (self.param.tfy_ContentOffsetX!=0.5) {
+             distance = CGRectGetMidX(visibleRect) - (attributes.center.x + (0.5-self.param.tfy_ContentOffsetX)*visibleRect.size.width);
+        }
+        if (self.param.tfy_SpecialStyle == SpecialStyleFirstScale) {
+            distance = CGRectGetMinX(visibleRect) - attributes.center.x;
+        }
         CGFloat normalizedDistance = fabs(distance / self.param.tfy_ActiveDistance);
         CGFloat zoom = 1 - self.param.tfy_ScaleFactor  * normalizedDistance;
-        attributes.transform3D = CATransform3DMakeScale(1.0, zoom, 1.0);
-        attributes.frame = CGRectMake(attributes.frame.origin.x, attributes.frame.origin.y + zoom, attributes.size.width, attributes.size.height);
+        if (self.param.tfy_SpecialStyle == SpecialStyleFirstScale) {
+            if (i == minIndex) {
+                attributes.transform3D = CATransform3DMakeScale(1.0, zoom+0.6, 1.0);
+            }else{
+                attributes.transform3D = CATransform3DMakeScale(1.0, 1.0, 1.0);
+            }
+        }else{
+            attributes.transform3D = CATransform3DMakeScale(1.0, zoom, 1.0);
+        }
         if (self.param.tfy_Alpha<1) {
             CGFloat collectionCenter =  self.collectionView.frame.size.width / 2 ;
             CGFloat offset = self.collectionView.contentOffset.x ;
@@ -67,13 +94,31 @@
             CGFloat alpha = ratio * (1 - self.param.tfy_Alpha) +self.param.tfy_Alpha;
             attributes.alpha = alpha;
         }
-        attributes.center = CGPointMake(attributes.center.x, (self.param.tfy_Position == BannerCellPositionBottom?attributes.center.y:self.collectionView.center.y) + zoom);
-
+        if (self.param.tfy_Zindex) {
+           attributes.zIndex = zoom*100;
+        }
+        CGPoint center = CGPointMake(attributes.center.x, self.collectionView.center.y );
+        if (self.param.tfy_Position == BannerCellPositionBottom) {
+            center =  CGPointMake(attributes.center.x, attributes.center.y + attributes.size.height*(1-zoom));
+            attributes.center = center;
+        }else if (self.param.tfy_Position == BannerCellPositionTop) {
+            center =  CGPointMake(attributes.center.x, attributes.center.y-  attributes.size.height*(1-zoom));
+            attributes.center = center;
+        }else if (self.param.tfy_Position == BannerCellPositionCenter) {
+            attributes.center = center;
+        }
+        [marr addObject:attributes];
     }
-    return array;
+    return marr;
 }
 
-
+- (void)setUpIndex{
+    if (!self.param.tfy_CardOverLap) {
+         self.param.myCurrentPath = self.param.tfy_Vertical?
+         round((ABS(self.collectionView.contentOffset.y))/(self.param.tfy_ItemSize.height+self.param.tfy_LineSpacing)):
+             round ((ABS(self.collectionView.contentOffset.x))/(self.param.tfy_ItemSize.width+self.param.tfy_LineSpacing));
+    }
+}
 
 - (NSArray *)getCopyOfAttributes:(NSArray *)attributes
 {
@@ -99,29 +144,83 @@
     if ([self.collectionView isPagingEnabled]||self.param.tfy_Marquee) {
         return proposedContentOffset;
     }
-    CGRect rect;
-    rect.origin.y = 0;
-    rect.origin.x = proposedContentOffset.x;
-    rect.size = self.collectionView.frame.size;
-    NSArray *array = [super layoutAttributesForElementsInRect:rect];
-  
-    
-    CGFloat centerX = proposedContentOffset.x + self.collectionView.frame.size.width * self.param.tfy_ContentOffsetX;
-    CGFloat minDelta = MAXFLOAT;
-    for (UICollectionViewLayoutAttributes *attrs in array) {
-        if (ABS(minDelta) > ABS(attrs.center.x - centerX)) {
-            minDelta = attrs.center.x - centerX;
+
+       
+    CGFloat offSetAdjustment = MAXFLOAT;
+    CGFloat horizontalCenter = (CGFloat) (proposedContentOffset.x + self.collectionView.frame.size.width * self.param.tfy_ContentOffsetX);
+
+    CGRect targetRect = CGRectMake(proposedContentOffset.x,
+                                    0.0,
+                                    self.collectionView.bounds.size.width,
+                                    self.collectionView.bounds.size.height);
+       
+    NSArray *attributes = [self layoutAttributesForElementsInRect:targetRect];
+    NSPredicate *cellAttributesPredicate = [NSPredicate predicateWithBlock: ^BOOL(UICollectionViewLayoutAttributes * _Nonnull evaluatedObject,NSDictionary<NSString *,id> * _Nullable bindings){
+           return (evaluatedObject.representedElementCategory == UICollectionElementCategoryCell);
+       }];
+       
+    NSArray *cellAttributes = [attributes filteredArrayUsingPredicate: cellAttributesPredicate];
+       
+    UICollectionViewLayoutAttributes *currentAttributes;
+       
+    for (UICollectionViewLayoutAttributes *layoutAttributes in cellAttributes)
+    {
+        CGFloat itemHorizontalCenter = layoutAttributes.center.x;
+        if (ABS(itemHorizontalCenter - horizontalCenter) < ABS(offSetAdjustment))
+        {
+            currentAttributes   = layoutAttributes;
+            offSetAdjustment    = itemHorizontalCenter - horizontalCenter;
         }
     }
-
-    proposedContentOffset.x += minDelta;
-
-    if (!self.param.tfy_CardOverLap) {
-        self.param.myCurrentPath = round((ABS(proposedContentOffset.x))/(self.param.tfy_ItemSize.width+self.param.tfy_LineSpacing));
-    }
-
-    return proposedContentOffset;
+       
+    CGFloat nextOffset          = proposedContentOffset.x + offSetAdjustment;
+       
+    proposedContentOffset.x     = nextOffset;
+    CGFloat deltaX              = proposedContentOffset.x - self.collectionView.contentOffset.x;
+    CGFloat velX                = velocity.x;
+       
+    if (fabs(deltaX) <= FLT_EPSILON || fabs(velX) <= FLT_EPSILON || (velX > 0.0 && deltaX > 0.0) || (velX < 0.0 && deltaX < 0.0))
+    {
+        
+    }else if (velocity.x > 0.0){
+      NSArray *revertedArray = [[attributes reverseObjectEnumerator] allObjects];
+      BOOL found = YES;
+      float proposedX = 0.0;
+      for (UICollectionViewLayoutAttributes *layoutAttributes in revertedArray)
+           {
+               if(layoutAttributes.representedElementCategory == UICollectionElementCategoryCell)
+               {
+                   CGFloat itemHorizontalCenter = layoutAttributes.center.x;
+                   if (itemHorizontalCenter > proposedContentOffset.x) {
+                       found = YES;
+                       proposedX = nextOffset + (currentAttributes.frame.size.width / 2) + (layoutAttributes.frame.size.width / 2);
+                   } else {
+                       break;
+                   }
+               }
+           }
+           
+           if (found) {
+               proposedContentOffset.x = proposedX;
+               proposedContentOffset.x += self.param.tfy_LineSpacing;
+           }
+       }
+       else if (velocity.x < 0.0)
+       {
+           for (UICollectionViewLayoutAttributes *layoutAttributes in cellAttributes)
+           {
+               CGFloat itemHorizontalCenter = layoutAttributes.center.x;
+               if (itemHorizontalCenter > proposedContentOffset.x)
+               {
+                   proposedContentOffset.x = nextOffset - ((currentAttributes.frame.size.width / 2) + (layoutAttributes.frame.size.width / 2));
+                   proposedContentOffset.x -= self.param.tfy_LineSpacing;
+                   break;
+               }
+           }
+       }
+       proposedContentOffset.y = 0.0;
+       
+       return proposedContentOffset;
     
 }
-
 @end

@@ -28,6 +28,10 @@ TFY_BannerParam *paramModel(void){
     if (self) {
         self.tfy_Scale = NO;
         self.tfy_CardOverLap = CardtypeCommon;
+        self.tfy_CardOverLapCount = 4;
+        self.tfy_CardOverMinAlpha = 0.1;
+        self.tfy_CardOverAlphaOpen = NO;
+        
         self.tfy_Effect = NO;
         self.tfy_HideBannerControl = NO;
         self.tfy_CanFingerSliding = YES;
@@ -37,6 +41,7 @@ TFY_BannerParam *paramModel(void){
         self.tfy_Vertical = NO;
         self.tfy_Marquee = NO;
         self.tfy_ClickCenter = NO;
+        self.tfy_Zindex = NO;
         self.tfy_SectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
         self.tfy_ScreenScale = 1;
         self.tfy_EffectHeight = 1;
@@ -49,7 +54,7 @@ TFY_BannerParam *paramModel(void){
         self.tfy_AutoScrollSecond = 3;
         self.tfy_SelectIndex = 0;
         self.tfy_MarqueeTextColor = [UIColor redColor];
-        self.tfy_MarqueeRate = 5;
+        self.tfy_MarqueeRate = 0.5;
         self.tfy_DecelerationRate = 0.1;
         self.tfy_DataParamIconName = @"icon";
         self.tfy_EffectStyle = UIBlurEffectStyleLight;
@@ -60,6 +65,8 @@ TFY_BannerParam *paramModel(void){
         self.tfy_visibleCount = kVisibleCount;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
         self.tfy_Time = BannTimeTypeGCD;
+        
+        
     }
     return self;
 }
@@ -73,6 +80,12 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,NSArray*,tfy_Data)
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Scale)
 /**开启卡片重叠模式 default NO*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,Cardtype,tfy_CardOverLap)
+//卡片重叠模式开启偏移透明度变化 default NO
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_CardOverAlphaOpen)
+//叠加模式透明度最小值 defalt 0.1
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_CardOverMinAlpha)
+//卡片重叠显示个数 default 4
+TFY_BannerSetFuncImplementation(TFY_BannerParam,NSInteger,tfy_CardOverLapCount)
 /**背景毛玻璃效果 default NO*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Effect)
 /**隐藏pageControl default NO*/
@@ -91,6 +104,8 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Vertical)
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_ClickCenter)
 /**跑马灯(文字效果) default NO*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Marquee)
+//中间视图放最上面 default NO
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Zindex)
 /**整体间距 默认UIEdgeInsetsMake(0,0, 0, 0)*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,UIEdgeInsets,tfy_SectionInset)
 /**整体视图缩放系数 default 1*/
@@ -137,6 +152,14 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerClickBlock,tfy_EventClick)
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerCenterClickBlock,tfy_EventCenterClick)
 /**每次滚动结束都会调用 最好是关闭自动滚动的场景使用*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerScrollEndBlock,tfy_EventScrollEnd)
+//正在滚动
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerScrollBlock,tfy_EventDidScroll)
+//特殊样式 default 无
+TFY_BannerSetFuncImplementation(TFY_BannerParam,SpecialStyle,tfy_SpecialStyle)
+
+//特殊样式SpecialLine 自定义下划线
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerSpecialLine,tfy_SpecialCustumLine)
+
 /**毛玻璃类型  默认 UIBlurEffectStyleLight */
 TFY_BannerSetFuncImplementation(TFY_BannerParam,UIBlurEffectStyle,tfy_EffectStyle)
 /**毛玻璃透明度 默认 apal */

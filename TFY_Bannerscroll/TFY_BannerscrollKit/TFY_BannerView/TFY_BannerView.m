@@ -15,6 +15,7 @@
 
 @interface TFY_BannerView ()<UICollectionViewDelegate,UICollectionViewDataSource> {
     BOOL beganDragging;
+    CGFloat marginTime;
 }
 @property(strong,nonatomic)UICollectionView *myCollectionV;
 @property(strong,nonatomic)UICollectionViewFlowLayout *flowL ;
@@ -24,6 +25,8 @@
 @property(copy,nonatomic)NSString *gcd_timer;
 @property(strong,nonatomic)NSTimer *timer;
 @property(weak,nonatomic)UIVisualEffectView *effectView;
+@property(assign,nonatomic)NSInteger lastIndex;
+@property(strong,nonatomic)UIView *line;
 @end
 
 @implementation TFY_BannerView
@@ -81,34 +84,57 @@
 
 - (void)resetCollection{
     self.bannerControl.numberOfPages = self.data.count;
+    self.bannerControl.hidden = self.data.count==1?YES:NO;
+
     [UIView animateWithDuration:0.0 animations:^{
         [self.myCollectionV reloadData];
-        if (self.param.tfy_SelectIndex > 0 || self.param.tfy_Repeat) {
+        if (self.param.tfy_SelectIndex >= 0 || self.param.tfy_Repeat) {
             NSIndexPath *path = [NSIndexPath indexPathForRow: self.param.tfy_Repeat?((COUNT/2)*self.data.count+self.param.tfy_SelectIndex):self.param.tfy_SelectIndex inSection:0];
-            [self scrolToPath:path animated:NO];
-            self.bannerControl.currentPage = self.param.tfy_SelectIndex;
-            self.param.myCurrentPath = self.param.tfy_Repeat?((COUNT/2)*self.data.count+self.param.tfy_SelectIndex):self.param.tfy_SelectIndex;
-            if (self.param.tfy_AutoScroll) {
-                [self createTimer];
-            }else{
-                [self cancelTimer];
-            }
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self scrolToPath:path animated:NO];
+                self.bannerControl.currentPage = self.param.tfy_SelectIndex;
+                self.param.myCurrentPath = self.param.tfy_Repeat?((COUNT/2)*self.data.count+self.param.tfy_SelectIndex):self.param.tfy_SelectIndex;
+                if (self.param.tfy_AutoScroll) {
+                    [self createTimer];
+                }else{
+                    [self cancelTimer];
+                }
+            });
         }
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self scrollEnd:[NSIndexPath indexPathForRow: self.param.tfy_Repeat?((COUNT/2)*self.data.count+self.param.tfy_SelectIndex):self.param.tfy_SelectIndex inSection:0]];
         });
     } completion:^(BOOL finished) {}];
     
-    
+    if (self.param.tfy_SpecialStyle == SpecialStyleLine&&self.param.tfy_Data.count) {
+        [self addSubview:self.line];
+        self.line.hidden = NO;
+        self.line.backgroundColor = [UIColor redColor];
+        if (self.param.tfy_SpecialCustumLine) {
+            self.param.tfy_SpecialCustumLine(self.line);
+        }
+        
+        CGFloat lineHeight = CGRectGetHeight(self.line.frame)?:2;
+        CGFloat lineWidth = CGRectGetWidth(self.param.tfy_Frame)/self.param.tfy_Data.count;
+        self.line.frame = CGRectMake(0, CGRectGetHeight(self.param.tfy_Frame) -lineHeight,  lineWidth, lineHeight);
+    }else{
+        self.line.hidden = YES;
+    }
 }
 
 - (void)setUp{
+    if (self.data&&self.data.count==1) {
+        self.param.tfy_Repeat = NO;
+        self.param.tfy_AutoScroll = NO;
+    }
+    
     if (self.param.tfy_Marquee) {
         self.param.tfy_AutoScroll = YES;
         self.param.tfy_HideBannerControl = YES;
-        self.param.tfy_AutoScrollSecond = 0.05f;
+        marginTime = 0.005;
         self.param.tfy_Repeat = YES;
     }
+    self.param.tfy_Frame = CGRectIntegral(self.param.tfy_Frame);
     
     if (self.param.tfy_ScreenScale<1&&self.param.tfy_ScreenScale>0) {
         CGRect rect = self.param.tfy_Frame;
@@ -143,7 +169,9 @@
     }else if(self.param.tfy_ItemSize.width>CGRectGetWidth(self.frame)){
         self.param.tfy_ItemSize = CGSizeMake(CGRectGetWidth(self.frame), self.param.tfy_ItemSize.height);
     }
-    
+    int width = self.param.tfy_ItemSize.width;
+    int height = self.param.tfy_ItemSize.height;
+    self.param.tfy_ItemSize = CGSizeMake(width, height);
     
     switch (self.param.tfy_CardOverLap) {
         case CardtypeCommon:
@@ -164,6 +192,7 @@
     }
     
     [self addSubview:self.myCollectionV];
+    
     self.myCollectionV.scrollEnabled = self.param.tfy_CanFingerSliding;
     
     [self.myCollectionV registerClass:[Collectioncell class] forCellWithReuseIdentifier:NSStringFromClass([Collectioncell class])];
@@ -174,7 +203,7 @@
             
            [self.myCollectionV registerClass:NSClassFromString(self.param.tfy_MyCellClassNames) forCellWithReuseIdentifier:self.param.tfy_MyCellClassNames];
             
-        }else if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSArray class]]) {
+        } else if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSArray class]]) {
             
             [(NSArray*)self.param.tfy_MyCellClassNames enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj isKindOfClass:[NSString class]]) {
@@ -187,11 +216,6 @@
     self.myCollectionV.frame = self.bounds;
     self.myCollectionV.pagingEnabled = (self.param.tfy_ItemSize.width == CGRectGetWidth(self.myCollectionV.frame) && self.param.tfy_LineSpacing == 0)||self.param.tfy_Vertical;
     
-    if ([self.myCollectionV isPagingEnabled]) {
-        self.myCollectionV.decelerationRate = UIScrollViewDecelerationRateNormal;
-    }
-    
-   
     self.bannerControl = [[TFY_BannerPageControl alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.frame) - 30, CGRectGetWidth(self.frame)-20, 30)];
     self.bannerControl.pageControlType = PageControlTypeCircle;
     if (self.param.tfy_CustomControl) {
@@ -202,6 +226,7 @@
     }
     
     self.bgImgView = [[TFY_BannerImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight)];
+//    self.bgImgView.contentMode = self.param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
     [self addSubview:self.bgImgView];
     [self sendSubviewToBack:self.bgImgView];
     self.bgImgView.hidden = !self.param.tfy_Effect;
@@ -210,6 +235,7 @@
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     effectView.frame = self.bgImgView.bounds;
     effectView.alpha = self.param.tfy_EffectAlpha;
+//    effectView.contentMode = self.param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
     [self.bgImgView addSubview:effectView];
     self.effectView = effectView;
     
@@ -220,9 +246,10 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = self.param.tfy_Repeat?indexPath.row%self.data.count:indexPath.row;
     id dic = self.data[index];
+    UICollectionViewCell *tmpCell = nil;
     if (self.param.tfy_MyCell) {
-        return self.param.tfy_MyCell([NSIndexPath indexPathForRow:index inSection:indexPath.section], collectionView, dic,self.bgImgView,self.data);
-    }else{
+        tmpCell = self.param.tfy_MyCell([NSIndexPath indexPathForRow:index inSection:indexPath.section], collectionView, dic,self.bgImgView,self.data);
+    } else {
         //默认视图
         Collectioncell *cell = (Collectioncell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([Collectioncell class]) forIndexPath:indexPath];
         cell.param = self.param;
@@ -232,8 +259,9 @@
         }else{
             [self setIconData:cell.icon withData:dic];
         }
-        return cell;
+        tmpCell = cell;
     }
+    return tmpCell;
 }
 
 - (void)setIconData:(TFY_BannerImageView*)icon withData:(id)data{
@@ -246,15 +274,6 @@
             icon.image = [UIImage imageNamed:(NSString*)data];
         }
     }
-}
-- (dispatch_queue_t )getImageOperatorQueue{
-    static dispatch_queue_t  _imageOperatorQueue;
-    static dispatch_once_t oncePredicate;
-    dispatch_once(&oncePredicate, ^{
-        //第二个参数 传入 DISPATCH_QUEUE_SERIAL 或 NULL 表示创建串行队列。传入 DISPATCH_QUEUE_CONCURRENT 表示创建并行队列
-        _imageOperatorQueue = dispatch_queue_create([@"imageOperatorQueue" UTF8String], DISPATCH_QUEUE_CONCURRENT);
-    });
-    return _imageOperatorQueue;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -349,9 +368,10 @@
     switch (self.param.tfy_CardOverLap) {
         case CardtypeCommon://普通
             if ([self.myCollectionV isPagingEnabled]) {
-                [self.myCollectionV scrollToItemAtIndexPath:path atScrollPosition:
-                 self.param.tfy_Vertical?UICollectionViewScrollPositionCenteredVertically:
-                                      UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+                [self.myCollectionV setContentOffset: self.param.tfy_Vertical?
+                 CGPointMake(0, path.row *CGRectGetHeight(self.myCollectionV.frame)):
+                 CGPointMake(path.row *CGRectGetWidth(self.myCollectionV.frame), 0)
+                                            animated:animated];
             }else{
                 [self.myCollectionV scrollToItemAtIndexPath:path atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
             }
@@ -368,7 +388,7 @@
         default:
             break;
     }
-    if ([self.myCollectionV isPagingEnabled]||self.param.tfy_CardOverLap) return;
+    if ([self.myCollectionV isPagingEnabled]) return;
     
     if(self.param.tfy_ContentOffsetX>0.5){
         self.myCollectionV.contentOffset = CGPointMake(self.myCollectionV.contentOffset.x-(self.param.tfy_ContentOffsetX-0.5)*CGRectGetWidth(self.myCollectionV.frame), self.myCollectionV.contentOffset.y);
@@ -426,19 +446,19 @@
 }
 
 
-
 //定时器
 - (void)createTimer {
     SEL sel = NSSelectorFromString(self.param.tfy_Marquee?@"autoMarqueenScrollAction":@"autoScrollAction");
+    CGFloat value_time = self.param.tfy_Marquee?marginTime:self.param.tfy_AutoScrollSecond;
     switch (self.param.tfy_Time) {
         case BannTimeTypeGCD:{
-            NSString *time = [BannerTime bannerTimerWithTarget:self selector:sel StartTime:1 interval:self.param.tfy_AutoScrollSecond repeats:YES mainQueue:YES];
+            NSString *time = [BannerTime bannerTimerWithTarget:self selector:sel StartTime:1 interval:value_time repeats:YES mainQueue:YES];
             self.gcd_timer = time;
         }
             break;
         case BannTimeTypeTime:{
             if (self.timer == nil) {
-                NSTimer *timer = [NSTimer timerWithTimeInterval:self.param.tfy_AutoScrollSecond target:self selector:sel userInfo:nil repeats:YES];
+                NSTimer *timer = [NSTimer timerWithTimeInterval:value_time target:self selector:sel userInfo:nil repeats:YES];
                 [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
                 self.timer = timer;
             }
@@ -457,8 +477,8 @@
         [self cancelTimer];
         return;
     }
-    self.param.myCurrentPath+=1;
-    if (self.param.tfy_Repeat&&  self.param.myCurrentPath == (self.data.count*COUNT)) {
+    self.param.myCurrentPath += 1;
+    if (self.param.tfy_Repeat&&  self.param.myCurrentPath == (self.data.count*COUNT - 1)) {
        self.param.myCurrentPath = 0;
     }
     else if(!self.param.tfy_Repeat&&  self.param.myCurrentPath == self.data.count){
@@ -476,19 +496,21 @@
         [self cancelTimer];
         return;
     }
+    NSValue *value = nil;
     if (self.param.tfy_Vertical) {
         CGFloat OffsetY = self.myCollectionV.contentOffset.y + self.param.tfy_MarqueeRate;
         if (OffsetY >self.myCollectionV.contentSize.height) {
             OffsetY = self.myCollectionV.contentSize.height/2;
         }
-        [self.myCollectionV setContentOffset:CGPointMake(self.myCollectionV.contentOffset.x, OffsetY) animated:NO];
+        value = [NSValue valueWithCGPoint:CGPointMake(self.myCollectionV.contentOffset.x, OffsetY)];
     }else{
         CGFloat OffsetX = self.myCollectionV.contentOffset.x + self.param.tfy_MarqueeRate;
         if (OffsetX >self.myCollectionV.contentSize.width) {
             OffsetX = self.myCollectionV.contentSize.width/2;
         }
-        [self.myCollectionV setContentOffset:CGPointMake(OffsetX, self.myCollectionV.contentOffset.y) animated:NO];
+        value = [NSValue valueWithCGPoint:CGPointMake(OffsetX, self.myCollectionV.contentOffset.y)];
     }
+    [self.myCollectionV setContentOffset:value.CGPointValue];
 }
 
 //定时器销毁
@@ -517,24 +539,28 @@
         if (self.param.tfy_AutoScroll) {
             [self cancelTimer];
         }
+    }else{
+        [self cancelTimer];
+        [self performSelector:@selector(createTimer) withObject:nil afterDelay:self.param.tfy_AutoScrollSecond];
     }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSInteger index = 0;
     switch (self.param.tfy_CardOverLap) {
         case CardtypeCommon:
             if ([self.myCollectionV isPagingEnabled]&&!self.param.tfy_Marquee) {
-                NSInteger index =  self.param.tfy_Vertical?
+                index =  self.param.tfy_Vertical?
                                    scrollView.contentOffset.y/scrollView.frame.size.height:
                                    scrollView.contentOffset.x/scrollView.frame.size.width;
                 self.param.myCurrentPath = index;
-                self.bannerControl.currentPage = self.param.tfy_Repeat?index %self.data.count:index;
+            }else{
+                index = self.param.myCurrentPath;
             }
             break;
         case CardtypeFallen:
             if ([self.myCollectionV isPagingEnabled]&&!self.param.tfy_Marquee) {
-                NSInteger index = self.param.tfy_Repeat?self.param.myCurrentPath%self.data.count:self.param.myCurrentPath;
-                self.bannerControl.currentPage = self.param.tfy_Repeat?index %self.data.count:index;
+                index = self.param.myCurrentPath;
             }
             break;
         case CardtypeMultifunction:
@@ -543,11 +569,19 @@
         default:
             break;
     }
+    self.bannerControl.currentPage = self.param.tfy_Repeat?index %self.data.count:index;
+    if (self.param.tfy_EventDidScroll) {
+        self.param.tfy_EventDidScroll(scrollView.contentOffset);
+    }
+    [self setUpSpecialFrame];
 }
 
 //拖动结束
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     beganDragging = NO;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (!self.param.tfy_Marquee) {
         if (![self.myCollectionV isPagingEnabled]) {
             self.bannerControl.currentPage = self.param.tfy_Repeat?self.param.myCurrentPath%self.data.count:self.param.myCurrentPath;
@@ -555,29 +589,72 @@
         if (self.param.tfy_AutoScroll) {
             [self createTimer];
         }
+        [self setUpSpecialFrame];
+        [self scrollEnd:[NSIndexPath indexPathForRow:self.param.myCurrentPath inSection:0]];
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    switch (self.param.tfy_CardOverLap) {
+        case CardtypeCommon:
+            
+            break;
+        case CardtypeFallen:
+            self.param.myCurrentPath = self.param.tfy_Vertical?
+                  MAX(floor(scrollView.contentOffset.y / scrollView.bounds.size.height ), 0):
+                  MAX(floor(scrollView.contentOffset.x / scrollView.bounds.size.width ), 0);
+            break;
+        case CardtypeMultifunction:
+            
+            break;
+        default:
+            
+            break;
+    }
     [self scrollEnd:[NSIndexPath indexPathForRow:self.param.myCurrentPath inSection:0]];
+    [self setUpSpecialFrame];
 }
 
+//更新下划线位置
+- (void)setUpSpecialFrame{
+    if (!self.param.tfy_SpecialStyle) return;
+    if (!self.data.count) return;
 
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
-   [self scrollEnd:[NSIndexPath indexPathForRow:self.param.myCurrentPath inSection:0]];
+    if (self.param.tfy_SpecialStyle == SpecialStyleLine) {
+        [UIView animateWithDuration:0.5 animations:^{
+            CGRect rect = self.line.frame;
+            rect.origin.x = (self.param.tfy_Repeat?self.param.myCurrentPath%self.data.count:self.param.myCurrentPath)*rect.size.width;
+            self.line.frame = rect;
+        }];
+    }
 }
 
 - (void)scrollEnd:(NSIndexPath*)indexPath{
     if (!self.data.count) return;
     if (self.param.tfy_Marquee) return;
-    NSInteger index = self.param.tfy_Repeat?self.param.myCurrentPath%self.data.count:self.param.myCurrentPath;
+    NSInteger indexCountPath = 0;
+    switch (self.param.tfy_CardOverLap) {
+        case CardtypeCommon:
+            indexCountPath = self.param.myCurrentPath;
+            break;
+        case CardtypeFallen:
+            indexCountPath = self.param.overFactPath;
+            break;
+        case CardtypeMultifunction:
+            
+            break;
+        default:
+            break;
+    }
+    NSInteger current = MAX(indexCountPath, 0);
+    NSInteger index =  self.param.tfy_Repeat?current%self.data.count:current;
     if (index>self.data.count-1) {
         index = 0;
     }
+    //取上一张
     id dic = self.data[index];
     if (self.param.tfy_EventScrollEnd) {
-        NSLog(@"%ld",self.param.myCurrentPath);
-        NSLog(@"%ld",indexPath.item);
         BOOL center = [self checkCellInCenterCollectionView:self.myCollectionV AtIndexPath:indexPath];
         UICollectionViewCell *currentCell = (UICollectionViewCell*)[self.myCollectionV cellForItemAtIndexPath:indexPath];
         self.param.tfy_EventScrollEnd(dic, index, center,currentCell);
@@ -589,8 +666,13 @@
             [self setIconData:self.bgImgView  withData:dic];
         }
     }
+    self.bannerControl.currentPage =  index;
+    
+    if (self.param.tfy_EventDidScroll) {
+        self.param.tfy_EventDidScroll(self.myCollectionV.contentOffset);
+    }
+    self.lastIndex = current;
 }
-
 
 - (UICollectionView *)myCollectionV{
     if (!_myCollectionV) {
@@ -631,6 +713,13 @@
                 break;
         }
     }
+}
+
+- (UIView *)line{
+    if (!_line) {
+        _line = [UIView new];
+    }
+    return _line;
 }
 
 @end

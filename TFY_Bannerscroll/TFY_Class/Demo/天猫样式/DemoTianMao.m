@@ -21,7 +21,7 @@
     
     TFY_BannerParam *param = paramModel()
     //自定义视图必传
-    .tfy_MyCellClassNameSet(@"TianMaoCell")
+    .tfy_MyCellClassNamesSet(@"TianMaoCell")
     .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
                //自定义视图
         TianMaoCell *cell = (TianMaoCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TianMaoCell class]) forIndexPath:indexPath];

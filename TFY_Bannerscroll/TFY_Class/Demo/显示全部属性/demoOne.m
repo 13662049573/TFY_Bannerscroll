@@ -47,7 +47,7 @@
         pageControl.currentPageNumberFont = [UIFont boldSystemFontOfSize:9.0];
     })
     //自定义视图必传
-    .tfy_MyCellClassNameSet(@"MyCell")
+    .tfy_MyCellClassNamesSet(@"MyCell")
     .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, TFY_BannerImageView *bgImageView,NSArray*dataArr) {
             //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];

@@ -26,7 +26,7 @@
 - (void)demoOne{
     TFY_BannerParam *param =paramModel()
     //自定义视图必传
-    .tfy_MyCellClassNameSet(@"MyCell")
+    .tfy_MyCellClassNamesSet(@"MyCell")
     .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
                //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
@@ -63,7 +63,7 @@
 - (void)demoTwo{
     TFY_BannerParam *param =paramModel()
    //自定义视图必传
-   .tfy_MyCellClassNameSet(@"MyCell")
+   .tfy_MyCellClassNamesSet(@"MyCell")
    .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
               //自定义视图
        MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
@@ -96,7 +96,7 @@
 - (void)demoThree{
      TFY_BannerParam *param =paramModel()
     //自定义视图必传
-    .tfy_MyCellClassNameSet(@"MyCell")
+    .tfy_MyCellClassNamesSet(@"MyCell")
     .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
                //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
@@ -104,7 +104,7 @@
         [cell.icon tfy_setImageWithURL:model[@"icon"]];
         return cell;
     })
-    .tfy_FrameSet(CGRectMake(0, BannerHeight*0.5, BannerWitdh, BannerHeight*0.2))
+    .tfy_FrameSet(CGRectMake(0, BannerHeight*0.55, BannerWitdh, BannerHeight*0.2))
     .tfy_DataSet([self getData])
     //关闭pageControl
     .tfy_HideBannerControlSet(YES)
@@ -122,7 +122,8 @@
     .tfy_SectionInsetSet(UIEdgeInsetsMake(0,10, 0, BannerWitdh*0.55*0.3))
     //间距
     .tfy_LineSpacingSet(10)
-    ;
+    .tfy_ClickCenterSet(YES);
+    
     TFY_BannerView *bannerView = [[TFY_BannerView alloc]initConfigureWithModel:param];
     [self.view addSubview:bannerView];
 }
