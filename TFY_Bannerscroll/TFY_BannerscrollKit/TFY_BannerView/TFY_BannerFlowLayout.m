@@ -113,10 +113,20 @@
 }
 
 - (void)setUpIndex{
-    if (!self.param.tfy_CardOverLap) {
-         self.param.myCurrentPath = self.param.tfy_Vertical?
-         round((ABS(self.collectionView.contentOffset.y))/(self.param.tfy_ItemSize.height+self.param.tfy_LineSpacing)):
-             round ((ABS(self.collectionView.contentOffset.x))/(self.param.tfy_ItemSize.width+self.param.tfy_LineSpacing));
+    switch (self.param.tfy_CardOverLap) {
+        case CardtypeCommon:
+            self.param.myCurrentPath = self.param.tfy_Vertical?
+            round((ABS(self.collectionView.contentOffset.y))/(self.param.tfy_ItemSize.height+self.param.tfy_LineSpacing)):
+                round ((ABS(self.collectionView.contentOffset.x))/(self.param.tfy_ItemSize.width+self.param.tfy_LineSpacing));
+            break;
+        case CardtypeFallen:
+            
+            break;
+        case CardtypeMultifunction:
+            
+            break;
+        default:
+            break;
     }
 }
 
