@@ -19,8 +19,8 @@ TFY_BannerParam *paramModel(void);
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGRect,tfy_Frame)
 /**选择想要的定时器 默认 BannTimeTypeGCD*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannTimeType,tfy_Time)
-/**图片的样式*/
-TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannerViewImageType,tfy_imageType)
+/**图片的样式 默认 混合*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannerImageURLType,tfy_imageURLType)
 /**图片添加圆角*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_bannerRadius)
 /**数据源 必传*/
@@ -55,7 +55,7 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_ClickCenter)
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Marquee)
 //中间视图放最上面 default NO
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Zindex)
-/**是否裁剪*/
+/**是否等比裁剪图片，默认关闭*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_bannerScale)
 /**整体间距 默认UIEdgeInsetsMake(0,0, 0, 0)*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,UIEdgeInsets,tfy_SectionInset)

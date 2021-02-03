@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,copy,readwrite)WebImageCompleted completed;
 /// 下载进度回调
 @property(nonatomic,copy,readwrite)LoadProgressBlock progress;
-/// 图片地址链接类型，默认 KJBannerImageURLTypeCommon
+/// 图片地址链接类型，默认 BannerImageURLTypeCommon
 @property(nonatomic,assign)BannerImageURLType URLType;
 /// 是否缓存数据至本地，默认开启
 @property(nonatomic,assign)bool cacheDatas;

@@ -101,7 +101,7 @@ typedef enum {
     DiverseImageScrollCardSeven,
 }DiverseImageScrollType;
 
-/**图片类型*/
+/**返回图片类型*/
 typedef NS_ENUM(NSInteger, BannerImageType) {
     BannerImageTypeUnknown = 0, /// 未知
     BannerImageTypeJpeg    = 1, /// jpg
@@ -111,21 +111,6 @@ typedef NS_ENUM(NSInteger, BannerImageType) {
     BannerImageTypeWebp    = 5, /// webp
 };
 
-/// 数据源类型
-typedef NS_ENUM(NSInteger, BannerViewImageType) {
-    BannerViewImageTypeMix = 0,  /// 混合，本地图片、网络图片、网络动态图、本地动态图
-    BannerViewImageTypeLocality, /// 本地图片和本地动态图
-    BannerViewImageTypeGIFAndNet,/// 网络动态图和网络图片混合
-    BannerViewImageTypeNetIamge, /// 网络图片
-    BannerViewImageTypeGIFImage, /// 网络动态图
-};
-/// 图片的几种类型
-typedef NS_ENUM(NSInteger, BannerImageInfoType) {
-    BannerImageInfoTypeLocality = 0,/// 本地图片
-    BannerImageInfoTypeLocalityGIF, /// 本地动态图
-    BannerImageInfoTypeNetIamge,    /// 网络图片
-    BannerImageInfoTypeGIFImage,    /// 网络动态图
-};
 /// 图片链接类型
 typedef NS_ENUM(NSInteger, BannerImageURLType) {
     BannerImageURLTypeMixture = 0,/// 混合

@@ -65,8 +65,8 @@ TFY_BannerParam *paramModel(void){
         self.tfy_visibleCount = kVisibleCount;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
         self.tfy_Time = BannTimeTypeGCD;
-        self.tfy_imageType = BannerViewImageTypeMix;
-        self.tfy_bannerScale = YES;
+        self.tfy_imageURLType = BannerImageURLTypeMixture;
+        self.tfy_bannerScale = NO;
     }
     return self;
 }
@@ -75,7 +75,7 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,CGRect,tfy_Frame)
 /**选择想要的定时器*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannTimeType,tfy_Time)
 /**图片的样式*/
-TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerViewImageType,tfy_imageType)
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerImageURLType,tfy_imageURLType)
 /**图片添加圆角*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_bannerRadius)
 /**数据源 必传*/
