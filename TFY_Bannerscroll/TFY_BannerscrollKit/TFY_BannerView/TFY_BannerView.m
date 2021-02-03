@@ -225,7 +225,7 @@
         [self addSubview:self.bannerControl];
     }
     
-    self.bgImgView = [[TFY_BannerImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight)];
+    self.bgImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight)];
 //    self.bgImgView.contentMode = self.param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
     [self addSubview:self.bgImgView];
     [self sendSubviewToBack:self.bgImgView];
@@ -254,24 +254,35 @@
         Collectioncell *cell = (Collectioncell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([Collectioncell class]) forIndexPath:indexPath];
         cell.param = self.param;
         if ([dic isKindOfClass:[NSDictionary class]]) {
-            [self setIconData:cell.icon withData:dic[self.param.tfy_DataParamIconName]];
+            [self setIconData:cell.bannerImageView withData:dic[self.param.tfy_DataParamIconName]];
 
         }else{
-            [self setIconData:cell.icon withData:dic];
+            [self setIconData:cell.bannerImageView withData:dic];
         }
         tmpCell = cell;
     }
     return tmpCell;
 }
 
-- (void)setIconData:(TFY_BannerImageView*)icon withData:(id)data{
+- (void)setIconData:(UIImageView*)bannerImageView withData:(id)data{
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
-        if ([(NSString*)data hasPrefix:@"http"] || [(NSString*)data hasPrefix:@"https"]) {
         UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-        [icon tfy_setImageWithURL:(NSString*)data placeholderImage:defaultimage];
-        }else{
-            icon.image = [UIImage imageNamed:(NSString*)data];
+        if (kBannerLocality((NSString*)data)) {
+            NSData *dataimage = kBannerGetLocalityGIFData((NSString*)data);
+            if (dataimage) {
+                bannerImageView.image = [UIImage tfy_bannerGIFImageWithData:dataimage]?:defaultimage;
+            } else {
+                bannerImageView.image = [UIImage imageNamed:(NSString*)data]?:defaultimage;
+            }
+        } else {
+            [bannerImageView tfy_setImageWithURL:[NSURL URLWithString:(NSString*)data] handle:^(id<TFY_BannerWebImageHandle>  _Nonnull handle) {
+                handle.placeholder = defaultimage;
+                handle.cropScale = self.param.tfy_bannerScale;
+                handle.completed = ^(BannerImageType imageType, UIImage * _Nullable image, NSData * _Nullable data) {
+                    bannerImageView.image = image;
+                };
+            }];
         }
     }
 }
@@ -729,20 +740,34 @@
 -(instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self){
-        self.icon = [TFY_BannerImageView new];
-        self.icon.layer.masksToBounds = YES;
-        [self.contentView addSubview:self.icon];
-        self.icon.frame = self.contentView.bounds;
-        self.contentView.layer.masksToBounds = YES;
-        self.contentView.layer.cornerRadius = 5;
+        [self.contentView addSubview:self.bannerImageView];
     }
     return self;
 }
 
 - (void)setParam:(TFY_BannerParam *)param{
     _param = param;
-    self.icon.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
+    self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
+    
+    if (_param.tfy_bannerRadius > 0) {
+        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+        maskLayer.frame = self.bounds;
+        maskLayer.path = ({
+            UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bannerImageView.bounds cornerRadius:_param.tfy_bannerRadius];
+            path.CGPath;
+        });
+        self.bannerImageView.layer.mask = maskLayer;
+    }
 }
+
+- (UIImageView*)bannerImageView{
+    if(!_bannerImageView){
+        _bannerImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    }
+    return _bannerImageView;
+}
+
+
 @end
 
 @implementation CollectionTextCell

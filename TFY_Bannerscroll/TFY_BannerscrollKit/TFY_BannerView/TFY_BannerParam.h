@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TFY_BannerConfig.h"
+#import "TFY_ITools.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,8 +19,12 @@ TFY_BannerParam *paramModel(void);
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGRect,tfy_Frame)
 /**选择想要的定时器 默认 BannTimeTypeGCD*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannTimeType,tfy_Time)
+/**图片的样式*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannerViewImageType,tfy_imageType)
+/**图片添加圆角*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_bannerRadius)
 /**数据源 必传*/
-TFY_BannerSetFuncStatement(TFY_BannerParam,strong,NSArray*,tfy_Data)
+TFY_BannerSetFuncStatement(TFY_BannerParam,strong,NSArray<id>*,tfy_Data)
 /**开启缩放 default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Scale)
 /**选择卡片模式 default CardtypeCommon*/
@@ -37,7 +41,7 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Effect)
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_HideBannerControl)
 /**是否允许手势滑动 default YES*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_CanFingerSliding)
-/**图片不变形铺满 默认 YES*/
+/**图片不变形铺满 默认 NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_ImageFill)
 /**开启无线滚动 default NO*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Repeat)
@@ -51,6 +55,8 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_ClickCenter)
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Marquee)
 //中间视图放最上面 default NO
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_Zindex)
+/**是否裁剪*/
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BOOL,tfy_bannerScale)
 /**整体间距 默认UIEdgeInsetsMake(0,0, 0, 0)*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,UIEdgeInsets,tfy_SectionInset)
 /**整体视图缩放系数 default 1*/

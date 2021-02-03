@@ -35,7 +35,7 @@ TFY_BannerParam *paramModel(void){
         self.tfy_Effect = NO;
         self.tfy_HideBannerControl = NO;
         self.tfy_CanFingerSliding = YES;
-        self.tfy_ImageFill = YES;
+        self.tfy_ImageFill = NO;
         self.tfy_Repeat = NO;
         self.tfy_AutoScroll = NO;
         self.tfy_Vertical = NO;
@@ -65,8 +65,8 @@ TFY_BannerParam *paramModel(void){
         self.tfy_visibleCount = kVisibleCount;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
         self.tfy_Time = BannTimeTypeGCD;
-        
-        
+        self.tfy_imageType = BannerViewImageTypeMix;
+        self.tfy_bannerScale = YES;
     }
     return self;
 }
@@ -74,8 +74,12 @@ TFY_BannerParam *paramModel(void){
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGRect,tfy_Frame)
 /**选择想要的定时器*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannTimeType,tfy_Time)
+/**图片的样式*/
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerViewImageType,tfy_imageType)
+/**图片添加圆角*/
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_bannerRadius)
 /**数据源 必传*/
-TFY_BannerSetFuncImplementation(TFY_BannerParam,NSArray*,tfy_Data)
+TFY_BannerSetFuncImplementation(TFY_BannerParam,NSArray<id>*,tfy_Data)
 /**开启缩放 default NO*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Scale)
 /**开启卡片重叠模式 default NO*/
@@ -106,6 +110,8 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_ClickCenter)
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Marquee)
 //中间视图放最上面 default NO
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Zindex)
+/**是否裁剪*/
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_bannerScale)
 /**整体间距 默认UIEdgeInsetsMake(0,0, 0, 0)*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,UIEdgeInsets,tfy_SectionInset)
 /**整体视图缩放系数 default 1*/

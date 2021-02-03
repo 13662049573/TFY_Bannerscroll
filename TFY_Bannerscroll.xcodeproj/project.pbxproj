@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33D8A0A537D10489E1DC8272 /* Pods_TFY_BannerscrollTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29F625BEEF7898D1E210DE0 /* Pods_TFY_BannerscrollTests.framework */; };
-		36085D9625C6299600B087DD /* TFY_FImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 36085D9525C6299600B087DD /* TFY_FImageCache.m */; };
 		36085DA525C636E600B087DD /* NSData+ImageType.m in Sources */ = {isa = PBXBuildFile; fileRef = 36085DA425C636E600B087DD /* NSData+ImageType.m */; };
-		36085DAB25C638FA00B087DD /* TFY_BannerImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36085DAA25C638FA00B087DD /* TFY_BannerImageView.m */; };
-		36085DB125C6441600B087DD /* TFY_BannerImageView+webURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 36085DB025C6441600B087DD /* TFY_BannerImageView+webURL.m */; };
 		36085DFF25C64CE300B087DD /* UIImageView+webURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 36085DFE25C64CE300B087DD /* UIImageView+webURL.m */; };
 		3654E37425C578EA0042826D /* TFY_BannerPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37325C578EA0042826D /* TFY_BannerPageControl.m */; };
 		3654E38625C57C160042826D /* TFY_BannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37C25C57C160042826D /* TFY_BannerView.m */; };
@@ -40,6 +37,12 @@
 		3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */; };
 		3677C49125C82E6A00665836 /* TFY_BannerDiverseLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3677C48D25C82E6A00665836 /* TFY_BannerDiverseLayoutAttributes.m */; };
 		3677C49225C82E6A00665836 /* TFY_BannerDiverseLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3677C48E25C82E6A00665836 /* TFY_BannerDiverseLayout.m */; };
+		36BE054925CA7F9D00BB0D96 /* UIImage+BannerGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BE054825CA7F9D00BB0D96 /* UIImage+BannerGIF.m */; };
+		36BE054F25CA802C00BB0D96 /* TFY_CacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BE054E25CA802C00BB0D96 /* TFY_CacheManager.m */; };
+		36BE055B25CA841A00BB0D96 /* TFY_BannerDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BE055A25CA841A00BB0D96 /* TFY_BannerDownloader.m */; };
+		36BE056425CA851000BB0D96 /* TFY_BannerLoadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BE056325CA851000BB0D96 /* TFY_BannerLoadManager.m */; };
+		36BE057125CA8CA700BB0D96 /* UIButton+webURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BE057025CA8CA700BB0D96 /* UIButton+webURL.m */; };
+		36BE057725CA8D8D00BB0D96 /* UIView+webURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BE057625CA8D8D00BB0D96 /* UIView+webURL.m */; };
 		36CDA2BC23B8337B009EFF82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BB23B8337B009EFF82 /* UIKit.framework */; };
 		36CDA2BE23B83383009EFF82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BD23B83383009EFF82 /* Foundation.framework */; };
 		EC6790A5AB1874B21FE71537 /* Pods_TFY_Bannerscroll.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E304A0B8A9FD3B88B89E280D /* Pods_TFY_Bannerscroll.framework */; };
@@ -67,14 +70,8 @@
 		0FEB32499BF82F690EB88A3F /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1DF16605C24348E72E6F6241 /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		36085D9425C6299600B087DD /* TFY_FImageCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_FImageCache.h; sourceTree = "<group>"; };
-		36085D9525C6299600B087DD /* TFY_FImageCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_FImageCache.m; sourceTree = "<group>"; };
 		36085DA325C636E600B087DD /* NSData+ImageType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageType.h"; sourceTree = "<group>"; };
 		36085DA425C636E600B087DD /* NSData+ImageType.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+ImageType.m"; sourceTree = "<group>"; };
-		36085DA925C638FA00B087DD /* TFY_BannerImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerImageView.h; sourceTree = "<group>"; };
-		36085DAA25C638FA00B087DD /* TFY_BannerImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerImageView.m; sourceTree = "<group>"; };
-		36085DAF25C6441600B087DD /* TFY_BannerImageView+webURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TFY_BannerImageView+webURL.h"; sourceTree = "<group>"; };
-		36085DB025C6441600B087DD /* TFY_BannerImageView+webURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "TFY_BannerImageView+webURL.m"; sourceTree = "<group>"; };
 		36085DFD25C64CE300B087DD /* UIImageView+webURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+webURL.h"; sourceTree = "<group>"; };
 		36085DFE25C64CE300B087DD /* UIImageView+webURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+webURL.m"; sourceTree = "<group>"; };
 		3654E37125C578EA0042826D /* TFY_BannerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerConfig.h; sourceTree = "<group>"; };
@@ -134,6 +131,20 @@
 		3677C48E25C82E6A00665836 /* TFY_BannerDiverseLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerDiverseLayout.m; sourceTree = "<group>"; };
 		3677C48F25C82E6A00665836 /* TFY_BannerDiverseLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerDiverseLayout.h; sourceTree = "<group>"; };
 		3677C49025C82E6A00665836 /* TFY_BannerDiverseLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerDiverseLayoutAttributes.h; sourceTree = "<group>"; };
+		36BE054725CA7F9D00BB0D96 /* UIImage+BannerGIF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+BannerGIF.h"; sourceTree = "<group>"; };
+		36BE054825CA7F9D00BB0D96 /* UIImage+BannerGIF.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+BannerGIF.m"; sourceTree = "<group>"; };
+		36BE054D25CA802C00BB0D96 /* TFY_CacheManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_CacheManager.h; sourceTree = "<group>"; };
+		36BE054E25CA802C00BB0D96 /* TFY_CacheManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_CacheManager.m; sourceTree = "<group>"; };
+		36BE055925CA841A00BB0D96 /* TFY_BannerDownloader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerDownloader.h; sourceTree = "<group>"; };
+		36BE055A25CA841A00BB0D96 /* TFY_BannerDownloader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerDownloader.m; sourceTree = "<group>"; };
+		36BE056225CA851000BB0D96 /* TFY_BannerLoadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerLoadManager.h; sourceTree = "<group>"; };
+		36BE056325CA851000BB0D96 /* TFY_BannerLoadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerLoadManager.m; sourceTree = "<group>"; };
+		36BE056825CA87C500BB0D96 /* TFY_BannerWebImageHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerWebImageHandle.h; sourceTree = "<group>"; };
+		36BE056F25CA8CA700BB0D96 /* UIButton+webURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+webURL.h"; sourceTree = "<group>"; };
+		36BE057025CA8CA700BB0D96 /* UIButton+webURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIButton+webURL.m"; sourceTree = "<group>"; };
+		36BE057525CA8D8D00BB0D96 /* UIView+webURL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+webURL.h"; sourceTree = "<group>"; };
+		36BE057625CA8D8D00BB0D96 /* UIView+webURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+webURL.m"; sourceTree = "<group>"; };
+		36BE057E25CA8EE200BB0D96 /* TFY_ITools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_ITools.h; sourceTree = "<group>"; };
 		36CDA2BB23B8337B009EFF82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		36CDA2BD23B83383009EFF82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		36EE10F8250A0D7C00D24B3C /* TFY_BannerscrollKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerscrollKit.h; sourceTree = "<group>"; };
@@ -178,19 +189,27 @@
 		3654E37025C578EA0042826D /* TFY_ITools */ = {
 			isa = PBXGroup;
 			children = (
+				36BE057E25CA8EE200BB0D96 /* TFY_ITools.h */,
 				3654E37125C578EA0042826D /* TFY_BannerConfig.h */,
+				36BE056825CA87C500BB0D96 /* TFY_BannerWebImageHandle.h */,
 				3654E37225C578EA0042826D /* TFY_BannerPageControl.h */,
 				3654E37325C578EA0042826D /* TFY_BannerPageControl.m */,
-				36085D9425C6299600B087DD /* TFY_FImageCache.h */,
-				36085D9525C6299600B087DD /* TFY_FImageCache.m */,
 				36085DA325C636E600B087DD /* NSData+ImageType.h */,
 				36085DA425C636E600B087DD /* NSData+ImageType.m */,
-				36085DA925C638FA00B087DD /* TFY_BannerImageView.h */,
-				36085DAA25C638FA00B087DD /* TFY_BannerImageView.m */,
-				36085DAF25C6441600B087DD /* TFY_BannerImageView+webURL.h */,
-				36085DB025C6441600B087DD /* TFY_BannerImageView+webURL.m */,
+				36BE054725CA7F9D00BB0D96 /* UIImage+BannerGIF.h */,
+				36BE054825CA7F9D00BB0D96 /* UIImage+BannerGIF.m */,
+				36BE054D25CA802C00BB0D96 /* TFY_CacheManager.h */,
+				36BE054E25CA802C00BB0D96 /* TFY_CacheManager.m */,
+				36BE055925CA841A00BB0D96 /* TFY_BannerDownloader.h */,
+				36BE055A25CA841A00BB0D96 /* TFY_BannerDownloader.m */,
+				36BE056225CA851000BB0D96 /* TFY_BannerLoadManager.h */,
+				36BE056325CA851000BB0D96 /* TFY_BannerLoadManager.m */,
 				36085DFD25C64CE300B087DD /* UIImageView+webURL.h */,
 				36085DFE25C64CE300B087DD /* UIImageView+webURL.m */,
+				36BE056F25CA8CA700BB0D96 /* UIButton+webURL.h */,
+				36BE057025CA8CA700BB0D96 /* UIButton+webURL.m */,
+				36BE057525CA8D8D00BB0D96 /* UIView+webURL.h */,
+				36BE057625CA8D8D00BB0D96 /* UIView+webURL.m */,
 			);
 			path = TFY_ITools;
 			sourceTree = "<group>";
@@ -668,13 +687,13 @@
 				36085DA525C636E600B087DD /* NSData+ImageType.m in Sources */,
 				3654E38925C57C160042826D /* TFY_BannerParam.m in Sources */,
 				3674C9D423B70FAE0076A0D5 /* DemoDianshang.m in Sources */,
-				36085DAB25C638FA00B087DD /* TFY_BannerImageView.m in Sources */,
 				3674C9CC23B70FAE0076A0D5 /* demoOne.m in Sources */,
-				36085DB125C6441600B087DD /* TFY_BannerImageView+webURL.m in Sources */,
 				3674C9D023B70FAE0076A0D5 /* DemoCard.m in Sources */,
 				3654E38825C57C160042826D /* TFY_BannerOverLayout.m in Sources */,
+				36BE057125CA8CA700BB0D96 /* UIButton+webURL.m in Sources */,
+				36BE055B25CA841A00BB0D96 /* TFY_BannerDownloader.m in Sources */,
+				36BE054925CA7F9D00BB0D96 /* UIImage+BannerGIF.m in Sources */,
 				3674C99423B6DB200076A0D5 /* AppDelegate.m in Sources */,
-				36085D9625C6299600B087DD /* TFY_FImageCache.m in Sources */,
 				3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */,
 				3654E37425C578EA0042826D /* TFY_BannerPageControl.m in Sources */,
 				3654E38A25C57C160042826D /* TFY_BannerFlowLayout.m in Sources */,
@@ -684,6 +703,8 @@
 				3677C49225C82E6A00665836 /* TFY_BannerDiverseLayout.m in Sources */,
 				3674C9CF23B70FAE0076A0D5 /* TianMaoCell.m in Sources */,
 				3674C9D623B70FAE0076A0D5 /* DemoAdd.m in Sources */,
+				36BE056425CA851000BB0D96 /* TFY_BannerLoadManager.m in Sources */,
+				36BE054F25CA802C00BB0D96 /* TFY_CacheManager.m in Sources */,
 				3677C49125C82E6A00665836 /* TFY_BannerDiverseLayoutAttributes.m in Sources */,
 				3674C9CD23B70FAE0076A0D5 /* demoNormal.m in Sources */,
 				3674C9D223B70FAE0076A0D5 /* DemoMarqueen.m in Sources */,
@@ -693,6 +714,7 @@
 				3674C96723B6DAA40076A0D5 /* main.m in Sources */,
 				3674C9D323B70FAE0076A0D5 /* KuaiBaoCell.m in Sources */,
 				3674C9CE23B70FAE0076A0D5 /* DemoTianMao.m in Sources */,
+				36BE057725CA8D8D00BB0D96 /* UIView+webURL.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,21 @@
 
 #import "demoOne.h"
 #import "MyCell.h"
+
+#define gif @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564463770360&di=c93e799328198337ed68c61381bcd0be&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20170714%2F1eed483f1874437990ad84c50ecfc82a_th.jpg"
+
+
+#define gif2 @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579085817466&di=0c1cba2b5dba938cd33ea7d053b1493a&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Flarge%2F85cc5ccbgy1ffngbkq2c9g20b206k78d.jpg"
+
+#define tu1 @"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1579082232413&di=2775dc6e781e712d518bf1cf7a1e675e&imgtype=0&src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fnote%2Fl%2Fpublic%2Fp41813904.jpg"
+
+#define tu2 @"http://photos.tuchong.com/285606/f/4374153.jpg"
+
+#define tu3 @"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fgss0.baidu.com%2F-4o3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2Ff636afc379310a558f3f592dbb4543a9832610cb.jpg&refer=http%3A%2F%2Fgss0.baidu.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1614246801&t=096f32d80f2f04110b4bddde27f2165e"
+
+#define tu4 @"https://tfile.melinked.com/2021/01/5c071de1-b7e9-4bf4-a1f7-a2f35eff9ed6.jpg"
+
+
 @interface demoOne ()
 @property(nonatomic,strong)TFY_BannerView *viewOne;
 @property(nonatomic,strong)TFY_BannerParam *param;
@@ -48,10 +63,10 @@
     })
     //自定义视图必传
     .tfy_MyCellClassNamesSet(@"MyCell")
-    .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, TFY_BannerImageView *bgImageView,NSArray*dataArr) {
+    .tfy_MyCellSet(^UICollectionViewCell *(NSIndexPath *indexPath, UICollectionView *collectionView, id model, UIImageView *bgImageView,NSArray*dataArr) {
             //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
-        [cell.icon tfy_setImageWithURL:model[@"icon"]];
+        [cell.icon tfy_setImageWithURL:[NSURL URLWithString:model[@"icon"]] handle:nil];
         cell.leftText.text = model[@"name"];
         return cell;
     })
@@ -64,7 +79,7 @@
     .tfy_EventScrollEndSet( ^(id anyID, NSInteger index, BOOL isCenter,UICollectionViewCell *cell) {
         //毛玻璃效果外部调整
          BannerStrongSelf(weakObject)
-        [strongObject.viewOne.bgImgView tfy_setImageWithURL:anyID[@"icon"]];
+        [strongObject.viewOne.bgImgView tfy_setImageWithURL:[NSURL URLWithString:anyID[@"icon"]] handle:nil];
     })
     //图片对应的key值
     .tfy_DataParamIconNameSet(@"icon")
@@ -88,7 +103,7 @@
     //滑动固定偏移距离 itemSize.width*倍数
     .tfy_ContentOffsetXSet(0.5)
     //默认滑动到第index个
-    .tfy_SelectIndexSet(2)
+    .tfy_SelectIndexSet(0)
     //循环滚动
     .tfy_RepeatSet(YES)
     //自动滚动时间
@@ -123,10 +138,14 @@
 
 
 //更新数据
-- (void)updata{
+- (void)updata{//02
     self.param.tfy_DataSet(@[
-@{@"name":@"自定义文本11",@"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501052334&di=47c55150e39ee4e13f52c2a2d60e3249&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn%2Fw800h450%2F20171207%2F9641-fypnsin6729109.jpg"},
-@{@"name":@"自定义文本22",@"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501100534&di=59ea2b526bd9050cd0e606be63ca1235&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn20110%2F82%2Fw1080h602%2F20191105%2F3093-ihyxcrp3886394.jpg"}
+    @{@"name":@"自定义文本11",@"icon":gif},
+    @{@"name":@"自定义文本22",@"icon":gif2},
+    @{@"name":@"自定义文本33",@"icon":tu1},
+    @{@"name":@"自定义文本44",@"icon":tu2},
+    @{@"name":@"自定义文本44",@"icon":tu3},
+    @{@"name":@"自定义文本44",@"icon":@"http://photos.tuchong.com/285606/f/4374153.jpg"},
     ]);
     [self.viewOne updateUI];
 }

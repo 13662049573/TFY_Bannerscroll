@@ -19,7 +19,7 @@
 {
     self = [super initWithFrame:frame];
     if (self){
-        self.backImage = [TFY_BannerImageView new];
+        self.backImage = [UIImageView new];
         [self.contentView addSubview:self.backImage];
         self.backImage.frame = CGRectMake(0, 0, frame.size.width, frame.size.height*0.85);
         

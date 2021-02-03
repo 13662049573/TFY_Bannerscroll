@@ -31,7 +31,7 @@
                //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
         cell.leftText.text = model[@"name"];
-        [cell.icon tfy_setImageWithURL:model[@"icon"]];
+        [cell.icon tfy_setImageWithURL:[NSURL URLWithString:model[@"icon"]] handle:nil];
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, 40, BannerWitdh, BannerHeight*0.2))
@@ -68,7 +68,7 @@
               //自定义视图
        MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
        cell.leftText.text = model[@"name"];
-       [cell.icon tfy_setImageWithURL:model[@"icon"]];
+       [cell.icon tfy_setImageWithURL:[NSURL URLWithString:model[@"icon"]] handle:nil];
        return cell;
    })
    .tfy_FrameSet(CGRectMake(0, BannerHeight*0.2+70, BannerWitdh, BannerHeight*0.2))
@@ -84,11 +84,13 @@
    .tfy_AutoScrollSet(YES)
     //循环
     .tfy_RepeatSet(YES)
+    
    //整体左右间距  设置为size.width的一半 让最后一个可以居中
    .tfy_SectionInsetSet(UIEdgeInsetsMake(0,20, 0, BannerWitdh*0.55*0.3))
    //间距
    .tfy_LineSpacingSet(20)
-   ;
+   .tfy_PositionSet(BannerCellPositionTop);
+    
    TFY_BannerView *bannerView = [[TFY_BannerView alloc]initConfigureWithModel:param];
    [self.view addSubview:bannerView];
 }
@@ -101,7 +103,7 @@
                //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
         cell.leftText.text = model[@"name"];
-        [cell.icon tfy_setImageWithURL:model[@"icon"]];
+        [cell.icon tfy_setImageWithURL:[NSURL URLWithString:model[@"icon"]] handle:nil];
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, BannerHeight*0.55, BannerWitdh, BannerHeight*0.2))
