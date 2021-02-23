@@ -64,9 +64,10 @@ TFY_BannerParam *paramModel(void){
         self.tfy_rotationAngle = kRotationAngle;
         self.tfy_visibleCount = kVisibleCount;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
-        self.tfy_Time = BannTimeTypeGCD;
+        self.tfy_Time = BannTimeTypeTime;
         self.tfy_imageURLType = BannerImageURLTypeMixture;
         self.tfy_bannerScale = NO;
+        self.tfy_scrollType = DiverseImageScrollCardFour;
     }
     return self;
 }

@@ -370,7 +370,7 @@
 
 //滚动处理
 - (void)scrolToPath:(NSIndexPath*)path animated:(BOOL)animated{
-    
+    NSLog(@"currentIndex-------------------------%ld----path.row-----%ld",[self currentIndex],path.row);
     if (self.param.tfy_Repeat?(path.row> self.data.count*COUNT-1):(path.row> self.data.count-1)){
         [self cancelTimer];
         return;

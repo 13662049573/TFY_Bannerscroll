@@ -75,8 +75,8 @@ typedef enum :NSInteger{
 
 /**定时器选择 -- */
 typedef enum :NSInteger{
-    BannTimeTypeGCD = 0,  //----  GCD
-    BannTimeTypeTime = 1, //----  TIME
+    BannTimeTypeTime = 0, //----  TIME
+    BannTimeTypeGCD = 1,  //----  GCD
 }BannTimeType;
 
 /*
@@ -91,10 +91,6 @@ typedef enum :NSInteger{
 图片滚动的样式  这里只属于第三模块
 */
 typedef enum {
-    DiverseImageScrollNone,
-    DiverseImageScrollCardOne,
-    DiverseImageScrollCardTwo,
-    DiverseImageScrollCardThird,
     DiverseImageScrollCardFour,
     DiverseImageScrollCardFive,
     DiverseImageScrollCardSix,
