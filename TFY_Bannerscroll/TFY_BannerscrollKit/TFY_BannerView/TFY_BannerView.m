@@ -10,7 +10,6 @@
 #import "TFY_BannerFlowLayout.h"
 #import "TFY_BannerOverLayout.h"
 #import "TFY_BannerPageControl.h"
-#import "TFY_BannerDiverseLayout.h"
 #define COUNT 500
 
 @interface TFY_BannerView ()<UICollectionViewDelegate,UICollectionViewDataSource> {
@@ -84,8 +83,6 @@
 
 - (void)resetCollection{
     self.bannerControl.numberOfPages = self.data.count;
-    self.bannerControl.hidden = self.data.count==1?YES:NO;
-
     [UIView animateWithDuration:0.0 animations:^{
         [self.myCollectionV reloadData];
         if (self.param.tfy_SelectIndex >= 0 || self.param.tfy_Repeat) {
@@ -106,7 +103,7 @@
         });
     } completion:^(BOOL finished) {}];
     
-    if (self.param.tfy_SpecialStyle == SpecialStyleLine&&self.param.tfy_Data.count) {
+    if (self.param.tfy_SpecialStyle == SpecialStyleLine && self.data.count) {
         [self addSubview:self.line];
         self.line.hidden = NO;
         self.line.backgroundColor = [UIColor redColor];
@@ -119,6 +116,12 @@
         self.line.frame = CGRectMake(0, CGRectGetHeight(self.param.tfy_Frame) -lineHeight,  lineWidth, lineHeight);
     }else{
         self.line.hidden = YES;
+    }
+    
+    if (self.param.tfy_Separate) {
+        self.bannerControl.hidden = self.data.count==1?YES:NO;
+        self.myCollectionV.scrollEnabled = self.data.count==1?NO:YES;
+        self.data.count == 1?[self cancelTimer]:[self createTimer];
     }
 }
 
@@ -183,9 +186,6 @@
                 self.param.tfy_ScaleFactor = 0.8f;
             }
             self.flowL = [[TFY_BannerOverLayout alloc] initConfigureWithModel:self.param];
-            break;
-        case CardtypeMultifunction:
-            self.flowL = [[TFY_BannerDiverseLayout alloc] initConfigureWithModel:self.param];
             break;
         default:
             break;
@@ -278,7 +278,7 @@
         } else {
             [bannerImageView tfy_setImageWithURL:[NSURL URLWithString:(NSString*)data] handle:^(id<TFY_BannerWebImageHandle>  _Nonnull handle) {
                 handle.placeholder = defaultimage;
-                handle.cropScale = self.param.tfy_bannerScale;
+                handle.cropScale = self.param.tfy_BannerScale;
                 handle.completed = ^(BannerImageType imageType, UIImage * _Nullable image, NSData * _Nullable data) {
                     bannerImageView.image = image;
                 };
@@ -370,7 +370,6 @@
 
 //滚动处理
 - (void)scrolToPath:(NSIndexPath*)path animated:(BOOL)animated{
-    NSLog(@"currentIndex-------------------------%ld----path.row-----%ld",[self currentIndex],path.row);
     if (self.param.tfy_Repeat?(path.row> self.data.count*COUNT-1):(path.row> self.data.count-1)){
         [self cancelTimer];
         return;
@@ -393,9 +392,6 @@
              CGPointMake(path.row *CGRectGetWidth(self.myCollectionV.frame), 0)
                                         animated:animated];
             break;
-        case CardtypeMultifunction://多样式
-            
-            break;
         default:
             break;
     }
@@ -409,48 +405,6 @@
 }
 
 #pragma mark - 私有方法
-
-- (NSInteger)currentIndex
-{
-    if (CGRectGetHeight(self.frame) == 0 || CGRectGetWidth(self.frame) == 0) {
-        return 0;
-    }
-    
-    NSInteger index     = 0;
-    NSInteger cellCount = [self.myCollectionV numberOfItemsInSection:0];
-    
-    if (self.param.tfy_scrollType == DiverseImageScrollCardSeven) {
-        CGFloat anglePerItem   = self.param.tfy_anglePerItem;
-        CGFloat angleAtExtreme = (cellCount - 1) * self.param.tfy_anglePerItem;
-        CGFloat factor;
-        // 默认停下来时，旋转的角度
-        CGFloat proposedAngle;
-        if (self.param.tfy_Vertical) {
-            factor        = angleAtExtreme / (self.myCollectionV.contentSize.height - CGRectGetHeight(self.frame));
-            proposedAngle = factor * self.myCollectionV.contentOffset.y;
-
-        }else {
-            factor        = angleAtExtreme / (self.myCollectionV.contentSize.width - CGRectGetWidth(self.frame));
-            proposedAngle = factor * self.myCollectionV.contentOffset.x;
-        }
-        CGFloat ratio = proposedAngle / anglePerItem;
-        index         = roundf(ratio);
-    }else {
-        if (self.param.tfy_Vertical) {
-            index = roundf((self.myCollectionV.contentOffset.y + CGRectGetHeight(self.frame) / 2 - (self.param.tfy_ItemSize.height + self.param.tfy_space) / 2) / (self.param.tfy_ItemSize.height + self.param.tfy_space));
-        }else {
-            index = roundf((self.myCollectionV.contentOffset.x + CGRectGetWidth(self.frame) / 2 - (self.param.tfy_ItemSize.width + self.param.tfy_space) / 2) / (self.param.tfy_ItemSize.width + self.param.tfy_space));
-        }
-    }
-    if (index < 0) {
-        index = 0;
-    }
-    if (index >= cellCount) {
-        index = cellCount - 1;
-    }
-    return index;
-}
-
 - (int)pageControlIndexWithCurrentCellIndex:(NSInteger)index
 {
     return (int)index % self.data.count;
@@ -574,9 +528,6 @@
                 index = self.param.myCurrentPath;
             }
             break;
-        case CardtypeMultifunction:
-            
-            break;
         default:
             break;
     }
@@ -616,11 +567,7 @@
                   MAX(floor(scrollView.contentOffset.y / scrollView.bounds.size.height ), 0):
                   MAX(floor(scrollView.contentOffset.x / scrollView.bounds.size.width ), 0);
             break;
-        case CardtypeMultifunction:
-            
-            break;
         default:
-            
             break;
     }
     [self scrollEnd:[NSIndexPath indexPathForRow:self.param.myCurrentPath inSection:0]];
@@ -651,9 +598,6 @@
             break;
         case CardtypeFallen:
             indexCountPath = self.param.overFactPath;
-            break;
-        case CardtypeMultifunction:
-            
             break;
         default:
             break;

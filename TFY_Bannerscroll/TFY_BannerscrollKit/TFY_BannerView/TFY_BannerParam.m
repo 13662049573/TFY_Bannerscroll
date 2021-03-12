@@ -8,14 +8,6 @@
 
 #import "TFY_BannerParam.h"
 
-#define kImageSevenRadius 500.0
-
-#define kRotationAngle M_PI_4
-
-#define kAnglePerItem M_PI/12
-
-#define kVisibleCount 5
-
 @implementation TFY_BannerParam
 /**本类初始化*/
 TFY_BannerParam *paramModel(void){
@@ -59,15 +51,11 @@ TFY_BannerParam *paramModel(void){
         self.tfy_DataParamIconName = @"icon";
         self.tfy_EffectStyle = UIBlurEffectStyleLight;
         self.tfy_EffectAlpha = 1;
-        self.tfy_radius = kImageSevenRadius;
-        self.tfy_anglePerItem = kAnglePerItem;
-        self.tfy_rotationAngle = kRotationAngle;
-        self.tfy_visibleCount = kVisibleCount;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
         self.tfy_Time = BannTimeTypeTime;
         self.tfy_imageURLType = BannerImageURLTypeMixture;
-        self.tfy_bannerScale = NO;
-        self.tfy_scrollType = DiverseImageScrollCardFour;
+        self.tfy_BannerScale = NO;
+        self.tfy_Separate = YES;
     }
     return self;
 }
@@ -112,7 +100,9 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Marquee)
 //中间视图放最上面 default NO
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Zindex)
 /**是否裁剪*/
-TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_bannerScale)
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_BannerScale)
+/**是否开启剩一张图片 停止滑动，圆点隐藏 默认 YES*/
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BOOL,tfy_Separate)
 /**整体间距 默认UIEdgeInsetsMake(0,0, 0, 0)*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,UIEdgeInsets,tfy_SectionInset)
 /**整体视图缩放系数 default 1*/
@@ -172,18 +162,5 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,UIBlurEffectStyle,tfy_EffectStyl
 /**毛玻璃透明度 默认 apal */
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_EffectAlpha)
 
-#pragma mark ------- 第三模块设置属性 ------------------
-
-TFY_BannerSetFuncImplementation(TFY_BannerParam,DiverseImageScrollType,tfy_scrollType)
-/// collectionView展示cell的数量,以最中间的cell开始和其两边的cell的数量加起来的数量,由于两边对称,所以数量为单数,如果设置为4,则展示3个,中间一个cell和两边各一个,数量必须为大于0,默认5
-TFY_BannerSetFuncImplementation(TFY_BannerParam,NSInteger,tfy_visibleCount)
-///cell的间隔,默认为0,若是竖直滚动,cell的高不进行缩放,只缩放宽,则cell之间的上下间隔就是space,若对高进行缩放,则cell之间的上下间隔就是space+cell的高乘上高的缩放比例除2,也就是说,就算你space为0,cell的高缩放了,间隔也会改变;反之,若是水平滚动,cell的宽不进行缩放,只缩放高,则cell之间的左右间隔就是space,,若对宽进行缩放,则cell之间的左右间隔就是space+cell的宽乘上宽的缩放比例除2.
-TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_space)
-/// 样式5,6的旋转弧度,默认M_PI_4,也就是度数为45°
-TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_rotationAngle)
-/// 样式7圆形半径
-TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_radius)
-/// 样式7每两个item之间的旋转角度
-TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_anglePerItem)
 @end
 

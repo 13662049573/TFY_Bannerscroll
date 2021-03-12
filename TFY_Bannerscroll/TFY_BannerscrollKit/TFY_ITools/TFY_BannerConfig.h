@@ -62,7 +62,6 @@ typedef void (^BannerSpecialLine)(UIView * _Nonnull line);
 typedef enum {
     CardtypeCommon = 0,//普通模式
     CardtypeFallen = 1,//重叠卡片
-    CardtypeMultifunction = 2, //多功能卡片
 }Cardtype;
 
 
@@ -86,16 +85,6 @@ typedef enum :NSInteger{
     SpecialStyleLine       = 1, //下划线
     SpecialStyleFirstScale = 2, //首个变大效果
 }SpecialStyle;
-
-/**
-图片滚动的样式  这里只属于第三模块
-*/
-typedef enum {
-    DiverseImageScrollCardFour,
-    DiverseImageScrollCardFive,
-    DiverseImageScrollCardSix,
-    DiverseImageScrollCardSeven,
-}DiverseImageScrollType;
 
 /**返回图片类型*/
 typedef NS_ENUM(NSInteger, BannerImageType) {

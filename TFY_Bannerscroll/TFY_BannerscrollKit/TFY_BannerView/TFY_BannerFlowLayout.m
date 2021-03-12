@@ -122,9 +122,6 @@
         case CardtypeFallen:
             
             break;
-        case CardtypeMultifunction:
-            
-            break;
         default:
             break;
     }
