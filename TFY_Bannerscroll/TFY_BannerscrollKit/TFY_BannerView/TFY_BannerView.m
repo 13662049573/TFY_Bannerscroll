@@ -92,7 +92,13 @@
                 self.bannerControl.currentPage = self.param.tfy_SelectIndex;
                 self.param.myCurrentPath = self.param.tfy_Repeat?((COUNT/2)*self.data.count+self.param.tfy_SelectIndex):self.param.tfy_SelectIndex;
                 if (self.param.tfy_AutoScroll) {
-                    [self createTimer];
+                    if (self.param.tfy_Separate) {
+                        self.bannerControl.hidden = self.data.count==1?YES:NO;
+                        self.myCollectionV.scrollEnabled = self.data.count==1?NO:YES;
+                        self.data.count == 1?[self cancelTimer]:[self createTimer];
+                    } else {
+                        [self createTimer];
+                    }
                 }else{
                     [self cancelTimer];
                 }
@@ -116,12 +122,6 @@
         self.line.frame = CGRectMake(0, CGRectGetHeight(self.param.tfy_Frame) -lineHeight,  lineWidth, lineHeight);
     }else{
         self.line.hidden = YES;
-    }
-    
-    if (self.param.tfy_Separate) {
-        self.bannerControl.hidden = self.data.count==1?YES:NO;
-        self.myCollectionV.scrollEnabled = self.data.count==1?NO:YES;
-        self.data.count == 1?[self cancelTimer]:[self createTimer];
     }
 }
 
