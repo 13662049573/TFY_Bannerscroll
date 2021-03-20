@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initConfigureWithModel:(TFY_BannerParam *)param;
 /**更新UI*/
 - (void)updateUI;
+/**更新fram 必须要假的把item 重新设置一下*/
+- (void)FrameUpdate;
 
 @end
 

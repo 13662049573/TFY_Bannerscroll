@@ -33,16 +33,9 @@
 - (instancetype)initConfigureWithModel:(TFY_BannerParam *)param withView:(UIView*)parentView{
     if (self = [super init]) {
         self.param = param;
-        if (parentView) {
-            [parentView addSubview:self];
-        }
-        self.param.tfy_Frame = CGRectMake(self.param.tfy_Frame.origin.x,
-                                       self.param.tfy_Frame.origin.y,
-                                       (int)self.param.tfy_Frame.size.width,
-                                       (int)self.param.tfy_Frame.size.height);
-        [self setFrame:self.param.tfy_Frame];
+        if (parentView) {[parentView addSubview:self];}
         self.data = [NSArray arrayWithArray:self.param.tfy_Data];
-        [self setUp];
+        [self FrameUpdate];
     }
     return self;
 }
@@ -54,15 +47,20 @@
 - (instancetype)initConfigureWithModel:(TFY_BannerParam *)param{
     if (self = [super init]) {
         self.param = param;
-        self.param.tfy_Frame = CGRectMake(self.param.tfy_Frame.origin.x,
-                                       self.param.tfy_Frame.origin.y,
-                                       (int)self.param.tfy_Frame.size.width,
-                                       (int)self.param.tfy_Frame.size.height);
-        [self setFrame:self.param.tfy_Frame];
         self.data = [NSArray arrayWithArray:self.param.tfy_Data];
-        [self setUp];
+        [self FrameUpdate];
     }
     return self;
+}
+
+- (void)FrameUpdate {
+    self.param.tfy_Frame = CGRectMake(self.param.tfy_Frame.origin.x,
+                                   self.param.tfy_Frame.origin.y,
+                                   (int)self.param.tfy_Frame.size.width,
+                                   (int)self.param.tfy_Frame.size.height);
+    [self setFrame:self.param.tfy_Frame];
+    
+    [self setUp];
 }
 
 //横竖屏更新布局。
@@ -165,11 +163,9 @@
     
     if (self.param.tfy_ItemSize.height == 0 || self.param.tfy_ItemSize.width == 0) {
         self.param.tfy_ItemSize = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
-    }
-
-    else if(self.param.tfy_ItemSize.height>CGRectGetHeight(self.frame)){
+    } else if(self.param.tfy_ItemSize.height > CGRectGetHeight(self.frame)){
         self.param.tfy_ItemSize = CGSizeMake(self.param.tfy_ItemSize.width, CGRectGetHeight(self.frame));
-    }else if(self.param.tfy_ItemSize.width>CGRectGetWidth(self.frame)){
+    } else if(self.param.tfy_ItemSize.width > CGRectGetWidth(self.frame)){
         self.param.tfy_ItemSize = CGSizeMake(CGRectGetWidth(self.frame), self.param.tfy_ItemSize.height);
     }
     int width = self.param.tfy_ItemSize.width;
