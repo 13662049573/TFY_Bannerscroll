@@ -212,7 +212,7 @@
     self.myCollectionV.frame = self.bounds;
     self.myCollectionV.pagingEnabled = (self.param.tfy_ItemSize.width == CGRectGetWidth(self.myCollectionV.frame) && self.param.tfy_LineSpacing == 0)||self.param.tfy_Vertical;
     
-    self.bannerControl = [[TFY_BannerPageControl alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.frame) - 30, CGRectGetWidth(self.frame)-20, 30)];
+    self.bannerControl = [[TFY_BannerPageControl alloc] initWithFrame:CGRectMake(10, CGRectGetHeight(self.frame) - self.param.tfy_ControlH, CGRectGetWidth(self.frame)-20, self.param.tfy_ControlH)];
     self.bannerControl.pageControlType = PageControlTypeCircle;
     if (self.param.tfy_CustomControl) {
         self.param.tfy_CustomControl(self.bannerControl);
@@ -222,7 +222,8 @@
     }
     
     self.bgImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)*self.param.tfy_EffectHeight)];
-//    self.bgImgView.contentMode = self.param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
+    self.bgImgView.contentMode = self.param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
+    self.bgImgView.clipsToBounds = YES;
     [self addSubview:self.bgImgView];
     [self sendSubviewToBack:self.bgImgView];
     self.bgImgView.hidden = !self.param.tfy_Effect;
@@ -231,7 +232,8 @@
     UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     effectView.frame = self.bgImgView.bounds;
     effectView.alpha = self.param.tfy_EffectAlpha;
-//    effectView.contentMode = self.param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
+    effectView.contentMode = self.param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
+    effectView.clipsToBounds = YES;
     [self.bgImgView addSubview:effectView];
     self.effectView = effectView;
     
@@ -688,7 +690,7 @@
 - (void)setParam:(TFY_BannerParam *)param{
     _param = param;
     self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
-    
+    self.bannerImageView.clipsToBounds = YES;
     if (_param.tfy_bannerRadius > 0) {
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
         maskLayer.frame = self.bounds;

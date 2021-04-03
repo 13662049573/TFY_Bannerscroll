@@ -56,6 +56,7 @@ TFY_BannerParam *paramModel(void){
         self.tfy_imageURLType = BannerImageURLTypeMixture;
         self.tfy_BannerScale = NO;
         self.tfy_Separate = YES;
+        self.tfy_ControlH = 30;
     }
     return self;
 }
@@ -141,6 +142,8 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,id,tfy_MyCellClassNames)
 TFY_BannerSetFuncImplementation(TFY_BannerParam,UIColor*,tfy_MarqueeTextColor)
 /**自定义pageControl*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerPageControl,tfy_CustomControl)
+/**自定义pageControl 的高度，默认里 底部的距离 self.frame.size.hieght -tfy_ControlH 默认 30 */
+TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_ControlH)
 /**跑马灯速度  default  5*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_MarqueeRate)
 /**点击方法*/

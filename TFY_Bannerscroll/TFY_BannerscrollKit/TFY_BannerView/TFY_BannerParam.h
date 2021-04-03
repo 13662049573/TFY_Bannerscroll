@@ -97,6 +97,8 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,copy,id,tfy_MyCellClassNames)
 TFY_BannerSetFuncStatement(TFY_BannerParam,strong,UIColor*,tfy_MarqueeTextColor)
 /**自定义pageControl设置*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerPageControl,tfy_CustomControl)
+/**自定义pageControl 的高度，默认里 底部的距离 self.frame.size.hieght -tfy_ControlH 默认 30 */
+TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_ControlH)
 /**跑马灯速度  default  0.5*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_MarqueeRate)
 /**点击方法*/
