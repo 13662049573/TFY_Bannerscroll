@@ -31,9 +31,6 @@ typedef NS_ENUM(NSInteger, PageControlType) {
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TFY_BannerPageControl : UIView
-
-- (instancetype)initWithFrame:(CGRect)frame;
-
 /// 页码数量，默认0
 @property (nonatomic, assign) NSInteger numberOfPages;
 /// 当前页码，默认0，取值范围是0~numberOfPages-1

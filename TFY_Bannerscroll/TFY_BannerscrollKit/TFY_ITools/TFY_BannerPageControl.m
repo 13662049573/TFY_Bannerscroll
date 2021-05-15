@@ -19,6 +19,16 @@
 
 @implementation TFY_BannerPageControl
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self database];
+    }
+    return self;
+}
+
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -28,37 +38,42 @@
         self.clipsToBounds = YES;
         self.layer.masksToBounds = YES;
         
-        _numberOfPages = 0;
-        _currentPage = 0;
-        
-        _hidesForSinglePage = NO;
-        
-        _pageIndicatorColor = [UIColor lightGrayColor];
-        _currentPageIndicatorColor = [UIColor blackColor];
-        
-        _pageControlType = PageControlTypeSquare;
-        _pageControlAlignment = PageControlAlignmentDefault;
-        
-        _transformScale = 1.0;
-        
-        _showPageNumber = NO;
-        _pageNumberColor = [UIColor lightGrayColor];
-        _currentPageNumberColor = [UIColor blackColor];
-        _pageNumberFont = [UIFont systemFontOfSize:6.0];
-        _currentPageNumberFont = [UIFont systemFontOfSize:6.0];
-        
-        _pageMargin = 6.0;
-        _pageSizeHeight = 6.0;
-        _pageSizeWidth = 6.0;
-        _shouldAutoresizingImage = NO;
-        _currentPageSizeWidth = 6.0;
-        _currentPageSizeHeight = 6.0;
+        [self database];
         
         [self setNeedsLayout];
     }
     
     return self;
 }
+
+- (void)database {
+    _numberOfPages = 0;
+    _currentPage = 0;
+    
+    _hidesForSinglePage = NO;
+    
+    _pageIndicatorColor = [UIColor lightGrayColor];
+    _currentPageIndicatorColor = [UIColor blackColor];
+    
+    _pageControlType = PageControlTypeSquare;
+    _pageControlAlignment = PageControlAlignmentDefault;
+    
+    _transformScale = 1.0;
+    
+    _showPageNumber = NO;
+    _pageNumberColor = [UIColor lightGrayColor];
+    _currentPageNumberColor = [UIColor blackColor];
+    _pageNumberFont = [UIFont systemFontOfSize:6.0];
+    _currentPageNumberFont = [UIFont systemFontOfSize:6.0];
+    
+    _pageMargin = 6.0;
+    _pageSizeHeight = 6.0;
+    _pageSizeWidth = 6.0;
+    _shouldAutoresizingImage = NO;
+    _currentPageSizeWidth = 6.0;
+    _currentPageSizeHeight = 6.0;
+}
+
 
 - (void)layoutSubviews
 {
