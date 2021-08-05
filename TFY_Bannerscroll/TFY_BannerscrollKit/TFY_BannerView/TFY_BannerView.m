@@ -266,22 +266,7 @@
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
         UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-        if (kBannerLocality((NSString*)data)) {
-            NSData *dataimage = kBannerGetLocalityGIFData((NSString*)data);
-            if (dataimage) {
-                bannerImageView.image = [UIImage tfy_bannerGIFImageWithData:dataimage]?:defaultimage;
-            } else {
-                bannerImageView.image = [UIImage imageNamed:(NSString*)data]?:defaultimage;
-            }
-        } else {
-            [bannerImageView tfy_setImageWithURL:[NSURL URLWithString:(NSString*)data] handle:^(id<TFY_BannerWebImageHandle>  _Nonnull handle) {
-                handle.placeholder = defaultimage;
-                handle.cropScale = self.param.tfy_BannerScale;
-                handle.completed = ^(BannerImageType imageType, UIImage * _Nullable image, NSData * _Nullable data) {
-                    bannerImageView.image = image;
-                };
-            }];
-        }
+        [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
     }
 }
 
@@ -413,22 +398,10 @@
 - (void)createTimer {
     SEL sel = NSSelectorFromString(self.param.tfy_Marquee?@"autoMarqueenScrollAction":@"autoScrollAction");
     CGFloat value_time = self.param.tfy_Marquee?marginTime:self.param.tfy_AutoScrollSecond;
-    switch (self.param.tfy_Time) {
-        case BannTimeTypeGCD:{
-            NSString *time = [BannerTime bannerTimerWithTarget:self selector:sel StartTime:1 interval:value_time repeats:YES mainQueue:YES];
-            self.gcd_timer = time;
-        }
-            break;
-        case BannTimeTypeTime:{
-            if (self.timer == nil) {
-                NSTimer *timer = [NSTimer timerWithTimeInterval:value_time target:self selector:sel userInfo:nil repeats:YES];
-                [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-                self.timer = timer;
-            }
-        }
-            break;
-        default:
-            break;
+    if (self.timer == nil) {
+        NSTimer *timer = [NSTimer timerWithTimeInterval:value_time target:self selector:sel userInfo:nil repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        self.timer = timer;
     }
 }
 
@@ -478,20 +451,9 @@
 
 //定时器销毁
 - (void)cancelTimer {
-    switch (self.param.tfy_Time) {
-        case BannTimeTypeGCD:{
-            [BannerTime bannerCancel:self.gcd_timer];
-        }
-            break;
-        case BannTimeTypeTime:{
-            if (self.timer!=nil) {
-                [self.timer invalidate];
-                self.timer = nil;
-            }
-        }
-            break;
-        default:
-            break;
+    if (self.timer!=nil) {
+        [self.timer invalidate];
+        self.timer = nil;
     }
 }
 
@@ -650,20 +612,9 @@
     [super willMoveToSuperview:newSuperview];
     if (!newSuperview) {
         // 销毁定时器
-        switch (self.param.tfy_Time) {
-            case BannTimeTypeGCD:{
-                [BannerTime bannerCancel:self.gcd_timer];
-            }
-                break;
-            case BannTimeTypeTime:{
-                if (self.timer!=nil) {
-                    [self.timer invalidate];
-                    self.timer = nil;
-                }
-            }
-                break;
-            default:
-                break;
+        if (self.timer!=nil) {
+            [self.timer invalidate];
+            self.timer = nil;
         }
     }
 }
@@ -731,75 +682,5 @@
     _param = param;
     self.label.textColor = self.param.tfy_MarqueeTextColor;
 }
-
-@end
-
-@implementation BannerTime
-
-static int i = 0;
-// 创建保存timer的容器
-static NSMutableDictionary *timers;
-dispatch_semaphore_t sem;
-
-+ (void)initialize{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        timers = [NSMutableDictionary dictionary];
-        sem = dispatch_semaphore_create(1);
-    });
-}
-
-+ (NSString *)bannerTimerWithTarget:(id)target selector:(SEL)selector StartTime:(NSTimeInterval)start interval:(NSTimeInterval)interval repeats:(BOOL)repeats mainQueue:(BOOL)async{
-    if (!target || !selector) {
-        return nil;
-    }
-    return [self bannerTimerWithStartTime:start interval:interval repeats:repeats mainQueue:async completion:^{
-        if ([target respondsToSelector:selector]) {
-            [target performSelector:selector withObject:nil afterDelay:start];
-        }
-    }];
-}
-
-+ (NSString *)bannerTimerWithStartTime:(NSTimeInterval)start interval:(NSTimeInterval)interval repeats:(BOOL)repeats mainQueue:(BOOL)async completion:(void (^)(void))completion {
-    if (!completion || start < 0 ||  interval <= 0) {
-        return nil;
-    }
-    // 创建定时器
-    dispatch_queue_t queue = !async ? dispatch_queue_create("gcd.timer.queue", NULL) : dispatch_get_main_queue();
-    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue );
-    // 设置时间,从什么时候开始，间隔多少，下面相当于2s后开始，每隔一秒一次
-    dispatch_source_set_timer(timer, dispatch_time(DISPATCH_TIME_NOW, start * NSEC_PER_SEC), interval * NSEC_PER_SEC, 0);
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    NSString *timerId = [NSString stringWithFormat:@"%d",i++];
-    timers[timerId]=timer;
-    dispatch_semaphore_signal(sem);
-    // 回调
-    dispatch_source_set_event_handler(timer, ^{
-        if (completion) {
-            completion();
-        }
-        // 不重复执行就取消timer
-        if (!repeats) {
-            [self bannerCancel:timerId];
-        }
-    });
-    dispatch_resume(timer);
-    return timerId;
-}
-
-+ (void)bannerCancel:(NSString *)timerID{
-    if (!timerID || timerID.length <= 0) {
-        return;
-    }
-    dispatch_semaphore_wait(sem, DISPATCH_TIME_FOREVER);
-    dispatch_source_t timer = timers[timerID];
-    if (timer) {
-        dispatch_source_cancel(timer);
-        [timers removeObjectForKey:timerID];
-    }
-    dispatch_semaphore_signal(sem);
-}
-
-
 
 @end

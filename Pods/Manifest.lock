@@ -1,4 +1,7 @@
 PODS:
+  - SDWebImage (5.11.1):
+    - SDWebImage/Core (= 5.11.1)
+  - SDWebImage/Core (5.11.1)
   - TFY_LayoutCategoryKit (1.8.6):
     - TFY_LayoutCategoryKit/TFY_Categories (= 1.8.6)
     - TFY_LayoutCategoryKit/TFY_Chain (= 1.8.6)
@@ -49,21 +52,24 @@ PODS:
   - TFY_ProgressHUD (2.4.6)
 
 DEPENDENCIES:
+  - SDWebImage
   - TFY_LayoutCategoryKit
   - TFY_Navigation
   - TFY_ProgressHUD
 
 SPEC REPOS:
   trunk:
+    - SDWebImage
     - TFY_LayoutCategoryKit
     - TFY_Navigation
     - TFY_ProgressHUD
 
 SPEC CHECKSUMS:
+  SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   TFY_LayoutCategoryKit: f7b54b52df018dc69cb49da7ecb1f6b1643b3efd
   TFY_Navigation: c78e46ce757b72e55a807816e2db9795446524ed
   TFY_ProgressHUD: c6ffd0626cd8ed74616177139f0925060ac040dd
 
-PODFILE CHECKSUM: a1943af01475d5b0e668683968eeac2a732b89e8
+PODFILE CHECKSUM: c3238cda8c4b5d8cd66f8ed671687ecdb4c0ce8e
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2

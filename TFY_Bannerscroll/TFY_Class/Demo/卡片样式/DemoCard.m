@@ -31,7 +31,7 @@
                //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
         cell.leftText.text = model[@"name"];
-        [cell.icon tfy_setImageWithURL:[NSURL URLWithString:model[@"icon"]] handle:nil];
+        [cell.icon sd_setImageWithURL:[NSURL URLWithString:model[@"icon"]]];
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, 40, BannerWitdh, BannerHeight*0.2))
@@ -68,7 +68,7 @@
               //自定义视图
        MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
        cell.leftText.text = model[@"name"];
-       [cell.icon tfy_setImageWithURL:[NSURL URLWithString:model[@"icon"]] handle:nil];
+       [cell.icon sd_setImageWithURL:[NSURL URLWithString:model[@"icon"]]];
        return cell;
    })
    .tfy_FrameSet(CGRectMake(0, BannerHeight*0.2+70, BannerWitdh, BannerHeight*0.2))
@@ -103,7 +103,7 @@
                //自定义视图
         MyCell *cell = (MyCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MyCell class]) forIndexPath:indexPath];
         cell.leftText.text = model[@"name"];
-        [cell.icon tfy_setImageWithURL:[NSURL URLWithString:model[@"icon"]] handle:nil];
+        [cell.icon sd_setImageWithURL:[NSURL URLWithString:model[@"icon"]]];
         return cell;
     })
     .tfy_FrameSet(CGRectMake(0, BannerHeight*0.55, BannerWitdh, BannerHeight*0.2))

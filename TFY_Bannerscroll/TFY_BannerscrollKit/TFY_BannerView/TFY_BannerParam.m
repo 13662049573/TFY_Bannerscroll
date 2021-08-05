@@ -52,7 +52,6 @@ TFY_BannerParam *paramModel(void){
         self.tfy_EffectStyle = UIBlurEffectStyleLight;
         self.tfy_EffectAlpha = 1;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
-        self.tfy_Time = BannTimeTypeTime;
         self.tfy_imageURLType = BannerImageURLTypeMixture;
         self.tfy_BannerScale = NO;
         self.tfy_Separate = YES;
@@ -62,8 +61,6 @@ TFY_BannerParam *paramModel(void){
 }
 
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGRect,tfy_Frame)
-/**选择想要的定时器*/
-TFY_BannerSetFuncImplementation(TFY_BannerParam,BannTimeType,tfy_Time)
 /**图片的样式*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerImageURLType,tfy_imageURLType)
 /**图片添加圆角*/

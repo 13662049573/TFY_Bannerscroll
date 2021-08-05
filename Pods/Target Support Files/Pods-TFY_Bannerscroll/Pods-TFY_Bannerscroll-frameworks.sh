@@ -175,11 +175,13 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFY_LayoutCategoryKit/TFY_LayoutCategoryKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFY_Navigation/TFY_Navigation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFY_ProgressHUD/TFY_ProgressHUD.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFY_LayoutCategoryKit/TFY_LayoutCategoryKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFY_Navigation/TFY_Navigation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TFY_ProgressHUD/TFY_ProgressHUD.framework"

@@ -3,10 +3,12 @@ platform :ios, '12.0'
 target 'TFY_Bannerscroll' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+
   pod 'TFY_LayoutCategoryKit'
   pod 'TFY_ProgressHUD'
   pod 'TFY_Navigation'
-  
+  pod 'SDWebImage'
+
   # Pods for TFY_Bannerscroll
 
   target 'TFY_BannerscrollTests' do

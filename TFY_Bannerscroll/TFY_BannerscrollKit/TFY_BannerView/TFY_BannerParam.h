@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TFY_ITools.h"
+#import "TFY_BannerConfig.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,8 +17,6 @@ TFY_BannerParam *paramModel(void);
 
 /**布局方式 frame  必传*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGRect,tfy_Frame)
-/**选择想要的定时器 默认 BannTimeTypeGCD*/
-TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannTimeType,tfy_Time)
 /**图片的样式 默认 混合*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannerImageURLType,tfy_imageURLType)
 /**图片添加圆角*/
