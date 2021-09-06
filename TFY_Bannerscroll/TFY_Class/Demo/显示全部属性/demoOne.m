@@ -97,9 +97,9 @@
     //缩放垂直间距
     .tfy_ActiveDistanceSet(400)
     //缩放系数
-    .tfy_ScaleFactorSet(0.5)
+    .tfy_ScaleFactorSet(0.2)
     //item的size
-    .tfy_ItemSizeSet(CGSizeMake(BannerWitdh*0.5, BannerHeight/3))
+    .tfy_ItemSizeSet(CGSizeMake(BannerWitdh - 40, BannerHeight/3))
     //滑动固定偏移距离 itemSize.width*倍数
     .tfy_ContentOffsetXSet(0.5)
     //默认滑动到第index个

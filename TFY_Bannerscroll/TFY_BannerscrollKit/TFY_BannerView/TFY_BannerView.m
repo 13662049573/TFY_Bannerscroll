@@ -265,8 +265,15 @@
 - (void)setIconData:(UIImageView*)bannerImageView withData:(id)data{
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
+        if (kBannerLocality(data)) {
+            bannerImageView.image = [UIImage imageNamed:(NSString *)data];
+        } else {
+            UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
+            [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
+        }
+    } else if ([data isKindOfClass:NSURL.class]) {
         UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-        [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
+        [bannerImageView sd_setImageWithURL:(NSURL *)data placeholderImage:defaultimage];
     }
 }
 
