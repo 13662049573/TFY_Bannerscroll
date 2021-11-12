@@ -62,20 +62,20 @@
     return @[
       @{
           @"name":@"天猫精灵,每天晚安闹钟1",
-          @"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501052339&di=92f3a70f4a5a52a5a3d2038e1442d2b7&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01fd035c626614a801203d2261c846.jpg%401280w_1l_2o_100sh.jpg"
+          @"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"
               , @"color":BannerColor(0x035eef)
       },
       @{
           @"name":@"天猫精灵,每天晚安闹钟3",
-        @"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501052339&di=9b3a0de1a35a502272c5d2c0788a2e55&imgtype=0&src=http%3A%2F%2Fn.sinaimg.cn%2Fsinacn10%2F266%2Fw640h426%2F20180321%2F97f6-fyskeue0515269.jpg",
+        @"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
       @"color":BannerColor(0x00D762)},
       @{
           @"name":@"天猫精灵,每天晚安闹钟3",
-        @"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501052338&di=9b686119c43280dccc0e523e3533a2b2&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2F19%2F1934%2F193450%2F19345029_1200x1000_0.jpg",
+        @"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
           @"color":BannerColor(0xD41B14)},
       @{
           @"name":@"天猫精灵,每天晚安闹钟4",
-        @"icon":@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1576501052336&di=6c5774392c54591c03ff4f6587c75848&imgtype=0&src=http%3A%2F%2Fimg.265g.com%2Fuserup%2F1111%2F201111071016446505.jpg"
+        @"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"
           ,@"color":BannerColor(0xF5DE95)
       }
       ];

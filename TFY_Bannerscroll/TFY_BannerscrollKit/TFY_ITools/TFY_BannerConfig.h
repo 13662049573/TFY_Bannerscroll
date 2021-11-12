@@ -99,26 +99,6 @@ typedef NS_ENUM(NSInteger, BannerImageURLType) {
     BannerImageURLTypeWebp,       /// webp
 };
 
-NS_INLINE void kGCD_banner_async(dispatch_block_t _Nonnull block) {
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    if (strcmp(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL), dispatch_queue_get_label(queue)) == 0) {
-        block();
-    }else{
-        dispatch_async(queue, block);
-    }
-}
-NS_INLINE void kGCD_banner_main(dispatch_block_t _Nonnull block) {
-    dispatch_queue_t queue = dispatch_get_main_queue();
-    if (strcmp(dispatch_queue_get_label(DISPATCH_CURRENT_QUEUE_LABEL), dispatch_queue_get_label(queue)) == 0) {
-        block();
-    }else{
-        if ([[NSThread currentThread] isMainThread]) {
-            dispatch_async(queue, block);
-        }else{
-            dispatch_sync(queue, block);
-        }
-    }
-}
 /// 判断是网络图片还是本地
 NS_INLINE bool kBannerLocality(NSString * _Nonnull urlString){
     return ([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"]) ? false : true;

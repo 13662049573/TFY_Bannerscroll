@@ -17,8 +17,6 @@ TFY_BannerParam *paramModel(void);
 
 /**布局方式 frame  必传*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGRect,tfy_Frame)
-/**图片的样式 默认 混合*/
-TFY_BannerSetFuncStatement(TFY_BannerParam,assign,BannerImageURLType,tfy_imageURLType)
 /**图片添加圆角*/
 TFY_BannerSetFuncStatement(TFY_BannerParam,assign,CGFloat,tfy_bannerRadius)
 /**数据源 必传*/

@@ -52,7 +52,6 @@ TFY_BannerParam *paramModel(void){
         self.tfy_EffectStyle = UIBlurEffectStyleLight;
         self.tfy_EffectAlpha = 1;
         self.tfy_DecelerationRate = UIScrollViewDecelerationRateFast;
-        self.tfy_imageURLType = BannerImageURLTypeMixture;
         self.tfy_BannerScale = NO;
         self.tfy_Separate = YES;
         self.tfy_ControlH = 30;
@@ -61,8 +60,6 @@ TFY_BannerParam *paramModel(void){
 }
 
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGRect,tfy_Frame)
-/**图片的样式*/
-TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerImageURLType,tfy_imageURLType)
 /**图片添加圆角*/
 TFY_BannerSetFuncImplementation(TFY_BannerParam,CGFloat,tfy_bannerRadius)
 /**数据源 必传*/

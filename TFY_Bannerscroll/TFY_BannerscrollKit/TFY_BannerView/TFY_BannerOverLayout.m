@@ -14,6 +14,7 @@
 @end
 
 @implementation TFY_BannerOverLayout
+
 - (instancetype)initConfigureWithModel:(TFY_BannerParam *)param{
     if (self = [super init]) {
         self.param = param;
