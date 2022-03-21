@@ -12,6 +12,8 @@
 #import "TFY_BannerPageControl.h"
 #define COUNT 500
 
+#define bannerWeak(o) __weak typeof(o) weak_##o = o;
+
 @interface TFY_BannerView ()<UICollectionViewDelegate,UICollectionViewDataSource> {
     BOOL beganDragging;
     CGFloat marginTime;
@@ -26,6 +28,15 @@
 @property(weak,nonatomic)UIVisualEffectView *effectView;
 @property(assign,nonatomic)NSInteger lastIndex;
 @property(strong,nonatomic)UIView *line;
+@property (nonatomic , assign)BOOL isSoloAmbient;
+// 视频缓存
+@property (nonatomic, strong) AVPlayerLayer *playerLayer;
+@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, strong) AVPlayerItem *playerItem;
+@property (nonatomic, strong) NSMutableDictionary<NSString *, AVURLAsset *> *assetCache;
+@property (assign, nonatomic) BOOL isPlay;
+//任务队列
+@property (nonatomic , strong)UIImageView *videoImageView;
 @end
 
 @implementation TFY_BannerView
@@ -60,7 +71,24 @@
                                    (int)self.param.tfy_Frame.size.height);
     [self setFrame:self.param.tfy_Frame];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidPlayToEndTimeNotification:) name:AVPlayerItemDidPlayToEndTimeNotification  object:nil];
+    // 进入前台，后台的处理
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
+    
     [self setUp];
+    
+    [self addObserverAndAudioSession];
+}
+
+- (void)addObserverAndAudioSession{
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    [session setActive:true error:nil];
+    if(self.isSoloAmbient == true) {
+        [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
+    }else {
+        [session setCategory:AVAudioSessionCategoryAmbient error:nil];
+    }
 }
 
 //横竖屏更新布局。
@@ -74,8 +102,10 @@
     [self layoutIfNeeded];
 }
 
-- (void)updateUI{
+- (void)updateUI {
+    
     self.data = [NSArray arrayWithArray:self.param.tfy_Data];
+
     [self resetCollection];
 }
 
@@ -191,8 +221,8 @@
     
     self.myCollectionV.scrollEnabled = self.param.tfy_CanFingerSliding;
     
-    [self.myCollectionV registerClass:[Collectioncell class] forCellWithReuseIdentifier:NSStringFromClass([Collectioncell class])];
-    [self.myCollectionV registerClass:[CollectionTextCell class] forCellWithReuseIdentifier:NSStringFromClass([CollectionTextCell class])];
+    [self.myCollectionV registerClass:Collectioncell.class forCellWithReuseIdentifier:NSStringFromClass(Collectioncell.class)];
+    [self.myCollectionV registerClass:CollectionTextCell.class forCellWithReuseIdentifier:NSStringFromClass(CollectionTextCell.class)];
     
     if (self.param.tfy_MyCellClassNames) {
         if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSString class]]) {
@@ -236,7 +266,7 @@
     effectView.clipsToBounds = YES;
     [self.bgImgView addSubview:effectView];
     self.effectView = effectView;
-    
+
     [self resetCollection];
 }
 
@@ -249,32 +279,173 @@
         tmpCell = self.param.tfy_MyCell([NSIndexPath indexPathForRow:index inSection:indexPath.section], collectionView, dic,self.bgImgView,self.data);
     } else {
         //默认视图
-        Collectioncell *cell = (Collectioncell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([Collectioncell class]) forIndexPath:indexPath];
+        Collectioncell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(Collectioncell.class) forIndexPath:indexPath];
         cell.param = self.param;
+        NSString *url = @"";
         if ([dic isKindOfClass:[NSDictionary class]]) {
-            [self setIconData:cell.bannerImageView withData:dic[self.param.tfy_DataParamIconName]];
-
-        }else{
-            [self setIconData:cell.bannerImageView withData:dic];
+            url = dic[self.param.tfy_DataParamIconName];
+            [self setIconData:cell.bannerImageView withData:url];
+            if ([self isVideoUrlString:url]) {
+                cell.palyBtn.hidden = self.isPlay;
+            } else {
+                cell.palyBtn.hidden = YES;
+            }
+        } else{
+            url = dic;
+            [self setIconData:cell.bannerImageView withData:url];
+            if ([self isVideoUrlString:url]) {
+                cell.palyBtn.hidden = self.isPlay;
+            } else {
+                cell.palyBtn.hidden = YES;
+            }
         }
+        bannerWeak(cell);
+        cell.player_Block = ^(UIButton * _Nonnull btn) {
+            [self setVideowithData:url imageView:weak_cell.bannerImageView btn:btn];
+        };
         tmpCell = cell;
     }
     return tmpCell;
 }
 
-- (void)setIconData:(UIImageView*)bannerImageView withData:(id)data{
+- (void)setIconData:(UIImageView*)bannerImageView withData:(id)data {
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
         if (kBannerLocality(data)) {
-            bannerImageView.image = [UIImage imageNamed:(NSString *)data];
+            NSURL *urlString = [NSURL fileURLWithPath:data];
+            if (urlString != nil) {
+                if ([self isVideoUrlString:urlString.absoluteString]) {
+                    UIImage *cacheimage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:urlString.absoluteString];
+                    if (cacheimage != nil) {
+                        bannerImageView.image = cacheimage;
+                    } else {
+                        UIImage *image = [self getThumbailImageRequestWithUrlString:data];
+                        bannerImageView.image = image;
+                    }
+                } else {
+                    bannerImageView.image = [UIImage imageWithContentsOfFile:data];
+                }
+            } else {
+                bannerImageView.image = [UIImage imageNamed:(NSString *)data];
+            }
         } else {
-            UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-            [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
+            if ([self isVideoUrlString:data]) {
+                UIImage *cacheimage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:data];
+                if (cacheimage != nil) {
+                    bannerImageView.image = cacheimage;
+                } else {
+                    UIImage *image = [self getThumbailImageRequestWithUrlString:data];
+                    bannerImageView.image = image;
+                }
+            } else {
+                UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
+                [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
+            }
         }
     } else if ([data isKindOfClass:NSURL.class]) {
-        UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-        [bannerImageView sd_setImageWithURL:(NSURL *)data placeholderImage:defaultimage];
+        NSURL *url = data;
+        if ([self isVideoUrlString:url.absoluteString]) {
+            UIImage *cacheimage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:url.absoluteString];
+            if (cacheimage != nil) {
+                bannerImageView.image = cacheimage;
+            } else {
+                UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
+                bannerImageView.image = image;
+            }
+        } else {
+            UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
+            [bannerImageView sd_setImageWithURL:url placeholderImage:defaultimage];
+        }
     }
+}
+
+- (void)setVideowithData:(id)data imageView:(UIImageView*)bannerImageView btn:(UIButton *)btn {
+    if (!data) {return ;}
+    NSURL *url = nil;
+    if ([data isKindOfClass:[NSString class]]) {
+        if (kBannerLocality(data)) {
+            url = [NSURL fileURLWithPath:data];
+            UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
+            bannerImageView.image = image;
+        } else {
+            url = [NSURL URLWithString:data];
+            UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
+            bannerImageView.image = image;
+        }
+    } else if ([data isKindOfClass:NSURL.class]) {
+        url = data;
+        UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
+        bannerImageView.image = image;
+    }
+    
+    AVURLAsset *asset = self.assetCache[url.absoluteString];
+    if (!asset) {
+        asset = [AVURLAsset URLAssetWithURL:url options:nil];
+        self.assetCache[url.absoluteString] = asset;
+    }
+    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    if (!tracks.count) return;  // 如果不是视频，直接return
+    self.playerItem = [AVPlayerItem playerItemWithAsset:asset];
+    self.playerItem.canUseNetworkResourcesForLiveStreamingWhilePaused = true;
+    [self.player replaceCurrentItemWithPlayerItem:self.playerItem];
+    [self.playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
+    
+    if (!_player) {
+        self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
+    }
+    if (!_playerLayer) {
+        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
+        self.playerLayer.frame = bannerImageView.bounds;
+        self.playerLayer.videoGravity = AVLayerVideoGravityResize;
+        [bannerImageView.layer addSublayer:self.playerLayer];
+    }
+   
+    [self.player play];
+    btn.hidden = YES;
+    self.isSoloAmbient = YES;
+    [self addObserverAndAudioSession];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+
+    if (object == self.playerItem && [keyPath isEqualToString:@"status"]) {
+
+        AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey]integerValue];
+
+        if (status == AVPlayerStatusReadyToPlay){
+            self.isPlay = YES;
+        }
+    }
+}
+
+
+- (void)playerItemDidPlayToEndTimeNotification:(NSNotification *)sender
+{
+    [self.player seekToTime:kCMTimeZero]; // seek to zero
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)nf
+{
+    [self stopVideo];
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)nf
+{
+    if (!self.isPlay) {
+        [self.player play];
+    }
+}
+
+- (void)stopVideo {
+    if (_player) {
+        [self.player pause];
+        _player = nil;
+    }
+    if (_playerLayer) {
+        [self.playerLayer removeFromSuperlayer];
+        _playerLayer = nil;
+    }
+    _playerItem = nil;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -324,6 +495,43 @@
             }
         }
     }
+}
+
+/* 判断url是否是视频 */
+- (BOOL)isVideoUrlString:(NSString *)urlString
+{
+    // 判断是否含有视频轨道（是否是视频）
+    AVAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:urlString] options:nil];
+    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    return [tracks count] > 0;
+}
+
+/* 获取视频第一帧缩略图 */
+- (UIImage *)getThumbailImageRequestWithUrlString:(NSString *)urlString {
+    //视频文件URL地址
+    NSURL *url = [NSURL URLWithString:urlString];
+    //创建媒体信息对象AVURLAsset
+    AVURLAsset *urlAsset = [AVURLAsset assetWithURL:url];
+    //创建视频缩略图生成器对象AVAssetImageGenerator
+    AVAssetImageGenerator *imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:urlAsset];
+    //创建视频缩略图的时间，第一个参数是视频第几秒，第二个参数是每秒帧数
+    CMTime time = CMTimeMake(0, 10);
+    CMTime actualTime;//实际生成视频缩略图的时间
+    NSError *error = nil;//错误信息
+    //使用对象方法，生成视频缩略图，注意生成的是CGImageRef类型，如果要在UIImageView上显示，需要转为UIImage
+    CGImageRef cgImage = [imageGenerator copyCGImageAtTime:time
+                                                actualTime:&actualTime
+                                                     error:&error];
+    if (error) {
+        NSLog(@"截取视频缩略图发生错误，错误信息：%@",error.localizedDescription);
+        return nil;
+    }
+    //CGImageRef转UIImage对象
+    UIImage *image = [UIImage imageWithCGImage:cgImage];
+    //记得释放CGImageRef
+    CGImageRelease(cgImage);
+    [[SDImageCache sharedImageCache] storeImage:image forKey:urlString toDisk:YES completion:^{}];
+    return image;
 }
 
 /*
@@ -555,7 +763,7 @@
     }
 }
 
-- (void)scrollEnd:(NSIndexPath*)indexPath{
+- (void)scrollEnd:(NSIndexPath*)indexPath {
     if (!self.data.count) return;
     if (self.param.tfy_Marquee) return;
     NSInteger indexCountPath = 0;
@@ -612,6 +820,7 @@
 - (void)dealloc{
     //单纯调用这里无法消除定时器
     [self cancelTimer];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 //要配合这里调用
@@ -641,14 +850,14 @@
     self = [super initWithFrame:frame];
     if (self){
         [self.contentView addSubview:self.bannerImageView];
+        [self.contentView addSubview:self.palyBtn];
     }
     return self;
 }
 
 - (void)setParam:(TFY_BannerParam *)param{
     _param = param;
-    self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
-    self.bannerImageView.clipsToBounds = YES;
+   self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
     if (_param.tfy_bannerRadius > 0) {
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
         maskLayer.frame = self.bounds;
@@ -663,10 +872,30 @@
 - (UIImageView*)bannerImageView{
     if(!_bannerImageView){
         _bannerImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _bannerImageView.clipsToBounds = YES;
     }
     return _bannerImageView;
 }
 
+- (UIButton *)palyBtn {
+    if (!_palyBtn) {
+        _palyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _palyBtn.frame = CGRectMake(CGRectGetWidth(self.frame)/2-32, CGRectGetHeight(self.frame)/2-32, 64, 64);
+        [_palyBtn setImage:[self tfy_fileImage:@"banner_play"] forState:UIControlStateNormal];
+        [_palyBtn addTarget:self action:@selector(playerClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _palyBtn;
+}
+
+- (void)playerClick:(UIButton *)btn {
+    if (self.player_Block) {
+        self.player_Block(btn);
+    }
+}
+
+-(UIImage *)tfy_fileImage:(NSString *)fileImage {
+    return [UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] pathForResource:@"TFY_banner" ofType:@"bundle"] stringByAppendingPathComponent:fileImage]];
+}
 
 @end
 

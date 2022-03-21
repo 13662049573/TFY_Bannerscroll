@@ -8,7 +8,7 @@ target 'TFY_Bannerscroll' do
   pod 'TFY_ProgressHUD'
   pod 'TFY_Navigation'
   pod 'SDWebImage'
-
+  pod 'Masonry'
   # Pods for TFY_Bannerscroll
 
   target 'TFY_BannerscrollTests' do

@@ -15,6 +15,12 @@
 
 @implementation demoNormal
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.bannerScrollerView stopVideo];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -34,11 +40,12 @@
     //开启循环滚动
     .tfy_RepeatSet(YES)
     //开启自动滚动
-    .tfy_AutoScrollSet(YES)
+//    .tfy_AutoScrollSet(YES)
     //开启纵向
     .tfy_VerticalSet(YES);
     TFY_BannerView *viewTwo = [[TFY_BannerView alloc]initConfigureWithModel:param1];
     [self.view addSubview:viewTwo];
+    self.bannerScrollerView = viewTwo;
 }
 
 - (TFY_BannerView *)bannerScrollerView {
@@ -71,14 +78,9 @@
 
 - (NSArray*)getData{
     return @[
-        @"http://photos.tuchong.com/285606/f/4374153.jpg",
+        @"http://dl.w.xk.miui.com/c64aea3266d6f8e777aa659152a22a73.720p.mp4",
+        @"https://media.giphy.com/media/12FparngCjPtC0/giphy.gif",
         @"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
-        @"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
-        @"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
-        @"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
-        @"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
-        @"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
-      @"http://i2.hdslb.com/bfs/archive/1c471796343e34a8613518cc0d393792680a1022.jpg",@"01",@"02",@"03",@"04",@"05"
       ];
 }
 

@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+
 #import "TFY_BannerParam.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -24,17 +26,21 @@ NS_ASSUME_NONNULL_BEGIN
 /**更新fram 必须要假的把item 重新设置一下*/
 - (void)FrameUpdate;
 
+- (void)stopVideo;
+
 @end
 
 @interface Collectioncell : UICollectionViewCell
 @property(nonatomic,strong)UIImageView *bannerImageView;
 @property(nonatomic,strong)TFY_BannerParam *param;
-
+@property (nonatomic , strong)UIButton *palyBtn,*banBtn;
+@property (nonatomic , copy, nullable) void (^player_Block)(UIButton *btn);
 @end
 
 @interface CollectionTextCell : UICollectionViewCell
 @property(nonatomic,strong)UILabel *label;
 @property(nonatomic,strong)TFY_BannerParam *param;
 @end
+
 
 NS_ASSUME_NONNULL_END

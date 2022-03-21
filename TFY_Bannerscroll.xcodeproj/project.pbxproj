@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33D8A0A537D10489E1DC8272 /* Pods_TFY_BannerscrollTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29F625BEEF7898D1E210DE0 /* Pods_TFY_BannerscrollTests.framework */; };
+		3600C42427E849AE00E0BFE0 /* TFY_banner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3600C42327E849AE00E0BFE0 /* TFY_banner.bundle */; };
 		3654E37425C578EA0042826D /* TFY_BannerPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37325C578EA0042826D /* TFY_BannerPageControl.m */; };
 		3654E38625C57C160042826D /* TFY_BannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37C25C57C160042826D /* TFY_BannerView.m */; };
 		3654E38825C57C160042826D /* TFY_BannerOverLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37F25C57C160042826D /* TFY_BannerOverLayout.m */; };
@@ -60,6 +61,7 @@
 		0FEB32499BF82F690EB88A3F /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1DF16605C24348E72E6F6241 /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3600C42327E849AE00E0BFE0 /* TFY_banner.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TFY_banner.bundle; sourceTree = "<group>"; };
 		3654E37125C578EA0042826D /* TFY_BannerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerConfig.h; sourceTree = "<group>"; };
 		3654E37225C578EA0042826D /* TFY_BannerPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerPageControl.h; sourceTree = "<group>"; };
 		3654E37325C578EA0042826D /* TFY_BannerPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerPageControl.m; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				36EE10F8250A0D7C00D24B3C /* TFY_BannerscrollKit.h */,
+				3600C42327E849AE00E0BFE0 /* TFY_banner.bundle */,
 				3654E37B25C57C160042826D /* TFY_BannerView */,
 				3654E37025C578EA0042826D /* TFY_ITools */,
 			);
@@ -501,6 +504,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3600C42427E849AE00E0BFE0 /* TFY_banner.bundle in Resources */,
 				3674C96423B6DAA40076A0D5 /* LaunchScreen.storyboard in Resources */,
 				3674C96123B6DAA40076A0D5 /* Assets.xcassets in Resources */,
 			);
@@ -817,7 +821,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.0;
-				DEVELOPMENT_TEAM = QH95759TSS;
+				DEVELOPMENT_TEAM = W27SB687KJ;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TFY_Bannerscroll/TFY_PCH/TFY_PrefixHeader.pch;
 				INFOPLIST_FILE = TFY_Bannerscroll/Info.plist;
@@ -841,7 +845,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.0;
-				DEVELOPMENT_TEAM = QH95759TSS;
+				DEVELOPMENT_TEAM = W27SB687KJ;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = TFY_Bannerscroll/TFY_PCH/TFY_PrefixHeader.pch;
 				INFOPLIST_FILE = TFY_Bannerscroll/Info.plist;

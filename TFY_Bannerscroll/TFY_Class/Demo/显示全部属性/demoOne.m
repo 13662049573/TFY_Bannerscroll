@@ -123,15 +123,14 @@
     self.viewOne = [[TFY_BannerView alloc]initConfigureWithModel:self.param withView:self.view];
 }
 
-
 //更新数据
 - (void)updata{//02
     self.param.tfy_DataSet(@[
-    @{@"name":@"自定义文本11",@"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"},
-    @{@"name":@"自定义文本22",@"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"},
-    @{@"name":@"自定义文本33",@"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"},
-    @{@"name":@"自定义文本44",@"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"},
-    @{@"name":@"自定义文本44",@"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"},
+    @{@"name":@"自定义文本11",@"icon":@"http://dl.w.xk.miui.com/c64aea3266d6f8e777aa659152a22a73.720p.mp4"},
+    @{@"name":@"自定义文本22",@"icon":@"https://media.giphy.com/media/kFqoBzMYjV8TC/giphy.gif"},
+    @{@"name":@"自定义文本33",@"icon":@"https://media.giphy.com/media/12FparngCjPtC0/giphy.gif"},
+    @{@"name":@"自定义文本44",@"icon":@"https://media.giphy.com/media/lyLRTrqRpW8YU/giphy.gif"},
+    @{@"name":@"自定义文本44",@"icon":@"https://p1.pstatp.com/aweme/1080x1080/216a00017bc43d43f663.jpeg"},
     @{@"name":@"自定义文本44",@"icon":@"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248"},
     ]);
     [self.viewOne updateUI];
