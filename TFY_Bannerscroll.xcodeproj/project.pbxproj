@@ -36,6 +36,8 @@
 		3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */; };
 		36CDA2BC23B8337B009EFF82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BB23B8337B009EFF82 /* UIKit.framework */; };
 		36CDA2BE23B83383009EFF82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BD23B83383009EFF82 /* Foundation.framework */; };
+		36E846BA27E99FA400B4E442 /* TFY_VideoMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E846B927E99FA400B4E442 /* TFY_VideoMaskView.m */; };
+		36E846BD27E9A05900B4E442 /* TFY_BannerVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E846BC27E9A05900B4E442 /* TFY_BannerVideoView.m */; };
 		EC6790A5AB1874B21FE71537 /* Pods_TFY_Bannerscroll.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E304A0B8A9FD3B88B89E280D /* Pods_TFY_Bannerscroll.framework */; };
 		F93C439ADF508FE77E5D40EA /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */; };
 /* End PBXBuildFile section */
@@ -117,6 +119,10 @@
 		3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoPageControl.m; sourceTree = "<group>"; };
 		36CDA2BB23B8337B009EFF82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		36CDA2BD23B83383009EFF82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		36E846B827E99FA400B4E442 /* TFY_VideoMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_VideoMaskView.h; sourceTree = "<group>"; };
+		36E846B927E99FA400B4E442 /* TFY_VideoMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_VideoMaskView.m; sourceTree = "<group>"; };
+		36E846BB27E9A05900B4E442 /* TFY_BannerVideoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerVideoView.h; sourceTree = "<group>"; };
+		36E846BC27E9A05900B4E442 /* TFY_BannerVideoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerVideoView.m; sourceTree = "<group>"; };
 		36EE10F8250A0D7C00D24B3C /* TFY_BannerscrollKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerscrollKit.h; sourceTree = "<group>"; };
 		4686EBA8D031AD5EDB5761FF /* Pods-TFY_BannerscrollTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_BannerscrollTests.release.xcconfig"; path = "Target Support Files/Pods-TFY_BannerscrollTests/Pods-TFY_BannerscrollTests.release.xcconfig"; sourceTree = "<group>"; };
 		4BB6E2B993E137D295E03E88 /* Pods-TFY_Bannerscroll.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll.release.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll.release.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +168,10 @@
 				3654E37125C578EA0042826D /* TFY_BannerConfig.h */,
 				3654E37225C578EA0042826D /* TFY_BannerPageControl.h */,
 				3654E37325C578EA0042826D /* TFY_BannerPageControl.m */,
+				36E846B827E99FA400B4E442 /* TFY_VideoMaskView.h */,
+				36E846B927E99FA400B4E442 /* TFY_VideoMaskView.m */,
+				36E846BB27E9A05900B4E442 /* TFY_BannerVideoView.h */,
+				36E846BC27E9A05900B4E442 /* TFY_BannerVideoView.m */,
 			);
 			path = TFY_ITools;
 			sourceTree = "<group>";
@@ -651,9 +661,11 @@
 				3674C9D223B70FAE0076A0D5 /* DemoMarqueen.m in Sources */,
 				3674C9D523B70FAE0076A0D5 /* marqueCell.m in Sources */,
 				3674C99323B6DB200076A0D5 /* SceneDelegate.m in Sources */,
+				36E846BD27E9A05900B4E442 /* TFY_BannerVideoView.m in Sources */,
 				3674C9D123B70FAE0076A0D5 /* MyCell.m in Sources */,
 				3674C96723B6DAA40076A0D5 /* main.m in Sources */,
 				3674C9D323B70FAE0076A0D5 /* KuaiBaoCell.m in Sources */,
+				36E846BA27E99FA400B4E442 /* TFY_VideoMaskView.m in Sources */,
 				3674C9CE23B70FAE0076A0D5 /* DemoTianMao.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -752,7 +764,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -805,7 +817,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

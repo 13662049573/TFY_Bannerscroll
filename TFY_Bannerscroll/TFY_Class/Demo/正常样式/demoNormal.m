@@ -15,12 +15,6 @@
 
 @implementation demoNormal
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [self.bannerScrollerView stopVideo];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     

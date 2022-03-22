@@ -28,15 +28,7 @@
 @property(weak,nonatomic)UIVisualEffectView *effectView;
 @property(assign,nonatomic)NSInteger lastIndex;
 @property(strong,nonatomic)UIView *line;
-@property (nonatomic , assign)BOOL isSoloAmbient;
-// 视频缓存
-@property (nonatomic, strong) AVPlayerLayer *playerLayer;
-@property (nonatomic, strong) AVPlayer *player;
-@property (nonatomic, strong) AVPlayerItem *playerItem;
-@property (nonatomic, strong) NSMutableDictionary<NSString *, AVURLAsset *> *assetCache;
 @property (assign, nonatomic) BOOL isPlay;
-//任务队列
-@property (nonatomic , strong)UIImageView *videoImageView;
 @end
 
 @implementation TFY_BannerView
@@ -71,24 +63,7 @@
                                    (int)self.param.tfy_Frame.size.height);
     [self setFrame:self.param.tfy_Frame];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(playerItemDidPlayToEndTimeNotification:) name:AVPlayerItemDidPlayToEndTimeNotification  object:nil];
-    // 进入前台，后台的处理
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground:) name:UIApplicationWillResignActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForeground:) name:UIApplicationDidBecomeActiveNotification object:nil];
-    
     [self setUp];
-    
-    [self addObserverAndAudioSession];
-}
-
-- (void)addObserverAndAudioSession{
-    AVAudioSession *session = [AVAudioSession sharedInstance];
-    [session setActive:true error:nil];
-    if(self.isSoloAmbient == true) {
-        [session setCategory:AVAudioSessionCategorySoloAmbient error:nil];
-    }else {
-        [session setCategory:AVAudioSessionCategoryAmbient error:nil];
-    }
 }
 
 //横竖屏更新布局。
@@ -103,7 +78,6 @@
 }
 
 - (void)updateUI {
-    
     self.data = [NSArray arrayWithArray:self.param.tfy_Data];
 
     [self resetCollection];
@@ -284,168 +258,46 @@
         NSString *url = @"";
         if ([dic isKindOfClass:[NSDictionary class]]) {
             url = dic[self.param.tfy_DataParamIconName];
-            [self setIconData:cell.bannerImageView withData:url];
             if ([self isVideoUrlString:url]) {
-                cell.palyBtn.hidden = self.isPlay;
+                cell.playerView.videoUrl = url;
+                cell.playerView.hidden = NO;
             } else {
-                cell.palyBtn.hidden = YES;
+                cell.playerView.hidden = YES;
+                [self setIconData:cell.bannerImageView withData:url];
             }
         } else{
             url = dic;
-            [self setIconData:cell.bannerImageView withData:url];
             if ([self isVideoUrlString:url]) {
-                cell.palyBtn.hidden = self.isPlay;
+                cell.playerView.videoUrl = url;
+                cell.playerView.hidden = NO;
             } else {
-                cell.palyBtn.hidden = YES;
+                cell.playerView.hidden = YES;
+                [self setIconData:cell.bannerImageView withData:url];
             }
         }
-        bannerWeak(cell);
-        cell.player_Block = ^(UIButton * _Nonnull btn) {
-            [self setVideowithData:url imageView:weak_cell.bannerImageView btn:btn];
-        };
         tmpCell = cell;
     }
     return tmpCell;
+}
+
+- (void)stopVideo {
+    
 }
 
 - (void)setIconData:(UIImageView*)bannerImageView withData:(id)data {
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
         if (kBannerLocality(data)) {
-            NSURL *urlString = [NSURL fileURLWithPath:data];
-            if (urlString != nil) {
-                if ([self isVideoUrlString:urlString.absoluteString]) {
-                    UIImage *cacheimage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:urlString.absoluteString];
-                    if (cacheimage != nil) {
-                        bannerImageView.image = cacheimage;
-                    } else {
-                        UIImage *image = [self getThumbailImageRequestWithUrlString:data];
-                        bannerImageView.image = image;
-                    }
-                } else {
-                    bannerImageView.image = [UIImage imageWithContentsOfFile:data];
-                }
-            } else {
-                bannerImageView.image = [UIImage imageNamed:(NSString *)data];
-            }
+            bannerImageView.image = [UIImage imageNamed:(NSString *)data];
         } else {
-            if ([self isVideoUrlString:data]) {
-                UIImage *cacheimage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:data];
-                if (cacheimage != nil) {
-                    bannerImageView.image = cacheimage;
-                } else {
-                    UIImage *image = [self getThumbailImageRequestWithUrlString:data];
-                    bannerImageView.image = image;
-                }
-            } else {
-                UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-                [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
-            }
+            UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
+            [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
         }
     } else if ([data isKindOfClass:NSURL.class]) {
         NSURL *url = data;
-        if ([self isVideoUrlString:url.absoluteString]) {
-            UIImage *cacheimage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:url.absoluteString];
-            if (cacheimage != nil) {
-                bannerImageView.image = cacheimage;
-            } else {
-                UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
-                bannerImageView.image = image;
-            }
-        } else {
-            UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-            [bannerImageView sd_setImageWithURL:url placeholderImage:defaultimage];
-        }
+        UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
+        [bannerImageView sd_setImageWithURL:url placeholderImage:defaultimage];
     }
-}
-
-- (void)setVideowithData:(id)data imageView:(UIImageView*)bannerImageView btn:(UIButton *)btn {
-    if (!data) {return ;}
-    NSURL *url = nil;
-    if ([data isKindOfClass:[NSString class]]) {
-        if (kBannerLocality(data)) {
-            url = [NSURL fileURLWithPath:data];
-            UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
-            bannerImageView.image = image;
-        } else {
-            url = [NSURL URLWithString:data];
-            UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
-            bannerImageView.image = image;
-        }
-    } else if ([data isKindOfClass:NSURL.class]) {
-        url = data;
-        UIImage *image = [self getThumbailImageRequestWithUrlString:url.absoluteString];
-        bannerImageView.image = image;
-    }
-    
-    AVURLAsset *asset = self.assetCache[url.absoluteString];
-    if (!asset) {
-        asset = [AVURLAsset URLAssetWithURL:url options:nil];
-        self.assetCache[url.absoluteString] = asset;
-    }
-    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
-    if (!tracks.count) return;  // 如果不是视频，直接return
-    self.playerItem = [AVPlayerItem playerItemWithAsset:asset];
-    self.playerItem.canUseNetworkResourcesForLiveStreamingWhilePaused = true;
-    [self.player replaceCurrentItemWithPlayerItem:self.playerItem];
-    [self.playerItem addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionNew context:nil];
-    
-    if (!_player) {
-        self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
-    }
-    if (!_playerLayer) {
-        self.playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.player];
-        self.playerLayer.frame = bannerImageView.bounds;
-        self.playerLayer.videoGravity = AVLayerVideoGravityResize;
-        [bannerImageView.layer addSublayer:self.playerLayer];
-    }
-   
-    [self.player play];
-    btn.hidden = YES;
-    self.isSoloAmbient = YES;
-    [self addObserverAndAudioSession];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-
-    if (object == self.playerItem && [keyPath isEqualToString:@"status"]) {
-
-        AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey]integerValue];
-
-        if (status == AVPlayerStatusReadyToPlay){
-            self.isPlay = YES;
-        }
-    }
-}
-
-
-- (void)playerItemDidPlayToEndTimeNotification:(NSNotification *)sender
-{
-    [self.player seekToTime:kCMTimeZero]; // seek to zero
-}
-
-- (void)applicationDidEnterBackground:(NSNotification *)nf
-{
-    [self stopVideo];
-}
-
-- (void)applicationWillEnterForeground:(NSNotification *)nf
-{
-    if (!self.isPlay) {
-        [self.player play];
-    }
-}
-
-- (void)stopVideo {
-    if (_player) {
-        [self.player pause];
-        _player = nil;
-    }
-    if (_playerLayer) {
-        [self.playerLayer removeFromSuperlayer];
-        _playerLayer = nil;
-    }
-    _playerItem = nil;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -850,7 +702,7 @@
     self = [super initWithFrame:frame];
     if (self){
         [self.contentView addSubview:self.bannerImageView];
-        [self.contentView addSubview:self.palyBtn];
+        [self.contentView addSubview:self.playerView];
     }
     return self;
 }
@@ -869,32 +721,20 @@
     }
 }
 
+- (TFY_BannerVideoView *)playerView {
+    if (!_playerView) {
+        _playerView = [[TFY_BannerVideoView alloc] initWithFrame:self.contentView.bounds];
+        _playerView.hidden = YES;
+    }
+    return _playerView;
+}
+
 - (UIImageView*)bannerImageView{
     if(!_bannerImageView){
         _bannerImageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _bannerImageView.clipsToBounds = YES;
     }
     return _bannerImageView;
-}
-
-- (UIButton *)palyBtn {
-    if (!_palyBtn) {
-        _palyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _palyBtn.frame = CGRectMake(CGRectGetWidth(self.frame)/2-32, CGRectGetHeight(self.frame)/2-32, 64, 64);
-        [_palyBtn setImage:[self tfy_fileImage:@"banner_play"] forState:UIControlStateNormal];
-        [_palyBtn addTarget:self action:@selector(playerClick:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _palyBtn;
-}
-
-- (void)playerClick:(UIButton *)btn {
-    if (self.player_Block) {
-        self.player_Block(btn);
-    }
-}
-
--(UIImage *)tfy_fileImage:(NSString *)fileImage {
-    return [UIImage imageWithContentsOfFile:[[[NSBundle mainBundle] pathForResource:@"TFY_banner" ofType:@"bundle"] stringByAppendingPathComponent:fileImage]];
 }
 
 @end
