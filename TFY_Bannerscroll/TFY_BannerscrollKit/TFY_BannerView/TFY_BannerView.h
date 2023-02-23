@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "TFY_BannerParam.h"
-#import "TFY_BannerVideoView.h"
+#import "TFY_ImageViewCell.h"
+#import "TFY_VideoCollectionCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,17 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)stopVideo;
 
-@end
-
-@interface Collectioncell : UICollectionViewCell
-@property(nonatomic,strong)UIImageView *bannerImageView;
-@property(nonatomic,strong)TFY_BannerParam *param;
-@property (nonatomic , strong)TFY_BannerVideoView *playerView;
-@end
-
-@interface CollectionTextCell : UICollectionViewCell
-@property(nonatomic,strong)UILabel *label;
-@property(nonatomic,strong)TFY_BannerParam *param;
 @end
 
 

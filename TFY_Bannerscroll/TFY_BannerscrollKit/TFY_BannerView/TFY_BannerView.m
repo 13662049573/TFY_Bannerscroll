@@ -10,6 +10,7 @@
 #import "TFY_BannerFlowLayout.h"
 #import "TFY_BannerOverLayout.h"
 #import "TFY_BannerPageControl.h"
+
 #define COUNT 500
 
 #define bannerWeak(o) __weak typeof(o) weak_##o = o;
@@ -195,8 +196,8 @@
     
     self.myCollectionV.scrollEnabled = self.param.tfy_CanFingerSliding;
     
-    [self.myCollectionV registerClass:Collectioncell.class forCellWithReuseIdentifier:NSStringFromClass(Collectioncell.class)];
-    [self.myCollectionV registerClass:CollectionTextCell.class forCellWithReuseIdentifier:NSStringFromClass(CollectionTextCell.class)];
+    [self.myCollectionV registerClass:TFY_ImageViewCell.class forCellWithReuseIdentifier:@"TFY_ImageViewCell"];
+    [self.myCollectionV registerClass:TFY_VideoCollectionCell.class forCellWithReuseIdentifier:@"TFY_VideoCollectionCell"];
     
     if (self.param.tfy_MyCellClassNames) {
         if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSString class]]) {
@@ -253,26 +254,25 @@
         tmpCell = self.param.tfy_MyCell([NSIndexPath indexPathForRow:index inSection:indexPath.section], collectionView, dic,self.bgImgView,self.data);
     } else {
         //默认视图
-        Collectioncell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass(Collectioncell.class) forIndexPath:indexPath];
-        cell.param = self.param;
+        TFY_BaseBannerViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_ImageViewCell" forIndexPath:indexPath];
         NSString *url = @"";
         if ([dic isKindOfClass:[NSDictionary class]]) {
             url = dic[self.param.tfy_DataParamIconName];
             if ([self isVideoUrlString:url]) {
-                cell.playerView.videoUrl = url;
-                cell.playerView.hidden = NO;
+                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_VideoCollectionCell" forIndexPath:indexPath];
+                ((TFY_VideoCollectionCell *)cell).videoUrl = url;
             } else {
-                cell.playerView.hidden = YES;
-                [self setIconData:cell.bannerImageView withData:url];
+                cell.param = self.param;
+                [self setIconData:((TFY_ImageViewCell *)cell).bannerImageView withData:url];
             }
         } else{
             url = dic;
             if ([self isVideoUrlString:url]) {
-                cell.playerView.videoUrl = url;
-                cell.playerView.hidden = NO;
+                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_VideoCollectionCell" forIndexPath:indexPath];
+                ((TFY_VideoCollectionCell *)cell).videoUrl = url;
             } else {
-                cell.playerView.hidden = YES;
-                [self setIconData:cell.bannerImageView withData:url];
+                cell.param = self.param;
+                [self setIconData:((TFY_ImageViewCell *)cell).bannerImageView withData:url];
             }
         }
         tmpCell = cell;
@@ -696,67 +696,3 @@
 
 @end
 
-@implementation Collectioncell
-
--(instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self){
-        [self.contentView addSubview:self.bannerImageView];
-        [self.contentView addSubview:self.playerView];
-    }
-    return self;
-}
-
-- (void)setParam:(TFY_BannerParam *)param{
-    _param = param;
-   self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
-    if (_param.tfy_bannerRadius > 0) {
-        CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
-        maskLayer.frame = self.bounds;
-        maskLayer.path = ({
-            UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.bannerImageView.bounds cornerRadius:_param.tfy_bannerRadius];
-            path.CGPath;
-        });
-        self.bannerImageView.layer.mask = maskLayer;
-    }
-}
-
-- (TFY_BannerVideoView *)playerView {
-    if (!_playerView) {
-        _playerView = [[TFY_BannerVideoView alloc] initWithFrame:self.contentView.bounds];
-        _playerView.hidden = YES;
-    }
-    return _playerView;
-}
-
-- (UIImageView*)bannerImageView{
-    if(!_bannerImageView){
-        _bannerImageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _bannerImageView.clipsToBounds = YES;
-    }
-    return _bannerImageView;
-}
-
-@end
-
-@implementation CollectionTextCell
-
--(instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self){
-        self.contentView.backgroundColor = [UIColor whiteColor];
-        self.label = [UILabel new];
-        self.label.font = [UIFont systemFontOfSize:17.0];
-        self.label.textColor = [UIColor redColor];
-        [self.contentView addSubview:self.label];
-        self.label.frame = CGRectMake(10, 0, CGRectGetWidth(frame)-20, CGRectGetHeight(frame));
-    }
-    return self;
-}
-
-- (void)setParam:(TFY_BannerParam *)param{
-    _param = param;
-    self.label.textColor = self.param.tfy_MarqueeTextColor;
-}
-
-@end

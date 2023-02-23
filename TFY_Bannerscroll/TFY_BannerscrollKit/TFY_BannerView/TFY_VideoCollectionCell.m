@@ -1,19 +1,19 @@
 //
-//  TFY_BannerVideoView.m
+//  TFY_VideoCollectionCell.m
 //  TFY_Bannerscroll
 //
-//  Created by 田风有 on 2022/3/22.
-//  Copyright © 2022 田风有. All rights reserved.
+//  Created by 田风有 on 2023/2/23.
+//  Copyright © 2023 田风有. All rights reserved.
 //
 
-#import "TFY_BannerVideoView.h"
+#import "TFY_VideoCollectionCell.h"
 #import "TFY_VideoMaskView.h"
 #import <MediaPlayer/MediaPlayer.h>
 
 @import AVFoundation;
 @import AVKit;
 
-@interface TFY_BannerVideoView ()<AVPlayerViewControllerDelegate>
+@interface TFY_VideoCollectionCell ()<AVPlayerViewControllerDelegate>
 
 @property (nonatomic, strong) AVPlayerViewController *videoPlayer;
 
@@ -25,12 +25,16 @@
 
 @end
 
-@implementation TFY_BannerVideoView
+@implementation TFY_VideoCollectionCell
+
+- (void)baseBannerViewLayout {
+    [self loadUI];
+}
 
 - (void)loadUI {
     
-    [self addSubview:self.videoPlayer.view];
-    [self addSubview:self.videoMaskView];
+    [self.contentView addSubview:self.videoPlayer.view];
+    [self.contentView addSubview:self.videoMaskView];
     
     [self systemVolumeView];
 
@@ -96,7 +100,7 @@
 
 - (void)setVideoUrl:(NSString *)videoUrl {
     _videoUrl = videoUrl;
-    [self loadUI];
+    self.videoPlayer.player = [AVPlayer playerWithURL:[NSURL URLWithString:videoUrl]];
 }
 
 - (void)createTimer {
@@ -124,10 +128,9 @@
 - (AVPlayerViewController *)videoPlayer {
     if (!_videoPlayer) {
         _videoPlayer = [[AVPlayerViewController alloc]init];
-        _videoPlayer.view.frame = self.frame;
+        _videoPlayer.view.frame = self.contentView.frame;
         _videoPlayer.delegate = self;
         _videoPlayer.showsPlaybackControls = NO;
-        _videoPlayer.player = [AVPlayer playerWithURL:[NSURL URLWithString:self.videoUrl]];
     }
     return _videoPlayer;
 }
@@ -141,13 +144,12 @@
 
 - (void)dealloc {
     [self stop];
-    [self.videoPlayer.player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+//    [self.videoPlayer.player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
     // 移除time观察者
     if (self.timeObserve) {
         [self.videoPlayer.player removeTimeObserver:self.timeObserve];
         self.timeObserve = nil;
     }
 }
-
 
 @end
