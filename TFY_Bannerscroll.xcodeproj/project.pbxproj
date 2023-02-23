@@ -171,8 +171,6 @@
 		3654E37025C578EA0042826D /* TFY_ITools */ = {
 			isa = PBXGroup;
 			children = (
-				362CBD3329A75F1B00085921 /* TFY_BaseBannerViewCell.h */,
-				362CBD3229A75F1B00085921 /* TFY_BaseBannerViewCell.m */,
 				3654E37125C578EA0042826D /* TFY_BannerConfig.h */,
 				3654E37225C578EA0042826D /* TFY_BannerPageControl.h */,
 				3654E37325C578EA0042826D /* TFY_BannerPageControl.m */,
@@ -197,6 +195,8 @@
 				3654E38125C57C160042826D /* TFY_BannerFlowLayout.m */,
 				3654E38525C57C160042826D /* TFY_BannerOverLayout.h */,
 				3654E37F25C57C160042826D /* TFY_BannerOverLayout.m */,
+				362CBD3329A75F1B00085921 /* TFY_BaseBannerViewCell.h */,
+				362CBD3229A75F1B00085921 /* TFY_BaseBannerViewCell.m */,
 			);
 			path = TFY_BannerView;
 			sourceTree = "<group>";
