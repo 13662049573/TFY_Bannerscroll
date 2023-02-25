@@ -1,31 +1,32 @@
 //
-//  TFY_VideoCollectionCell.m
+//  TFY_BannerVideoCollectionCell.m
 //  TFY_Bannerscroll
 //
-//  Created by 田风有 on 2023/2/23.
+//  Created by 田风有 on 2023/2/25.
 //  Copyright © 2023 田风有. All rights reserved.
 //
 
-#import "TFY_VideoCollectionCell.h"
-#import "TFY_VideoMaskView.h"
+#import "TFY_BannerVideoCollectionCell.h"
+#import "TFY_BannerVideoMaskView.h"
 #import <MediaPlayer/MediaPlayer.h>
 
 @import AVFoundation;
 @import AVKit;
 
-@interface TFY_VideoCollectionCell ()<AVPlayerViewControllerDelegate>
+@interface TFY_BannerVideoCollectionCell ()<AVPlayerViewControllerDelegate>
 
 @property (nonatomic, strong) AVPlayerViewController *videoPlayer;
 
-@property (nonatomic, strong) TFY_VideoMaskView *videoMaskView;
+@property (nonatomic, strong) TFY_BannerVideoMaskView *videoMaskView;
 
 @property (nonatomic, strong) id timeObserve;
 /** 音量控制滑杆 */
 @property (nonatomic, strong) UISlider *volumeViewSlider;
 
+
 @end
 
-@implementation TFY_VideoCollectionCell
+@implementation TFY_BannerVideoCollectionCell
 
 - (void)baseBannerViewLayout {
     [self loadUI];
@@ -135,21 +136,21 @@
     return _videoPlayer;
 }
 
-- (TFY_VideoMaskView *)videoMaskView {
+- (TFY_BannerVideoMaskView *)videoMaskView {
     if (!_videoMaskView) {
-        _videoMaskView = [[TFY_VideoMaskView alloc]initWithFrame:self.frame];
+        _videoMaskView = [[TFY_BannerVideoMaskView alloc]initWithFrame:self.frame];
     }
     return _videoMaskView;
 }
 
 - (void)dealloc {
     [self stop];
-//    [self.videoPlayer.player.currentItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
     // 移除time观察者
     if (self.timeObserve) {
         [self.videoPlayer.player removeTimeObserver:self.timeObserve];
         self.timeObserve = nil;
     }
 }
+
 
 @end

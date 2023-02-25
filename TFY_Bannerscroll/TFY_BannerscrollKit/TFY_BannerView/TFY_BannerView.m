@@ -196,8 +196,8 @@
     
     self.myCollectionV.scrollEnabled = self.param.tfy_CanFingerSliding;
     
-    [self.myCollectionV registerClass:TFY_ImageViewCell.class forCellWithReuseIdentifier:@"TFY_ImageViewCell"];
-    [self.myCollectionV registerClass:TFY_VideoCollectionCell.class forCellWithReuseIdentifier:@"TFY_VideoCollectionCell"];
+    [self.myCollectionV registerClass:TFY_BannerImageViewCell.class forCellWithReuseIdentifier:@"TFY_BannerImageViewCell"];
+    [self.myCollectionV registerClass:TFY_BannerVideoCollectionCell.class forCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell"];
     
     if (self.param.tfy_MyCellClassNames) {
         if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSString class]]) {
@@ -254,25 +254,25 @@
         tmpCell = self.param.tfy_MyCell([NSIndexPath indexPathForRow:index inSection:indexPath.section], collectionView, dic,self.bgImgView,self.data);
     } else {
         //默认视图
-        TFY_BaseBannerViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_ImageViewCell" forIndexPath:indexPath];
+        TFY_BaseBannerViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
         NSString *url = @"";
         if ([dic isKindOfClass:[NSDictionary class]]) {
             url = dic[self.param.tfy_DataParamIconName];
             if ([self isVideoUrlString:url]) {
-                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_VideoCollectionCell" forIndexPath:indexPath];
-                ((TFY_VideoCollectionCell *)cell).videoUrl = url;
+                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell" forIndexPath:indexPath];
+                ((TFY_BannerVideoCollectionCell *)cell).videoUrl = url;
             } else {
                 cell.param = self.param;
-                [self setIconData:((TFY_ImageViewCell *)cell).bannerImageView withData:url];
+                [self setIconData:((TFY_BannerImageViewCell *)cell).bannerImageView withData:url];
             }
         } else{
             url = dic;
             if ([self isVideoUrlString:url]) {
-                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_VideoCollectionCell" forIndexPath:indexPath];
-                ((TFY_VideoCollectionCell *)cell).videoUrl = url;
+                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell" forIndexPath:indexPath];
+                ((TFY_BannerVideoCollectionCell *)cell).videoUrl = url;
             } else {
                 cell.param = self.param;
-                [self setIconData:((TFY_ImageViewCell *)cell).bannerImageView withData:url];
+                [self setIconData:((TFY_BannerImageViewCell *)cell).bannerImageView withData:url];
             }
         }
         tmpCell = cell;

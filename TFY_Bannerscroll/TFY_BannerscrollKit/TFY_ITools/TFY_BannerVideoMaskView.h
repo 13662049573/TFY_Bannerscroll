@@ -1,12 +1,14 @@
 //
-//  TFY_VideoMaskView.h
+//  TFY_BannerVideoMaskView.h
 //  TFY_Bannerscroll
 //
-//  Created by 田风有 on 2022/3/22.
-//  Copyright © 2022 田风有. All rights reserved.
+//  Created by 田风有 on 2023/2/25.
+//  Copyright © 2023 田风有. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, TFY_PlayerState) {
     TFY_PlayerStateStart,
@@ -15,9 +17,8 @@ typedef NS_ENUM(NSInteger, TFY_PlayerState) {
 
 typedef void(^StartButtonTapedBlock)(TFY_PlayerState state);
 
-NS_ASSUME_NONNULL_BEGIN
+@interface TFY_BannerVideoMaskView : UIView
 
-@interface TFY_VideoMaskView : UIView
 /*
  * 底部进度条的值
  */

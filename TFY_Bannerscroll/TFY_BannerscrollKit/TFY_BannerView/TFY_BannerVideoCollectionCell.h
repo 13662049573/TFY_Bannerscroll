@@ -1,8 +1,8 @@
 //
-//  TFY_VideoCollectionCell.h
+//  TFY_BannerVideoCollectionCell.h
 //  TFY_Bannerscroll
 //
-//  Created by 田风有 on 2023/2/23.
+//  Created by 田风有 on 2023/2/25.
 //  Copyright © 2023 田风有. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TFY_VideoCollectionCell : TFY_BaseBannerViewCell
+@interface TFY_BannerVideoCollectionCell : TFY_BaseBannerViewCell
 // ******* 是否处于播放状态 ******
 @property (nonatomic, assign) BOOL isPlay;
 // ******* 视频播放地址 ******
@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
  * 暂停播放
  */
 - (void)stop;
-
 @end
 
 NS_ASSUME_NONNULL_END

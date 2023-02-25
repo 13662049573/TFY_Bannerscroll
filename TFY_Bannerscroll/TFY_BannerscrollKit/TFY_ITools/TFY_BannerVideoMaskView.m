@@ -1,15 +1,14 @@
 //
-//  TFY_VideoMaskView.m
+//  TFY_BannerVideoMaskView.m
 //  TFY_Bannerscroll
 //
-//  Created by 田风有 on 2022/3/22.
-//  Copyright © 2022 田风有. All rights reserved.
+//  Created by 田风有 on 2023/2/25.
+//  Copyright © 2023 田风有. All rights reserved.
 //
 
-#import "TFY_VideoMaskView.h"
+#import "TFY_BannerVideoMaskView.h"
 
-@interface TFY_VideoMaskView ()
-// ******* 底部进度条 *******
+@interface TFY_BannerVideoMaskView ()// ******* 底部进度条 *******
 @property (nonatomic, strong) UIProgressView *progressView;
 // ******* 开始播放按钮 *******
 @property (nonatomic, strong) UIButton *stratButton;
@@ -21,7 +20,7 @@
 
 @end
 
-@implementation TFY_VideoMaskView
+@implementation TFY_BannerVideoMaskView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -145,5 +144,6 @@
         self.broadcasting_Block(btn);
     }
 }
+
 
 @end

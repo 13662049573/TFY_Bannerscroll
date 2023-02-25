@@ -9,14 +9,15 @@
 /* Begin PBXBuildFile section */
 		33D8A0A537D10489E1DC8272 /* Pods_TFY_BannerscrollTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F29F625BEEF7898D1E210DE0 /* Pods_TFY_BannerscrollTests.framework */; };
 		3600C42427E849AE00E0BFE0 /* TFY_banner.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3600C42327E849AE00E0BFE0 /* TFY_banner.bundle */; };
-		362CBD2F29A75F0D00085921 /* TFY_ImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 362CBD2929A75F0D00085921 /* TFY_ImageViewCell.m */; };
-		362CBD3029A75F0D00085921 /* TFY_VideoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 362CBD2B29A75F0D00085921 /* TFY_VideoCollectionCell.m */; };
 		362CBD3429A75F1B00085921 /* TFY_BaseBannerViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 362CBD3229A75F1B00085921 /* TFY_BaseBannerViewCell.m */; };
 		3654E37425C578EA0042826D /* TFY_BannerPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37325C578EA0042826D /* TFY_BannerPageControl.m */; };
 		3654E38625C57C160042826D /* TFY_BannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37C25C57C160042826D /* TFY_BannerView.m */; };
 		3654E38825C57C160042826D /* TFY_BannerOverLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E37F25C57C160042826D /* TFY_BannerOverLayout.m */; };
 		3654E38925C57C160042826D /* TFY_BannerParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E38025C57C160042826D /* TFY_BannerParam.m */; };
 		3654E38A25C57C160042826D /* TFY_BannerFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E38125C57C160042826D /* TFY_BannerFlowLayout.m */; };
+		3667A6CD29AA1F670020B575 /* TFY_BannerImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3667A6CC29AA1F670020B575 /* TFY_BannerImageViewCell.m */; };
+		3667A6D029AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3667A6CF29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m */; };
+		3667A6D329AA207B0020B575 /* TFY_BannerVideoMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3667A6D229AA207B0020B575 /* TFY_BannerVideoMaskView.m */; };
 		3674C96123B6DAA40076A0D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3674C96023B6DAA40076A0D5 /* Assets.xcassets */; };
 		3674C96423B6DAA40076A0D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3674C96223B6DAA40076A0D5 /* LaunchScreen.storyboard */; };
 		3674C96723B6DAA40076A0D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C96623B6DAA40076A0D5 /* main.m */; };
@@ -39,7 +40,6 @@
 		3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */; };
 		36CDA2BC23B8337B009EFF82 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BB23B8337B009EFF82 /* UIKit.framework */; };
 		36CDA2BE23B83383009EFF82 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36CDA2BD23B83383009EFF82 /* Foundation.framework */; };
-		36E846BA27E99FA400B4E442 /* TFY_VideoMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36E846B927E99FA400B4E442 /* TFY_VideoMaskView.m */; };
 		EC6790A5AB1874B21FE71537 /* Pods_TFY_Bannerscroll.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E304A0B8A9FD3B88B89E280D /* Pods_TFY_Bannerscroll.framework */; };
 		F93C439ADF508FE77E5D40EA /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */; };
 /* End PBXBuildFile section */
@@ -66,10 +66,6 @@
 		1DF16605C24348E72E6F6241 /* Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests/Pods-TFY_Bannerscroll-TFY_BannerscrollUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		23A92539B50A30D26A4D0925 /* Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TFY_Bannerscroll_TFY_BannerscrollUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3600C42327E849AE00E0BFE0 /* TFY_banner.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TFY_banner.bundle; sourceTree = "<group>"; };
-		362CBD2929A75F0D00085921 /* TFY_ImageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFY_ImageViewCell.m; sourceTree = "<group>"; };
-		362CBD2A29A75F0D00085921 /* TFY_VideoCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_VideoCollectionCell.h; sourceTree = "<group>"; };
-		362CBD2B29A75F0D00085921 /* TFY_VideoCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFY_VideoCollectionCell.m; sourceTree = "<group>"; };
-		362CBD2D29A75F0D00085921 /* TFY_ImageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_ImageViewCell.h; sourceTree = "<group>"; };
 		362CBD3229A75F1B00085921 /* TFY_BaseBannerViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFY_BaseBannerViewCell.m; sourceTree = "<group>"; };
 		362CBD3329A75F1B00085921 /* TFY_BaseBannerViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BaseBannerViewCell.h; sourceTree = "<group>"; };
 		3654E37125C578EA0042826D /* TFY_BannerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerConfig.h; sourceTree = "<group>"; };
@@ -83,6 +79,12 @@
 		3654E38225C57C160042826D /* TFY_BannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerView.h; sourceTree = "<group>"; };
 		3654E38425C57C160042826D /* TFY_BannerParam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerParam.h; sourceTree = "<group>"; };
 		3654E38525C57C160042826D /* TFY_BannerOverLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerOverLayout.h; sourceTree = "<group>"; };
+		3667A6CB29AA1F670020B575 /* TFY_BannerImageViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerImageViewCell.h; sourceTree = "<group>"; };
+		3667A6CC29AA1F670020B575 /* TFY_BannerImageViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerImageViewCell.m; sourceTree = "<group>"; };
+		3667A6CE29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerVideoCollectionCell.h; sourceTree = "<group>"; };
+		3667A6CF29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerVideoCollectionCell.m; sourceTree = "<group>"; };
+		3667A6D129AA207B0020B575 /* TFY_BannerVideoMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerVideoMaskView.h; sourceTree = "<group>"; };
+		3667A6D229AA207B0020B575 /* TFY_BannerVideoMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerVideoMaskView.m; sourceTree = "<group>"; };
 		3674C95123B6DAA20076A0D5 /* TFY_Bannerscroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFY_Bannerscroll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3674C96023B6DAA40076A0D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3674C96323B6DAA40076A0D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -127,8 +129,6 @@
 		3674C9CB23B70FAE0076A0D5 /* DemoPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoPageControl.m; sourceTree = "<group>"; };
 		36CDA2BB23B8337B009EFF82 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		36CDA2BD23B83383009EFF82 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		36E846B827E99FA400B4E442 /* TFY_VideoMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_VideoMaskView.h; sourceTree = "<group>"; };
-		36E846B927E99FA400B4E442 /* TFY_VideoMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_VideoMaskView.m; sourceTree = "<group>"; };
 		36EE10F8250A0D7C00D24B3C /* TFY_BannerscrollKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerscrollKit.h; sourceTree = "<group>"; };
 		4686EBA8D031AD5EDB5761FF /* Pods-TFY_BannerscrollTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_BannerscrollTests.release.xcconfig"; path = "Target Support Files/Pods-TFY_BannerscrollTests/Pods-TFY_BannerscrollTests.release.xcconfig"; sourceTree = "<group>"; };
 		4BB6E2B993E137D295E03E88 /* Pods-TFY_Bannerscroll.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TFY_Bannerscroll.release.xcconfig"; path = "Target Support Files/Pods-TFY_Bannerscroll/Pods-TFY_Bannerscroll.release.xcconfig"; sourceTree = "<group>"; };
@@ -174,8 +174,8 @@
 				3654E37125C578EA0042826D /* TFY_BannerConfig.h */,
 				3654E37225C578EA0042826D /* TFY_BannerPageControl.h */,
 				3654E37325C578EA0042826D /* TFY_BannerPageControl.m */,
-				36E846B827E99FA400B4E442 /* TFY_VideoMaskView.h */,
-				36E846B927E99FA400B4E442 /* TFY_VideoMaskView.m */,
+				3667A6D129AA207B0020B575 /* TFY_BannerVideoMaskView.h */,
+				3667A6D229AA207B0020B575 /* TFY_BannerVideoMaskView.m */,
 			);
 			path = TFY_ITools;
 			sourceTree = "<group>";
@@ -183,10 +183,6 @@
 		3654E37B25C57C160042826D /* TFY_BannerView */ = {
 			isa = PBXGroup;
 			children = (
-				362CBD2D29A75F0D00085921 /* TFY_ImageViewCell.h */,
-				362CBD2929A75F0D00085921 /* TFY_ImageViewCell.m */,
-				362CBD2A29A75F0D00085921 /* TFY_VideoCollectionCell.h */,
-				362CBD2B29A75F0D00085921 /* TFY_VideoCollectionCell.m */,
 				3654E38425C57C160042826D /* TFY_BannerParam.h */,
 				3654E38025C57C160042826D /* TFY_BannerParam.m */,
 				3654E38225C57C160042826D /* TFY_BannerView.h */,
@@ -197,6 +193,10 @@
 				3654E37F25C57C160042826D /* TFY_BannerOverLayout.m */,
 				362CBD3329A75F1B00085921 /* TFY_BaseBannerViewCell.h */,
 				362CBD3229A75F1B00085921 /* TFY_BaseBannerViewCell.m */,
+				3667A6CB29AA1F670020B575 /* TFY_BannerImageViewCell.h */,
+				3667A6CC29AA1F670020B575 /* TFY_BannerImageViewCell.m */,
+				3667A6CE29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.h */,
+				3667A6CF29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m */,
 			);
 			path = TFY_BannerView;
 			sourceTree = "<group>";
@@ -663,21 +663,21 @@
 				3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */,
 				3654E37425C578EA0042826D /* TFY_BannerPageControl.m in Sources */,
 				3654E38A25C57C160042826D /* TFY_BannerFlowLayout.m in Sources */,
+				3667A6D029AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m in Sources */,
 				3654E38625C57C160042826D /* TFY_BannerView.m in Sources */,
 				3674C99223B6DB200076A0D5 /* ViewController.m in Sources */,
 				3674C9CF23B70FAE0076A0D5 /* TianMaoCell.m in Sources */,
 				3674C9D623B70FAE0076A0D5 /* DemoAdd.m in Sources */,
 				3674C9CD23B70FAE0076A0D5 /* demoNormal.m in Sources */,
-				362CBD2F29A75F0D00085921 /* TFY_ImageViewCell.m in Sources */,
 				3674C9D223B70FAE0076A0D5 /* DemoMarqueen.m in Sources */,
 				3674C9D523B70FAE0076A0D5 /* marqueCell.m in Sources */,
-				362CBD3029A75F0D00085921 /* TFY_VideoCollectionCell.m in Sources */,
 				3674C99323B6DB200076A0D5 /* SceneDelegate.m in Sources */,
 				3674C9D123B70FAE0076A0D5 /* MyCell.m in Sources */,
 				362CBD3429A75F1B00085921 /* TFY_BaseBannerViewCell.m in Sources */,
 				3674C96723B6DAA40076A0D5 /* main.m in Sources */,
 				3674C9D323B70FAE0076A0D5 /* KuaiBaoCell.m in Sources */,
-				36E846BA27E99FA400B4E442 /* TFY_VideoMaskView.m in Sources */,
+				3667A6D329AA207B0020B575 /* TFY_BannerVideoMaskView.m in Sources */,
+				3667A6CD29AA1F670020B575 /* TFY_BannerImageViewCell.m in Sources */,
 				3674C9CE23B70FAE0076A0D5 /* DemoTianMao.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

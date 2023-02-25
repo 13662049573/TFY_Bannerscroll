@@ -1,14 +1,14 @@
 //
-//  TFY_ImageViewCell.m
+//  TFY_BannerImageViewCell.m
 //  TFY_Bannerscroll
 //
-//  Created by 田风有 on 2023/2/23.
+//  Created by 田风有 on 2023/2/25.
 //  Copyright © 2023 田风有. All rights reserved.
 //
 
-#import "TFY_ImageViewCell.h"
+#import "TFY_BannerImageViewCell.h"
 
-@implementation TFY_ImageViewCell
+@implementation TFY_BannerImageViewCell
 
 - (void)baseBannerViewLayout {
     [self.contentView addSubview:self.bannerImageView];
