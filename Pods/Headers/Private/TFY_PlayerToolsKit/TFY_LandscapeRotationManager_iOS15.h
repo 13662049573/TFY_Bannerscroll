@@ -1,1 +1,0 @@
-../../../TFY_PlayerToolsKit/TFY_PlayerTools/TFY_PlayerToolsKit/TFY_PlayerTool/TFY_LandscapeRotationManager_iOS15.h
