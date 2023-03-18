@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "TFY_BannerImageViewCell.h"
-#import "TFY_BannerVideoCollectionCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

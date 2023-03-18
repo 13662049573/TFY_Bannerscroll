@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,8 +15,6 @@
 		3654E38925C57C160042826D /* TFY_BannerParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E38025C57C160042826D /* TFY_BannerParam.m */; };
 		3654E38A25C57C160042826D /* TFY_BannerFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3654E38125C57C160042826D /* TFY_BannerFlowLayout.m */; };
 		3667A6CD29AA1F670020B575 /* TFY_BannerImageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3667A6CC29AA1F670020B575 /* TFY_BannerImageViewCell.m */; };
-		3667A6D029AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3667A6CF29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m */; };
-		3667A6D329AA207B0020B575 /* TFY_BannerVideoMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3667A6D229AA207B0020B575 /* TFY_BannerVideoMaskView.m */; };
 		3674C96123B6DAA40076A0D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3674C96023B6DAA40076A0D5 /* Assets.xcassets */; };
 		3674C96423B6DAA40076A0D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3674C96223B6DAA40076A0D5 /* LaunchScreen.storyboard */; };
 		3674C96723B6DAA40076A0D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3674C96623B6DAA40076A0D5 /* main.m */; };
@@ -80,10 +78,6 @@
 		3654E38525C57C160042826D /* TFY_BannerOverLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFY_BannerOverLayout.h; sourceTree = "<group>"; };
 		3667A6CB29AA1F670020B575 /* TFY_BannerImageViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerImageViewCell.h; sourceTree = "<group>"; };
 		3667A6CC29AA1F670020B575 /* TFY_BannerImageViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerImageViewCell.m; sourceTree = "<group>"; };
-		3667A6CE29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerVideoCollectionCell.h; sourceTree = "<group>"; };
-		3667A6CF29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerVideoCollectionCell.m; sourceTree = "<group>"; };
-		3667A6D129AA207B0020B575 /* TFY_BannerVideoMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TFY_BannerVideoMaskView.h; sourceTree = "<group>"; };
-		3667A6D229AA207B0020B575 /* TFY_BannerVideoMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TFY_BannerVideoMaskView.m; sourceTree = "<group>"; };
 		3674C95123B6DAA20076A0D5 /* TFY_Bannerscroll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TFY_Bannerscroll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3674C96023B6DAA40076A0D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3674C96323B6DAA40076A0D5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -174,8 +168,6 @@
 				3654E37125C578EA0042826D /* TFY_BannerConfig.h */,
 				3654E37225C578EA0042826D /* TFY_BannerPageControl.h */,
 				3654E37325C578EA0042826D /* TFY_BannerPageControl.m */,
-				3667A6D129AA207B0020B575 /* TFY_BannerVideoMaskView.h */,
-				3667A6D229AA207B0020B575 /* TFY_BannerVideoMaskView.m */,
 			);
 			path = TFY_ITools;
 			sourceTree = "<group>";
@@ -195,8 +187,6 @@
 				362CBD3229A75F1B00085921 /* TFY_BaseBannerViewCell.m */,
 				3667A6CB29AA1F670020B575 /* TFY_BannerImageViewCell.h */,
 				3667A6CC29AA1F670020B575 /* TFY_BannerImageViewCell.m */,
-				3667A6CE29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.h */,
-				3667A6CF29AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m */,
 			);
 			path = TFY_BannerView;
 			sourceTree = "<group>";
@@ -659,7 +649,6 @@
 				3674C9D723B70FAE0076A0D5 /* DemoPageControl.m in Sources */,
 				3654E37425C578EA0042826D /* TFY_BannerPageControl.m in Sources */,
 				3654E38A25C57C160042826D /* TFY_BannerFlowLayout.m in Sources */,
-				3667A6D029AA1FA10020B575 /* TFY_BannerVideoCollectionCell.m in Sources */,
 				3654E38625C57C160042826D /* TFY_BannerView.m in Sources */,
 				3674C99223B6DB200076A0D5 /* ViewController.m in Sources */,
 				3674C9CF23B70FAE0076A0D5 /* TianMaoCell.m in Sources */,
@@ -672,7 +661,6 @@
 				362CBD3429A75F1B00085921 /* TFY_BaseBannerViewCell.m in Sources */,
 				3674C96723B6DAA40076A0D5 /* main.m in Sources */,
 				3674C9D323B70FAE0076A0D5 /* KuaiBaoCell.m in Sources */,
-				3667A6D329AA207B0020B575 /* TFY_BannerVideoMaskView.m in Sources */,
 				3667A6CD29AA1F670020B575 /* TFY_BannerImageViewCell.m in Sources */,
 				3674C9CE23B70FAE0076A0D5 /* DemoTianMao.m in Sources */,
 			);

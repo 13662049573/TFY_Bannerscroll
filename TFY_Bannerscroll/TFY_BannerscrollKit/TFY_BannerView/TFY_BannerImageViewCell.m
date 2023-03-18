@@ -8,19 +8,7 @@
 
 #import "TFY_BannerImageViewCell.h"
 
-@interface TFY_BannerImageViewCell ()
-@property(nonatomic , strong)UIButton *paybtn;
-@property(nonatomic , strong)NSMutableDictionary *musicPlayers;
-@end
-
 @implementation TFY_BannerImageViewCell
-
--(NSMutableDictionary *)musicPlayers {
-    if(!_musicPlayers){
-        _musicPlayers = [NSMutableDictionary dictionary];
-    }
-    return _musicPlayers;
-}
 
 - (void)baseBannerViewLayout {
     [self.contentView addSubview:self.bannerImageView];
@@ -46,20 +34,8 @@
     [super setBannerUrl:bannerUrl];
     if ([self isVideoUrlString:bannerUrl]) {
         self.paybtn.hidden = NO;
-        UIImage *videoImage = [self musicPlayers][bannerUrl];
-        if (videoImage == nil) {
-            videoImage =  [self privateGetVideoPreViewImage:[NSURL URLWithString:bannerUrl]];
-            [self musicPlayers][bannerUrl] = videoImage;
-        }
-        self.bannerImageView.image = videoImage;
     } else {
         self.paybtn.hidden = YES;
-        UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-        if (kBannerLocality(bannerUrl)) {
-            self.bannerImageView.image = [UIImage imageNamed:bannerUrl];
-        } else {
-            [self.bannerImageView sd_setImageWithURL:[NSURL URLWithString:bannerUrl] placeholderImage:defaultimage];
-        }
     }
 }
 
@@ -99,20 +75,6 @@
     if (self.banner_Block) {
         self.banner_Block(sender, self.bannerUrl);
     }
-}
-
-- (UIImage *)privateGetVideoPreViewImage:(NSURL *)url {
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
-    AVAssetImageGenerator *assetGen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-    
-    assetGen.appliesPreferredTrackTransform = YES;
-    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
-    NSError *error = nil;
-    CMTime actualTime;
-    CGImageRef image = [assetGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
-    UIImage *videoImage = [[UIImage alloc] initWithCGImage:image];
-    CGImageRelease(image);
-    return videoImage;
 }
 
 @end

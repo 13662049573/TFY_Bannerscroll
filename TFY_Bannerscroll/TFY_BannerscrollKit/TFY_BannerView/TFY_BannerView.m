@@ -10,13 +10,16 @@
 #import "TFY_BannerFlowLayout.h"
 #import "TFY_BannerOverLayout.h"
 #import "TFY_BannerPageControl.h"
-#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
-#import <TFY_PlayerToolsKit.h>
-#endif
+
+#define HasPlayerToolsKit (__has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h"))
 
 #define COUNT 500
 
 #define bannerWeak(o) __weak typeof(o) weak_##o = o;
+
+#if HasPlayerToolsKit
+#import <TFY_PlayerToolsKit.h>
+#endif
 
 @interface TFY_BannerView ()<UICollectionViewDelegate,UICollectionViewDataSource> {
     BOOL beganDragging;
@@ -33,11 +36,14 @@
 @property(assign,nonatomic)NSInteger lastIndex;
 @property(strong,nonatomic)UIView *line;
 @property (assign, nonatomic) BOOL isPlay;
-#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+@property(nonatomic , strong)NSMutableDictionary *musicPlayers;
+@property(nonatomic , strong)NSMutableDictionary *videoPlayers;
+#if HasPlayerToolsKit
 /**播放器*/
 @property (strong, nonatomic) TFY_PlayerController *player;
 /**播放器显示View*/
 @property (strong, nonatomic) TFY_PlayerControlView *controlView;
+
 #endif
 @end
 
@@ -206,8 +212,7 @@
     self.myCollectionV.scrollEnabled = self.param.tfy_CanFingerSliding;
     
     [self.myCollectionV registerClass:TFY_BannerImageViewCell.class forCellWithReuseIdentifier:@"TFY_BannerImageViewCell"];
-    [self.myCollectionV registerClass:TFY_BannerVideoCollectionCell.class forCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell"];
-    
+
     if (self.param.tfy_MyCellClassNames) {
         if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSString class]]) {
             
@@ -264,42 +269,27 @@
         //默认视图
         TFY_BaseBannerViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
         NSString *url = @"";
-#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
         if ([dic isKindOfClass:[NSDictionary class]]) {
             url = dic[self.param.tfy_DataParamIconName];
         } else{
             url = dic;
         }
+#if HasPlayerToolsKit
         __weak typeof(self) weakSelf = self;
         cell.banner_Block = ^(UIButton * _Nonnull btn, NSString *bannerUrl) {
             [weakSelf privatePlayButton:btn bannerUrl:bannerUrl];
         };
-#else
-        if ([dic isKindOfClass:[NSDictionary class]]) {
-            url = dic[self.param.tfy_DataParamIconName];
-            if ([self isVideoUrlString:url]) {
-                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell" forIndexPath:indexPath];
-            } else {
-                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
-            }
-        } else{
-            url = dic;
-            if ([self isVideoUrlString:url]) {
-                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell" forIndexPath:indexPath];
-            } else {
-                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
-            }
-        }
 #endif
         cell.param = self.param;
         cell.bannerUrl = url;
+        [self setIconData:((TFY_BannerImageViewCell *)cell).bannerImageView withData:url];
         tmpCell = cell;
     }
     return tmpCell;
 }
 
 - (void)privatePlayButton:(UIButton *)sender bannerUrl:(NSString *)bannerUrl {
-#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+#if HasPlayerToolsKit
     [self.controlView resetControlView];
     UIView *superview = sender.superview;
     TFY_AVPlayerManager *palyerManager = [[TFY_AVPlayerManager alloc] init];
@@ -327,7 +317,7 @@
 #endif
 }
 
-#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+#if HasPlayerToolsKit
 - (TFY_PlayerControlView *)controlView {
     if (!_controlView) {
         _controlView = [[TFY_PlayerControlView alloc] init];
@@ -340,16 +330,53 @@
     if (!data) return;
     if ([data isKindOfClass:[NSString class]]) {
         if (kBannerLocality(data)) {
-            bannerImageView.image = [UIImage imageNamed:(NSString *)data];
+            UIImage *videoImage = self.musicPlayers[data];
+            if (videoImage == nil) {
+                if ([self isVideoUrlString:data]) {
+                    videoImage =  [self privateGetVideoPreViewImage:[NSURL URLWithString:data]];
+                } else {
+                    videoImage = [UIImage imageNamed:(NSString *)data];
+                }
+            }
+            bannerImageView.image = videoImage;
+            self.musicPlayers[data] = videoImage;
         } else {
-            UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-            [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
+            if ([self isVideoUrlString:data]) {
+                UIImage *videoImage = self.musicPlayers[data];
+                if (videoImage == nil) {
+                    videoImage =  [self privateGetVideoPreViewImage:[NSURL URLWithString:data]];
+                }
+                bannerImageView.image = videoImage;
+                self.musicPlayers[data] = videoImage;
+            } else {
+                UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
+                [bannerImageView sd_setImageWithURL:[NSURL URLWithString:(NSString *)data] placeholderImage:defaultimage];
+            }
         }
-    } else if ([data isKindOfClass:NSURL.class]) {
-        NSURL *url = data;
-        UIImage *defaultimage = [UIImage imageNamed:self.param.tfy_PlaceholderImage?self.param.tfy_PlaceholderImage:@""];
-        [bannerImageView sd_setImageWithURL:url placeholderImage:defaultimage];
     }
+}
+
+/* 判断url是否是视频 */
+- (BOOL)isVideoUrlString:(NSString *)urlString
+{
+    // 判断是否含有视频轨道（是否是视频）
+    AVAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:urlString] options:nil];
+    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
+    return [tracks count] > 0;
+}
+
+- (UIImage *)privateGetVideoPreViewImage:(NSURL *)url {
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:nil];
+    AVAssetImageGenerator *assetGen = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    
+    assetGen.appliesPreferredTrackTransform = YES;
+    CMTime time = CMTimeMakeWithSeconds(0.0, 600);
+    NSError *error = nil;
+    CMTime actualTime;
+    CGImageRef image = [assetGen copyCGImageAtTime:time actualTime:&actualTime error:&error];
+    UIImage *videoImage = [[UIImage alloc] initWithCGImage:image];
+    CGImageRelease(image);
+    return videoImage;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
@@ -399,43 +426,6 @@
             }
         }
     }
-}
-
-/* 判断url是否是视频 */
-- (BOOL)isVideoUrlString:(NSString *)urlString
-{
-    // 判断是否含有视频轨道（是否是视频）
-    AVAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:urlString] options:nil];
-    NSArray *tracks = [asset tracksWithMediaType:AVMediaTypeVideo];
-    return [tracks count] > 0;
-}
-
-/* 获取视频第一帧缩略图 */
-- (UIImage *)getThumbailImageRequestWithUrlString:(NSString *)urlString {
-    //视频文件URL地址
-    NSURL *url = [NSURL URLWithString:urlString];
-    //创建媒体信息对象AVURLAsset
-    AVURLAsset *urlAsset = [AVURLAsset assetWithURL:url];
-    //创建视频缩略图生成器对象AVAssetImageGenerator
-    AVAssetImageGenerator *imageGenerator = [AVAssetImageGenerator assetImageGeneratorWithAsset:urlAsset];
-    //创建视频缩略图的时间，第一个参数是视频第几秒，第二个参数是每秒帧数
-    CMTime time = CMTimeMake(0, 10);
-    CMTime actualTime;//实际生成视频缩略图的时间
-    NSError *error = nil;//错误信息
-    //使用对象方法，生成视频缩略图，注意生成的是CGImageRef类型，如果要在UIImageView上显示，需要转为UIImage
-    CGImageRef cgImage = [imageGenerator copyCGImageAtTime:time
-                                                actualTime:&actualTime
-                                                     error:&error];
-    if (error) {
-        NSLog(@"截取视频缩略图发生错误，错误信息：%@",error.localizedDescription);
-        return nil;
-    }
-    //CGImageRef转UIImage对象
-    UIImage *image = [UIImage imageWithCGImage:cgImage];
-    //记得释放CGImageRef
-    CGImageRelease(cgImage);
-    [[SDImageCache sharedImageCache] storeImage:image forKey:urlString toDisk:YES completion:^{}];
-    return image;
 }
 
 /*
@@ -582,13 +572,13 @@
     if (!self.param.tfy_Marquee) {
         if (self.param.tfy_AutoScroll) {
             [self cancelTimer];
-#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+#if HasPlayerToolsKit
             [self.player stop];
-        }
 #endif
+        }
     }else{
         [self cancelTimer];
-#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+#if HasPlayerToolsKit
         [self.player stop];
 #endif
         [self performSelector:@selector(createTimer) withObject:nil afterDelay:self.param.tfy_AutoScrollSecond];
@@ -750,6 +740,20 @@
         _line = [UIView new];
     }
     return _line;
+}
+
+-(NSMutableDictionary *)musicPlayers {
+    if(!_musicPlayers){
+        _musicPlayers = [NSMutableDictionary dictionary];
+    }
+    return _musicPlayers;
+}
+
+-(NSMutableDictionary *)videoPlayers {
+    if(!_videoPlayers){
+        _videoPlayers = [NSMutableDictionary dictionary];
+    }
+    return _videoPlayers;
 }
 
 @end
