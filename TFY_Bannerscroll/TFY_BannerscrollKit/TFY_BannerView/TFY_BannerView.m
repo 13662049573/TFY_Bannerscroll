@@ -10,6 +10,7 @@
 #import "TFY_BannerFlowLayout.h"
 #import "TFY_BannerOverLayout.h"
 #import "TFY_BannerPageControl.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 #define HasPlayerToolsKit (__has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h"))
 
@@ -266,7 +267,7 @@
         tmpCell = self.param.tfy_MyCell([NSIndexPath indexPathForRow:index inSection:indexPath.section], collectionView, dic,self.bgImgView,self.data);
     } else {
         //默认视图
-        TFY_BaseBannerViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
+        UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
         NSString *url = @"";
         if ([dic isKindOfClass:[NSDictionary class]]) {
             url = dic[self.param.tfy_DataParamIconName];
@@ -275,12 +276,12 @@
         }
 #if HasPlayerToolsKit
         __weak typeof(self) weakSelf = self;
-        cell.banner_Block = ^(UIButton * _Nonnull btn, NSString *bannerUrl) {
+        ((TFY_BannerImageViewCell *)cell).banner_Block = ^(UIButton * _Nonnull btn, NSString *bannerUrl) {
             [weakSelf privatePlayButton:btn bannerUrl:bannerUrl];
         };
 #endif
-        cell.param = self.param;
-        cell.bannerUrl = url;
+        ((TFY_BannerImageViewCell *)cell).param = self.param;
+        ((TFY_BannerImageViewCell *)cell).bannerUrl = url;
         [self setIconData:((TFY_BannerImageViewCell *)cell).bannerImageView withData:url];
         tmpCell = cell;
     }

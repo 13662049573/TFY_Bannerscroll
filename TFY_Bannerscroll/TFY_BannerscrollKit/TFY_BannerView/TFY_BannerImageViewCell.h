@@ -6,13 +6,20 @@
 //  Copyright © 2023 田风有. All rights reserved.
 //
 
-#import "TFY_BaseBannerViewCell.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "TFY_BannerParam.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TFY_BannerImageViewCell : TFY_BaseBannerViewCell
+@interface TFY_BannerImageViewCell : UICollectionViewCell
+
 @property(nonatomic,strong)UIImageView *bannerImageView;
-@property(nonatomic , strong)UIButton *paybtn;
+@property(nonatomic,strong)TFY_BannerParam *param;
+@property (nonatomic, strong) NSString *bannerUrl;
+@property (nonatomic , copy, nullable) void (^banner_Block)(id data,NSString *bannerUrl);
+
 @end
 
 NS_ASSUME_NONNULL_END

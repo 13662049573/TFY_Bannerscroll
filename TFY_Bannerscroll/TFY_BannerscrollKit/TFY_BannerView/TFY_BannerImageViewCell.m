@@ -8,7 +8,20 @@
 
 #import "TFY_BannerImageViewCell.h"
 
+@interface TFY_BannerImageViewCell ()
+@property(nonatomic , strong)UIButton *paybtn;
+@end
+
 @implementation TFY_BannerImageViewCell
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self baseBannerViewLayout];
+    }
+    return self;
+}
 
 - (void)baseBannerViewLayout {
     [self.contentView addSubview:self.bannerImageView];
@@ -17,7 +30,7 @@
 }
 
 - (void)setParam:(TFY_BannerParam *)param {
-    [super setParam:param];
+    _param = param;
    self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
     if (param.tfy_bannerRadius > 0) {
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
@@ -31,7 +44,7 @@
 }
 
 - (void)setBannerUrl:(NSString *)bannerUrl {
-    [super setBannerUrl:bannerUrl];
+    _bannerUrl = bannerUrl;
     if ([self isVideoUrlString:bannerUrl]) {
         self.paybtn.hidden = NO;
     } else {
