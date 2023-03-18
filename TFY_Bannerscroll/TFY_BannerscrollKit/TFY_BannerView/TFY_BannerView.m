@@ -37,7 +37,6 @@
 @property(strong,nonatomic)UIView *line;
 @property (assign, nonatomic) BOOL isPlay;
 @property(nonatomic , strong)NSMutableDictionary *musicPlayers;
-@property(nonatomic , strong)NSMutableDictionary *videoPlayers;
 #if HasPlayerToolsKit
 /**播放器*/
 @property (strong, nonatomic) TFY_PlayerController *player;
@@ -747,13 +746,6 @@
         _musicPlayers = [NSMutableDictionary dictionary];
     }
     return _musicPlayers;
-}
-
--(NSMutableDictionary *)videoPlayers {
-    if(!_videoPlayers){
-        _videoPlayers = [NSMutableDictionary dictionary];
-    }
-    return _videoPlayers;
 }
 
 @end
