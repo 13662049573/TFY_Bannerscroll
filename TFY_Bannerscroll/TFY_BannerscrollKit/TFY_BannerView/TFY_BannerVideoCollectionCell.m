@@ -99,9 +99,9 @@
     }
 }
 
-- (void)setVideoUrl:(NSString *)videoUrl {
-    _videoUrl = videoUrl;
-    self.videoPlayer.player = [AVPlayer playerWithURL:[NSURL URLWithString:videoUrl]];
+- (void)setBannerUrl:(NSString *)bannerUrl {
+    [super setBannerUrl:bannerUrl];
+    self.videoPlayer.player = [AVPlayer playerWithURL:[NSURL URLWithString:bannerUrl]];
 }
 
 - (void)createTimer {

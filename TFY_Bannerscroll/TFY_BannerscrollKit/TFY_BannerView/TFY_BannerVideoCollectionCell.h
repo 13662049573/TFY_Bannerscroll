@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TFY_BannerVideoCollectionCell : TFY_BaseBannerViewCell
 // ******* 是否处于播放状态 ******
 @property (nonatomic, assign) BOOL isPlay;
-// ******* 视频播放地址 ******
-@property (nonatomic, strong) NSString *videoUrl;
 /*
  * 开始播放
  */

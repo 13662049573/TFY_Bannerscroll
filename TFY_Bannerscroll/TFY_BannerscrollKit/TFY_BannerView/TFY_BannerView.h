@@ -26,7 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**更新fram 必须要假的把item 重新设置一下*/
 - (void)FrameUpdate;
 
-- (void)stopVideo;
+//定时器
+- (void)createTimer;
+
+//定时器销毁
+- (void)cancelTimer;
 
 @end
 

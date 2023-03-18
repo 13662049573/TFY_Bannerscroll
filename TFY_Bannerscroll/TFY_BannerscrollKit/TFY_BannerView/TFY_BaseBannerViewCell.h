@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TFY_BaseBannerViewCell : UICollectionViewCell
 @property(nonatomic,strong)TFY_BannerParam *param;
+@property (nonatomic, strong) NSString *bannerUrl;
 - (void)baseBannerViewLayout;
+@property (nonatomic , copy, nullable) void (^banner_Block)(id data,NSString *bannerUrl);
 @end
 
 NS_ASSUME_NONNULL_END

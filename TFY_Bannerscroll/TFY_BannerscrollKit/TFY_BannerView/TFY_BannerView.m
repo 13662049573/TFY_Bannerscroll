@@ -10,6 +10,9 @@
 #import "TFY_BannerFlowLayout.h"
 #import "TFY_BannerOverLayout.h"
 #import "TFY_BannerPageControl.h"
+#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+#import <TFY_PlayerToolsKit.h>
+#endif
 
 #define COUNT 500
 
@@ -30,6 +33,12 @@
 @property(assign,nonatomic)NSInteger lastIndex;
 @property(strong,nonatomic)UIView *line;
 @property (assign, nonatomic) BOOL isPlay;
+#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+/**播放器*/
+@property (strong, nonatomic) TFY_PlayerController *player;
+/**播放器显示View*/
+@property (strong, nonatomic) TFY_PlayerControlView *controlView;
+#endif
 @end
 
 @implementation TFY_BannerView
@@ -59,9 +68,9 @@
 
 - (void)FrameUpdate {
     self.param.tfy_Frame = CGRectMake(self.param.tfy_Frame.origin.x,
-                                   self.param.tfy_Frame.origin.y,
-                                   (int)self.param.tfy_Frame.size.width,
-                                   (int)self.param.tfy_Frame.size.height);
+                                      self.param.tfy_Frame.origin.y,
+                                      (int)self.param.tfy_Frame.size.width,
+                                      (int)self.param.tfy_Frame.size.height);
     [self setFrame:self.param.tfy_Frame];
     
     [self setUp];
@@ -80,7 +89,7 @@
 
 - (void)updateUI {
     self.data = [NSArray arrayWithArray:self.param.tfy_Data];
-
+    
     [self resetCollection];
 }
 
@@ -202,13 +211,13 @@
     if (self.param.tfy_MyCellClassNames) {
         if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSString class]]) {
             
-           [self.myCollectionV registerClass:NSClassFromString(self.param.tfy_MyCellClassNames) forCellWithReuseIdentifier:self.param.tfy_MyCellClassNames];
+            [self.myCollectionV registerClass:NSClassFromString(self.param.tfy_MyCellClassNames) forCellWithReuseIdentifier:self.param.tfy_MyCellClassNames];
             
         } else if ([self.param.tfy_MyCellClassNames isKindOfClass:[NSArray class]]) {
             
             [(NSArray*)self.param.tfy_MyCellClassNames enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj isKindOfClass:[NSString class]]) {
-                     [self.myCollectionV registerClass:NSClassFromString(obj) forCellWithReuseIdentifier:obj];
+                    [self.myCollectionV registerClass:NSClassFromString(obj) forCellWithReuseIdentifier:obj];
                 }
             }];
         }
@@ -241,10 +250,9 @@
     effectView.clipsToBounds = YES;
     [self.bgImgView addSubview:effectView];
     self.effectView = effectView;
-
+    
     [self resetCollection];
 }
-
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger index = self.param.tfy_Repeat?indexPath.row%self.data.count:indexPath.row;
@@ -256,33 +264,77 @@
         //默认视图
         TFY_BaseBannerViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
         NSString *url = @"";
+#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+        if ([dic isKindOfClass:[NSDictionary class]]) {
+            url = dic[self.param.tfy_DataParamIconName];
+        } else{
+            url = dic;
+        }
+        __weak typeof(self) weakSelf = self;
+        cell.banner_Block = ^(UIButton * _Nonnull btn, NSString *bannerUrl) {
+            [weakSelf privatePlayButton:btn bannerUrl:bannerUrl];
+        };
+#else
         if ([dic isKindOfClass:[NSDictionary class]]) {
             url = dic[self.param.tfy_DataParamIconName];
             if ([self isVideoUrlString:url]) {
                 cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell" forIndexPath:indexPath];
-                ((TFY_BannerVideoCollectionCell *)cell).videoUrl = url;
             } else {
-                cell.param = self.param;
-                [self setIconData:((TFY_BannerImageViewCell *)cell).bannerImageView withData:url];
+                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
             }
         } else{
             url = dic;
             if ([self isVideoUrlString:url]) {
                 cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerVideoCollectionCell" forIndexPath:indexPath];
-                ((TFY_BannerVideoCollectionCell *)cell).videoUrl = url;
             } else {
-                cell.param = self.param;
-                [self setIconData:((TFY_BannerImageViewCell *)cell).bannerImageView withData:url];
+                cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"TFY_BannerImageViewCell" forIndexPath:indexPath];
             }
         }
+#endif
+        cell.param = self.param;
+        cell.bannerUrl = url;
         tmpCell = cell;
     }
     return tmpCell;
 }
 
-- (void)stopVideo {
-    
+- (void)privatePlayButton:(UIButton *)sender bannerUrl:(NSString *)bannerUrl {
+#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+    [self.controlView resetControlView];
+    UIView *superview = sender.superview;
+    TFY_AVPlayerManager *palyerManager = [[TFY_AVPlayerManager alloc] init];
+    self.player = [TFY_PlayerController playerWithPlayerManager:palyerManager containerView:superview];
+    self.player.pauseWhenAppResignActive = NO;// 设置退到后台继续播放
+    self.player.controlView = self.controlView;
+    __weak typeof(self) weakSelf = self;
+    self.player.orientationWillChange = ^(TFY_PlayerController * _Nonnull player, BOOL isFullScreen) {
+        
+    };
+    self.player.playerPlayStateChanged = ^(id<TFY_PlayerMediaPlayback>  _Nonnull asset, PlayerPlaybackState playState) {
+        if (playState == PlayerPlayStatePaused && !weakSelf.player.isFullScreen) {
+            [weakSelf.player stop];
+            [weakSelf createTimer];
+        }
+    };
+    self.player.playerDidToEnd = ^(id<TFY_PlayerMediaPlayback>  _Nonnull asset) {
+        [weakSelf.player stop];
+        [weakSelf createTimer];
+    };
+    self.player.playerPrepareToPlay = ^(id<TFY_PlayerMediaPlayback>  _Nonnull asset, NSURL * _Nonnull assetURL) {
+        [weakSelf cancelTimer];
+    };
+    self.player.assetURL = [NSURL URLWithString:bannerUrl];
+#endif
 }
+
+#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+- (TFY_PlayerControlView *)controlView {
+    if (!_controlView) {
+        _controlView = [[TFY_PlayerControlView alloc] init];
+    }
+    return _controlView;
+}
+#endif
 
 - (void)setIconData:(UIImageView*)bannerImageView withData:(id)data {
     if (!data) return;
@@ -530,9 +582,15 @@
     if (!self.param.tfy_Marquee) {
         if (self.param.tfy_AutoScroll) {
             [self cancelTimer];
+#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+            [self.player stop];
         }
+#endif
     }else{
         [self cancelTimer];
+#if __has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h")
+        [self.player stop];
+#endif
         [self performSelector:@selector(createTimer) withObject:nil afterDelay:self.param.tfy_AutoScrollSecond];
     }
 }

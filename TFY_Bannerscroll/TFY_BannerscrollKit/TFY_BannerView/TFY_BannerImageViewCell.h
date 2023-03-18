@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TFY_BannerImageViewCell : TFY_BaseBannerViewCell
 @property(nonatomic,strong)UIImageView *bannerImageView;
+
 @end
 
 NS_ASSUME_NONNULL_END
