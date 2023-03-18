@@ -8,6 +8,8 @@
 
 #import "TFY_BannerImageViewCell.h"
 
+#define HasPlayerToolsKit (__has_include(<TFY_PlayerToolsKit.h>) || __has_include("TFY_PlayerToolsKit.h"))
+
 @interface TFY_BannerImageViewCell ()
 @property(nonatomic , strong)UIButton *paybtn;
 @end
@@ -45,11 +47,15 @@
 
 - (void)setBannerUrl:(NSString *)bannerUrl {
     _bannerUrl = bannerUrl;
+#if HasPlayerToolsKit
     if ([self isVideoUrlString:bannerUrl]) {
         self.paybtn.hidden = NO;
     } else {
         self.paybtn.hidden = YES;
     }
+#else
+    self.paybtn.hidden = YES;
+#endif
 }
 
 /* 判断url是否是视频 */
