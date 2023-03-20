@@ -33,7 +33,7 @@
 
 - (void)setParam:(TFY_BannerParam *)param {
     _param = param;
-   self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleAspectFit;
+   self.bannerImageView.contentMode = param.tfy_ImageFill?UIViewContentModeScaleAspectFill:UIViewContentModeScaleToFill;
     if (param.tfy_bannerRadius > 0) {
         CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
         maskLayer.frame = self.bounds;

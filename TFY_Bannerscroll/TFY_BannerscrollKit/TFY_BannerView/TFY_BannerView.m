@@ -567,18 +567,15 @@
 //开始拖动
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     beganDragging = YES;
+#if HasPlayerToolsKit
+    [self.player stop];
+#endif
     if (!self.param.tfy_Marquee) {
         if (self.param.tfy_AutoScroll) {
             [self cancelTimer];
-#if HasPlayerToolsKit
-            [self.player stop];
-#endif
         }
     }else{
         [self cancelTimer];
-#if HasPlayerToolsKit
-        [self.player stop];
-#endif
         [self performSelector:@selector(createTimer) withObject:nil afterDelay:self.param.tfy_AutoScrollSecond];
     }
     if (self.param.tfy_WillBeginDraggingScroll) {
