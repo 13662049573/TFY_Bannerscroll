@@ -10,7 +10,7 @@ target 'TFY_Bannerscroll' do
   pod 'TFY_Navigation'
   pod 'SDWebImage'
   pod 'Masonry'
-  
+  pod 'TFY_PlayerToolsKit'
   # Pods for TFY_Bannerscroll
 
   target 'TFY_BannerscrollTests' do
