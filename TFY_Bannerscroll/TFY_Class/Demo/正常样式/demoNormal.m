@@ -62,7 +62,7 @@
         //开启自动滚动
         .tfy_AutoScrollSet(YES)
         //自动滚动时间
-        .tfy_AutoScrollSecondSet(1.5)
+        .tfy_AutoScrollSecondSet(6)
         .tfy_ItemSizeSet(CGSizeMake(BannerWitdh/2, BannerWitdh/3))//item的size default 视图的宽高 item的width最小为父视图的一半 (为了保证同屏最多显示3个 减少不必要的bug)
         .tfy_HideBannerControlSet(YES);
     }

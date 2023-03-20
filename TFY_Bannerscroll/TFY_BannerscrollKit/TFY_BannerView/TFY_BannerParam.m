@@ -148,6 +148,8 @@ TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerCenterClickBlock,tfy_Event
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerScrollEndBlock,tfy_EventScrollEnd)
 //正在滚动
 TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerScrollBlock,tfy_EventDidScroll)
+// 开始滚动
+TFY_BannerSetFuncImplementation(TFY_BannerParam,BannerscrollViewWillBeginDraggingBlock,tfy_WillBeginDraggingScroll)
 //特殊样式 default 无
 TFY_BannerSetFuncImplementation(TFY_BannerParam,SpecialStyle,tfy_SpecialStyle)
 

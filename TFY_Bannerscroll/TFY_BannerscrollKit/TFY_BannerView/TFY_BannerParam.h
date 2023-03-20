@@ -105,6 +105,8 @@ TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerCenterClickBlock,tfy_Event
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerScrollEndBlock,tfy_EventScrollEnd)
 //正在滚动
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerScrollBlock,tfy_EventDidScroll)
+// 开始滚动
+TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerscrollViewWillBeginDraggingBlock,tfy_WillBeginDraggingScroll)
 //特殊样式SpecialLine 自定义下划线
 TFY_BannerSetFuncStatement(TFY_BannerParam,copy,BannerSpecialLine,tfy_SpecialCustumLine)
 //特殊样式 default 无

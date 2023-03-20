@@ -54,6 +54,9 @@ typedef void (^BannerScrollEndBlock)(id _Nonnull anyID,NSInteger index,BOOL isCe
 /** 滚动*/
 typedef void (^BannerScrollBlock)(CGPoint point);
 
+/**开始滚动**/
+typedef void (^BannerscrollViewWillBeginDraggingBlock)(UIScrollView *_Nonnull scrollView);
+
 /** 自定义下划线*/
 typedef void (^BannerSpecialLine)(UIView * _Nonnull line);
 

@@ -581,6 +581,9 @@
 #endif
         [self performSelector:@selector(createTimer) withObject:nil afterDelay:self.param.tfy_AutoScrollSecond];
     }
+    if (self.param.tfy_WillBeginDraggingScroll) {
+        self.param.tfy_WillBeginDraggingScroll(scrollView);
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
