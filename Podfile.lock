@@ -58,6 +58,12 @@ PODS:
   - TFY_Navigation (2.9.4):
     - TFY_Navigation/TFY_NavControoler (= 2.9.4)
   - TFY_Navigation/TFY_NavControoler (2.9.4)
+  - TFY_PlayerToolsKit (2.2.2):
+    - TFY_PlayerToolsKit/TFY_PlayerTool (= 2.2.2)
+    - TFY_PlayerToolsKit/TFY_PlayerView (= 2.2.2)
+  - TFY_PlayerToolsKit/TFY_PlayerTool (2.2.2)
+  - TFY_PlayerToolsKit/TFY_PlayerView (2.2.2):
+    - TFY_PlayerToolsKit/TFY_PlayerTool
   - TFY_ProgressHUD (2.4.8)
 
 DEPENDENCIES:
@@ -65,6 +71,7 @@ DEPENDENCIES:
   - SDWebImage
   - TFY_LayoutCategoryKit
   - TFY_Navigation
+  - TFY_PlayerToolsKit
   - TFY_ProgressHUD
 
 SPEC REPOS:
@@ -73,6 +80,7 @@ SPEC REPOS:
     - SDWebImage
     - TFY_LayoutCategoryKit
     - TFY_Navigation
+    - TFY_PlayerToolsKit
     - TFY_ProgressHUD
 
 SPEC CHECKSUMS:
@@ -80,8 +88,9 @@ SPEC CHECKSUMS:
   SDWebImage: fd7e1a22f00303e058058278639bf6196ee431fe
   TFY_LayoutCategoryKit: 2f2622dbf20b2da60c1c98c8e219cd1b732adb45
   TFY_Navigation: a9661e0742dca3086b232596015c5f5748535604
+  TFY_PlayerToolsKit: de3eaa8b46c2a2749c770fe9e2f5b1f09163b372
   TFY_ProgressHUD: cd69a1005edd6c9527c7c4dfa8df09c1f09c3006
 
-PODFILE CHECKSUM: 22ba9cb2def7a3b4d845cc536b9b89d7f545833a
+PODFILE CHECKSUM: b3c8bc669e10f56728935219462b67958fbb604b
 
 COCOAPODS: 1.12.0

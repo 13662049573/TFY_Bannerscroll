@@ -98,10 +98,12 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_ROOT}/TFY_Navigation/TFY_Navigation/TFY_Navigation/TFY_NavigationImage.bundle"
+  install_resource "${PODS_ROOT}/TFY_PlayerToolsKit/TFY_PlayerTools/TFY_PlayerToolsKit/videoImages.bundle"
   install_resource "${PODS_ROOT}/TFY_ProgressHUD/TFY_ProgressHUD/TFY_ProgressHUD/TFY_ProgressHUD.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_ROOT}/TFY_Navigation/TFY_Navigation/TFY_Navigation/TFY_NavigationImage.bundle"
+  install_resource "${PODS_ROOT}/TFY_PlayerToolsKit/TFY_PlayerTools/TFY_PlayerToolsKit/videoImages.bundle"
   install_resource "${PODS_ROOT}/TFY_ProgressHUD/TFY_ProgressHUD/TFY_ProgressHUD/TFY_ProgressHUD.bundle"
 fi
 
