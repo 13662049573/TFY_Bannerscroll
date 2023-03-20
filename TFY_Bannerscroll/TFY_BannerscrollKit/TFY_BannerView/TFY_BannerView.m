@@ -294,18 +294,17 @@
     UIView *superview = sender.superview;
     TFY_AVPlayerManager *palyerManager = [[TFY_AVPlayerManager alloc] init];
     self.player = [TFY_PlayerController playerWithPlayerManager:palyerManager containerView:superview];
-    self.player.pauseWhenAppResignActive = NO;// 设置退到后台继续播放
     self.player.controlView = self.controlView;
+    self.player.playerDisapperaPercent = 0.4;/// 0.4是消失40%时候
+    self.player.playerApperaPercent = 0.6;/// 0.6是出现60%时候
+    self.player.WWANAutoPlay = YES;/// 移动网络依然自动播放
+    self.player.resumePlayRecord = YES;/// 续播
+    self.player.stopWhileNotVisible = YES;
+    self.player.disableGestureTypes = PlayerDisableGestureTypesPan; /// 禁止掉滑动手势
+    self.player.orientationObserver.portraitFullScreenMode = PortraitFullScreenModeScaleAspectFit; /// 全屏的填充模式（全屏填充、按视频大小填充）
+    self.player.orientationObserver.fullScreenMode = FullScreenModeAutomatic;
+    self.player.orientationObserver.disablePortraitGestureTypes = DisablePortraitGestureTypesNone;/// 禁用竖屏全屏的手势（点击、拖动手势）
     __weak typeof(self) weakSelf = self;
-    self.player.orientationWillChange = ^(TFY_PlayerController * _Nonnull player, BOOL isFullScreen) {
-        
-    };
-    self.player.playerPlayStateChanged = ^(id<TFY_PlayerMediaPlayback>  _Nonnull asset, PlayerPlaybackState playState) {
-        if (playState == PlayerPlayStatePaused && !weakSelf.player.isFullScreen) {
-            [weakSelf.player stop];
-            [weakSelf createTimer];
-        }
-    };
     self.player.playerDidToEnd = ^(id<TFY_PlayerMediaPlayback>  _Nonnull asset) {
         [weakSelf.player stop];
         [weakSelf createTimer];

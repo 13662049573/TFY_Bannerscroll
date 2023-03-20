@@ -71,7 +71,9 @@
 
 
 - (NSArray*)getData{
+    NSString *url = [@"https://tj-data-bak-to-test20221028.oss-cn-hangzhou.aliyuncs.com/uploadFiles/images/app/banner/浙大妙智康宣传片.mp4" stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet  URLQueryAllowedCharacterSet]];
     return @[
+        url,
         @"http://dl.w.xk.miui.com/c64aea3266d6f8e777aa659152a22a73.720p.mp4",
         @"https://media.giphy.com/media/12FparngCjPtC0/giphy.gif",
         @"http://p3.music.126.net/jGi52eDVUxCnMaVy-_bqcQ==/18531168976543961.jpg?param=640y248",
