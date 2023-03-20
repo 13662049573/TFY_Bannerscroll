@@ -92,7 +92,7 @@
 
 - (void)privatePlayButton:(UIButton *)sender {
     if (self.banner_Block) {
-        self.banner_Block(sender, self.bannerUrl);
+        self.banner_Block(self.bannerImageView, self.bannerUrl);
     }
 }
 

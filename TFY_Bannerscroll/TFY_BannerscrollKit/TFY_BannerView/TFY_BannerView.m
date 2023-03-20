@@ -276,8 +276,8 @@
         }
 #if HasPlayerToolsKit
         __weak typeof(self) weakSelf = self;
-        ((TFY_BannerImageViewCell *)cell).banner_Block = ^(UIButton * _Nonnull btn, NSString *bannerUrl) {
-            [weakSelf privatePlayButton:btn bannerUrl:bannerUrl];
+        ((TFY_BannerImageViewCell *)cell).banner_Block = ^(UIImageView * _Nonnull imageView, NSString *bannerUrl) {
+            [weakSelf privatePlayButton:imageView bannerUrl:bannerUrl];
         };
 #endif
         ((TFY_BannerImageViewCell *)cell).param = self.param;
@@ -288,12 +288,11 @@
     return tmpCell;
 }
 
-- (void)privatePlayButton:(UIButton *)sender bannerUrl:(NSString *)bannerUrl {
+- (void)privatePlayButton:(UIImageView *)imageView bannerUrl:(NSString *)bannerUrl {
 #if HasPlayerToolsKit
     [self.controlView resetControlView];
-    UIView *superview = sender.superview;
     TFY_AVPlayerManager *palyerManager = [[TFY_AVPlayerManager alloc] init];
-    self.player = [TFY_PlayerController playerWithPlayerManager:palyerManager containerView:superview];
+    self.player = [TFY_PlayerController playerWithPlayerManager:palyerManager containerView:imageView];
     self.player.controlView = self.controlView;
     self.player.playerDisapperaPercent = 0.4;/// 0.4是消失40%时候
     self.player.playerApperaPercent = 0.6;/// 0.6是出现60%时候
